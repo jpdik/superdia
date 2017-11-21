@@ -11,10 +11,13 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Login.fxml"));
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/br/superdia/views/Login.fxml"));
 			Scene scene = new Scene(root,400,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("/br/superdia/views/css/Login.css").toExternalForm());
 			primaryStage.setScene(scene);
+			primaryStage.setTitle("Autenticação - SuperDia");
+			primaryStage.setResizable(false);
+			primaryStage.centerOnScreen();
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
