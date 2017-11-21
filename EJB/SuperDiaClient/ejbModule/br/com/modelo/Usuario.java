@@ -7,6 +7,10 @@ import javax.persistence.Id;
 
 @Entity
 public class Usuario {
+	public enum perfis {
+        Cliente, Caixa, Administrador;
+   } 
+	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
@@ -44,8 +48,13 @@ public class Usuario {
 	public String getPerfil() {
 		return perfil;
 	}
-	public void setPerfil(String perfil) {
-		this.perfil = perfil;
+	public void setPerfil(Usuario.perfis perfil) {
+		for(Usuario.perfis i : Usuario.perfis.values())
+			if(perfil.equals(i)){
+				this.perfil = perfil.toString();
+				return;
+			}
+		this.perfil = perfis.Cliente.toString();
 	}
 	
 	@Override

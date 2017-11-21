@@ -4,6 +4,7 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import br.com.interfacebean.IAutentica;
 import br.com.modelo.Usuario;
@@ -16,7 +17,16 @@ public class AutenticaBean implements IAutentica {
 	
 	@Override
 	public Usuario autentica(Usuario usuario) {
-		return em.find(Usuario.class, usuario.getId());
+		Query q = em.createQuery("SELECT u FROM Usuario u WHERE u.login = :login AND u.senha = :senha");
+		
+		q.setParameter("login", usuario.getUsuario());
+		q.setParameter("senha", usuario.getSenha());
+		
+		try{
+			return (Usuario) q.getSingleResult();
+		}catch (Exception e) {
+			return null;
+		}
 	}
 
 }
