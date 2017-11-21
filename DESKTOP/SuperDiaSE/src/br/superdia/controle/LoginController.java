@@ -1,4 +1,4 @@
-package br.superdia.app;
+package br.superdia.controle;
 
 public class LoginController {
 	

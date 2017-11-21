@@ -2,6 +2,6 @@
 	
 <?import javafx.scene.layout.AnchorPane?>
 	
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.superdia.app.LoginController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.superdia.controle.LoginController">
 	<!-- TODO Add Nodes -->
 </AnchorPane>
