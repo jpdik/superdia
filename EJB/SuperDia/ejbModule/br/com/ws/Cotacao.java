@@ -1,5 +1,6 @@
 package br.com.ws;
 
+// Que porra é essa aqui mano!
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
