@@ -1,15 +1,19 @@
 package br.com.modelo;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Usuario {
+public class Usuario implements Serializable {
+	private static final long serialVersionUID = 5652115488111234796L;
+	
 	public enum perfis {
         Cliente, Caixa, Administrador;
-   } 
+	} 
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -19,6 +23,12 @@ public class Usuario {
 	private String perfil;
 	
 	public Usuario() {
+	}
+
+	public Usuario(String usuario, String senha) {
+		super();
+		this.usuario = usuario;
+		this.senha = senha;
 	}
 
 	public Usuario(String usuario, String senha, String perfil) {

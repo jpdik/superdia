@@ -17,9 +17,9 @@ public class AutenticaBean implements IAutentica {
 	
 	@Override
 	public Usuario autentica(Usuario usuario) {
-		Query q = em.createQuery("SELECT u FROM Usuario u WHERE u.login = :login AND u.senha = :senha");
+		Query q = em.createQuery("SELECT u FROM Usuario u WHERE u.usuario = :usuario AND u.senha = :senha");
 		
-		q.setParameter("login", usuario.getUsuario());
+		q.setParameter("usuario", usuario.getUsuario());
 		q.setParameter("senha", usuario.getSenha());
 		
 		try{
