@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="janelaCaixaAnchorPane" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.superdia.controle.CaixaController">
+   <children>
+      <HBox alignment="CENTER" layoutX="19.0" layoutY="31.0" prefHeight="55.0" prefWidth="997.0" spacing="15.0">
+         <children>
+            <Label text="Operador:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="operadorTextField" editable="false" prefHeight="32.0" prefWidth="378.0" promptText="Nome do usuario funcionário logado no caixa" />
+         </children>
+      </HBox>
+      <HBox layoutX="6.0" layoutY="117.0" prefHeight="513.0" prefWidth="1001.0">
+         <children>
+            <TableView fx:id="tabelaEstoque" onMouseClicked="#tabelaEstoqueOnMouseCliked" prefHeight="513.0" prefWidth="372.0">
+              <columns>
+                  <TableColumn fx:id="idEstoqueTableColumn" prefWidth="95.0" text="id" visible="false" />
+                  <TableColumn fx:id="descricaoEstoqueTableColumn" prefWidth="53.666656494140625" text="descricao" visible="false" />
+                  <TableColumn fx:id="estoqueMinimoEstoqueTableColumn" prefWidth="34.333343505859375" text="estoqueMinimo" visible="false" />
+                  <TableColumn fx:id="nomeEstoqueTableColumn" prefWidth="250.33334350585938" text="Nome" />
+                <TableColumn fx:id="precoEstoqueTableColumn" prefWidth="63.666656494140625" text="Preço Uni." />
+                <TableColumn fx:id="quantidadeEstoqueTableColumn" minWidth="0.0" prefWidth="52.333343505859375" text="Quant." />
+              </columns>
+            </TableView>
+            <VBox alignment="CENTER" prefHeight="513.0" prefWidth="280.0" spacing="20.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <Slider fx:id="quantidadeSlider" orientation="VERTICAL" />
+                        <TextField fx:id="quantidadeTextField" alignment="CENTER" disable="true" editable="false" prefHeight="38.0" prefWidth="59.0" promptText="Quantidade" />
+                     </children>
+                  </HBox>
+                  <Button fx:id="adicionarButton" mnemonicParsing="false" onAction="#adicionarButtonOnAction" prefHeight="37.0" prefWidth="158.0" text="Adicionar &gt;&gt;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Adiciona uma cópia do produto selecionado na tabela Estoque á tabela Vendas." wrapText="true" />
+                     </tooltip>
+                  </Button>
+                  <Button fx:id="removerButton" mnemonicParsing="false" onAction="#removerButtonOnAction" prefHeight="37.0" prefWidth="158.0" text="&lt;&lt; Remover">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Devolve o produto da venda ao estoque." wrapText="true" />
+                     </tooltip>
+                  </Button>
+               </children>
+            </VBox>
+            <TableView fx:id="tabelaVendas" onMouseClicked="#tabelaVendasOnMouseCliked" prefHeight="513.0" prefWidth="372.0">
+               <columns>
+                  <TableColumn fx:id="idVendaTableColumn" prefWidth="95.0" text="id" visible="false" />
+                  <TableColumn fx:id="descricaoVendaTableColumn" prefWidth="53.666656494140625" text="descricao" visible="false" />
+                  <TableColumn fx:id="estoqueMinimoVendaTableColumn" prefWidth="34.333343505859375" text="estoqueMinimo" visible="false" />
+                  <TableColumn fx:id="nomeVendaTableColumn" prefWidth="250.33334350585938" text="Nome" />
+                  <TableColumn fx:id="precoVendaTableColumn" minWidth="0.0" prefWidth="63.666656494140625" text="Preço" />
+                  <TableColumn fx:id="quantidadeVendaTableColumn" minWidth="0.0" prefWidth="52.333343505859375" text="Quant." />
+               </columns>
+            </TableView>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+      <Label layoutX="106.0" layoutY="97.0" text="Produtos Disponíveis Em Estoque" />
+      <Label layoutX="770.0" layoutY="97.0" text="Produtos Vendidos" />
+      <HBox alignment="BASELINE_RIGHT" layoutX="625.0" layoutY="627.0" prefHeight="59.0" prefWidth="379.0" spacing="15.0">
+         <children>
+            <Label prefHeight="44.0" prefWidth="121.0" text="Total compra:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="valorTotalCompraTextField" alignment="CENTER" editable="false" prefHeight="34.0" prefWidth="220.0" promptText="Valor Total da Compra" />
+         </children>
+         <padding>
+            <Insets top="5.0" />
+         </padding>
+      </HBox>
+      <Button fx:id="comprarButton" layoutX="766.0" layoutY="700.0" mnemonicParsing="false" onAction="#comprarButtonOnAction" prefHeight="37.0" prefWidth="238.0" text="Comprar">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="21.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="/br/superdia/imagens/compras.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="infoLabel" alignment="TOP_LEFT" layoutX="1.0" layoutY="647.0" prefHeight="117.0" prefWidth="546.0" textFill="RED" wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="atualizarImageView" fitHeight="25.0" fitWidth="25.0" layoutX="20.0" layoutY="90.0" onMouseClicked="#atualizarOnMouseClicked" onMouseEntered="#atualizarOnMouseEntered" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="/br/superdia/imagens/atualizar.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

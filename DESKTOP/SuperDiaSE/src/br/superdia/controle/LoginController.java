@@ -1,5 +1,7 @@
 package br.superdia.controle;
 
+import java.io.IOException;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -17,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class LoginController {
-	 @FXML
+	@FXML
     private AnchorPane janelaLoginAnchorPane;
 
     @FXML
@@ -40,8 +42,8 @@ public class LoginController {
     private FXMLLoader janelaCaixaFXMLLoader;
 	private Parent janelaCaixaParent;
 	private Scene janelaCaixaScene;
-	private Stage primaryStage;/*
-	private CaixaController caixaController;*/
+	private Stage primaryStage;
+	private CaixaController caixaController;
 	
 	@FXML
     private void initialize() {		
@@ -65,7 +67,7 @@ public class LoginController {
     		msgErroLabel.setText("ERRO: Usuário Inexistente.");
     	else if(usuario.getPerfil().equalsIgnoreCase("Caixa")) {
     		System.out.println("Ir para o caixa realizar a compra");
-    		/*try {
+    		try {
 				janelaCaixaFXMLLoader = new FXMLLoader(getClass().getResource("/br/superdia/views/Caixa.fxml"));
 				janelaCaixaParent = (Parent) janelaCaixaFXMLLoader.load();
 				janelaCaixaScene = new Scene(janelaCaixaParent);
@@ -81,7 +83,7 @@ public class LoginController {
 				primaryStage.show();
 			} catch (IOException e) {
 				e.printStackTrace();
-			}*/    		
+			}    		
     	}else {
     		msgErroLabel.setText("ERRO: O usuário de perfil (" + usuario.getPerfil() + ") NÃO pode ter acesso ao sistema.");
     	}
@@ -193,5 +195,14 @@ public class LoginController {
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-	}    
+	}
+
+	public CaixaController getCaixaController() {
+		return caixaController;
+	}
+
+	public void setCaixaController(CaixaController caixaController) {
+		this.caixaController = caixaController;
+	}
+	
 }
