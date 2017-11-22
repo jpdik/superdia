@@ -5,6 +5,8 @@
 	<projects>
 		<project>SuperDia</project>
 		<project>SuperDiaClient</project>
+		<project>SuperDiaWebAdm</project>
+		<project>SuperDiaJAXRS</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

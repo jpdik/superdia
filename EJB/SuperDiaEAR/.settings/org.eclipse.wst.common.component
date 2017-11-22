@@ -8,5 +8,13 @@
         <dependent-module archiveName="SuperDiaClient.jar" deploy-path="/" handle="module:/resource/SuperDiaClient/SuperDiaClient">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="SuperDiaWebAdm.war" deploy-path="/" handle="module:/resource/SuperDiaWebAdm/SuperDiaWebAdm">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="SuperDiaJAXRS.war" deploy-path="/" handle="module:/resource/SuperDiaJAXRS/SuperDiaJAXRS">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>
