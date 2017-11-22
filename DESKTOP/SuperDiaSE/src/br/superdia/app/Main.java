@@ -10,7 +10,7 @@ import javafx.fxml.FXMLLoader;
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
-		try {
+		try {			
 			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/br/superdia/views/Login.fxml"));
 			Scene scene = new Scene(root,400,400);
 			scene.getStylesheets().add(getClass().getResource("/br/superdia/views/css/Login.css").toExternalForm());
