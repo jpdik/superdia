@@ -1,8 +1,10 @@
 package br.superdia.controle;
 
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import br.com.interfacebean.IAutentica;
+import br.com.modelo.Usuario;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -40,12 +42,62 @@ public class LoginController {
 	private Scene janelaCaixaScene;
 	private Stage primaryStage;/*
 	private CaixaController caixaController;*/
+	
+	@FXML
+    private void initialize() {		
+    	try {
+    		ic = new InitialContext();
+    		iAutentica = (IAutentica) ic.lookup("br.com.interfacebean.IAutentica");
+    	} catch (NamingException e) {
+    		System.err.println(e.getMessage());
+    		System.exit(0);
+    	}
+	}
+	
+    @FXML
+    private void entrarButtonOnAction() {
+    	Usuario usuario = new Usuario();
+    	usuario.setUsuario(usuarioTextField.getText());
+    	usuario.setSenha(senhaPasswordField.getText());
+    	usuario = iAutentica.autentica(usuario);
+    	System.out.println(usuario);
+    	if(usuario == null)
+    		msgErroLabel.setText("ERRO: Usuário Inexistente.");
+    	else if(usuario.getPerfil().equalsIgnoreCase("Caixa")) {
+    		System.out.println("Ir para o caixa realizar a compra");
+    		/*try {
+				janelaCaixaFXMLLoader = new FXMLLoader(getClass().getResource("/br/superdia/views/Caixa.fxml"));
+				janelaCaixaParent = (Parent) janelaCaixaFXMLLoader.load();
+				janelaCaixaScene = new Scene(janelaCaixaParent);
+				janelaCaixaScene.getStylesheets().add(getClass().getResource("/br/superdia/views/css/Caixa.css").toExternalForm());
+				
+				caixaController = (CaixaController) janelaCaixaFXMLLoader.getController();
+				caixaController.getOperadorTextField().setText(usuario.getUsuario());
+				
+				primaryStage = (Stage) msgErroLabel.getScene().getWindow();
+				primaryStage.setScene(janelaCaixaScene);
+				primaryStage.setTitle("Caixa");
+				primaryStage.centerOnScreen();
+				primaryStage.show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}*/    		
+    	}else {
+    		msgErroLabel.setText("ERRO: O usuário de perfil (" + usuario.getPerfil() + ") NÃO pode ter acesso ao sistema.");
+    	}
+    	
+    }
     
     @FXML
-    private void entrarButtonOnAction() {}
+    private void cancelarButtonOnAction() {
+    	limparCampos();
+    }
     
-    @FXML
-    private void cancelarButtonOnAction() {}
+    private void limparCampos() {
+    	usuarioTextField.clear();
+    	senhaPasswordField.clear();
+    	msgErroLabel.setText("");
+    }
 
 	public AnchorPane getJanelaLoginAnchorPane() {
 		return janelaLoginAnchorPane;
