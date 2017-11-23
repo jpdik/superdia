@@ -1,14 +1,23 @@
 package br.superdia.controle;
 
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import br.com.interfacebean.IProduto;
 import br.com.modelo.Produto;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 public class CaixaController {
@@ -43,47 +52,205 @@ public class CaixaController {
     @FXML
     private Slider quantidadeSlider;
     
-    @FXML private ImageView atualizarImageView;    
+    @FXML private ImageView atualizarImageView;
     
+    private Produto produtoEstoque, produtoVenda;
+    private ObservableList<Produto> listTabelaEstoque;
+    private ObservableList<Produto> listTabelaVendas;
+    private InitialContext ic;
+    private IProduto iProduto = null;
     
     @FXML private void initialize() {
+    	try {
+    		ic = new InitialContext();
+    		iProduto = (IProduto) ic.lookup("br.com.interfacebean.IProduto");
+    	} catch (NamingException e) {
+    		System.err.println(e.getMessage());
+    		System.exit(0);
+    	}
     	
+    	idEstoqueTableColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+		nomeEstoqueTableColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
+		descricaoEstoqueTableColumn.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+		quantidadeEstoqueTableColumn.setCellValueFactory(new PropertyValueFactory<>("quantidadeEstoque"));
+		estoqueMinimoEstoqueTableColumn.setCellValueFactory(new PropertyValueFactory<>("estoqueMinimo"));
+		precoEstoqueTableColumn.setCellValueFactory(new PropertyValueFactory<>("preco"));
+		
+		idVendaTableColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+		nomeVendaTableColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
+		descricaoVendaTableColumn.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+		quantidadeVendaTableColumn.setCellValueFactory(new PropertyValueFactory<>("quantidadeEstoque"));
+		estoqueMinimoVendaTableColumn.setCellValueFactory(new PropertyValueFactory<>("estoqueMinimo"));
+		precoVendaTableColumn.setCellValueFactory(new PropertyValueFactory<>("preco"));
+		
+		listTabelaEstoque = FXCollections.observableArrayList(iProduto.listaTodos());		
+		tabelaEstoque.setItems(listTabelaEstoque);
+		
+		listTabelaVendas = FXCollections.observableArrayList();
+		tabelaVendas.setItems(listTabelaVendas);
+		quantidadeTextField.setText("1");
+		quantidadeSlider(35);
 	} 
     
     
     @FXML
     private void tabelaEstoqueOnMouseCliked() {
-    	
+    	produtoEstoque = tabelaEstoque.getSelectionModel().getSelectedItem();
+    	if(produtoEstoque != null){
+    		quantidadeSlider(produtoEstoque.getQuantidadeEstoque());
+    		infoLabel.setText("");
+    	}
+    	tabelaVendas.getSelectionModel().clearSelection();
+    	produtoVenda = null;
     }
     
     @FXML
     private void tabelaVendasOnMouseCliked() {
-    	
+    	produtoVenda = tabelaVendas.getSelectionModel().getSelectedItem();
+    	if(produtoVenda != null){
+    		quantidadeSlider(produtoVenda.getQuantidadeEstoque());
+    		infoLabel.setText("");
+    	}
+    	tabelaEstoque.getSelectionModel().clearSelection();
+    	produtoEstoque = null;
     }
 
     @FXML
     private void adicionarButtonOnAction() {
-    	
+    	if(produtoEstoque != null){
+    		if(produtoEstoque.getQuantidadeEstoque() > 0) {
+	    		produtoVenda = atribuirProdutoAProduto(produtoEstoque, Integer.parseInt(quantidadeTextField.getText()));
+    				    		
+	    		Integer quantEst = produtoEstoque.getQuantidadeEstoque();
+	    		produtoEstoque.setQuantidadeEstoque(quantEst - produtoVenda.getQuantidadeEstoque());
+	    		
+	    		atualizaTabelaEstoque(produtoEstoque);    		
+	    		
+	    		atualizaTabelaVendas(produtoVenda);
+	    		tabelaVendas.setItems(listTabelaVendas);
+	    		
+	    		valorTotalCompraTextField.setText("R$ " + atualizaValorTotalCompra().toString());
+    		}else {
+    			infoLabel.setText("O produto (" + produtoEstoque.getNome() + ") não existe em estoque.");
+    		}
+    	}else{
+    		infoLabel.setText("Selecione um produto da tabela ESTOQUE antes de clicar em adicionar.");
+    	}
+    	tabelaEstoque.getSelectionModel().clearSelection();
+    	produtoEstoque = null;
+    	produtoVenda = null;
     }
   
     @FXML
     private void removerButtonOnAction() {    	
-    	
+    	if(produtoVenda != null){
+    		int quantTF = Integer.parseInt(quantidadeTextField.getText());
+    		int indice = buscaPorProdutoID(listTabelaEstoque, produtoVenda);
+    		produtoEstoque = listTabelaEstoque.get(indice);
+    		produtoEstoque.setQuantidadeEstoque(produtoEstoque.getQuantidadeEstoque() + quantTF);
+    		listTabelaEstoque.set(indice, produtoEstoque);
+    		if(quantTF == produtoVenda.getQuantidadeEstoque()){    			
+    			listTabelaVendas.remove(produtoVenda);
+    		}if(quantTF < produtoVenda.getQuantidadeEstoque()){
+    			int quantProdVenda = produtoVenda.getQuantidadeEstoque() - quantTF;
+    			produtoVenda.setQuantidadeEstoque(quantProdVenda);
+    			produtoVenda.setPreco(quantProdVenda * produtoEstoque.getPreco());
+    			indice = buscaPorProdutoID(listTabelaVendas, produtoVenda);
+    			listTabelaVendas.set(indice, produtoVenda);      		
+    		}
+    		valorTotalCompraTextField.setText("R$ " + atualizaValorTotalCompra().toString());
+    	}else{
+    		infoLabel.setText("Selecione um produto da tabela Vendas antes de clicar em remover.");    		
+    	}
+    	tabelaVendas.getSelectionModel().clearSelection();
+    	produtoVenda = null;
+    	produtoEstoque = null;
     }
 
     @FXML
     private void comprarButtonOnAction() {
-    	
+    	for (Produto produto : listTabelaVendas) {
+			Integer indice = buscaPorProdutoID(listTabelaEstoque, produto);
+			produto = listTabelaEstoque.get(indice);
+			iProduto.altera(produto);
+		}
+    	listTabelaVendas.clear();
+    	valorTotalCompraTextField.clear();
+    	tabelaVendas.setItems(listTabelaVendas);
+    	System.out.println("Compra finalizada com SUCESSO.");
     }   
     
     @FXML
     private void atualizarOnMouseClicked() {    	
-    	    	
+    	if(listTabelaVendas.isEmpty()) {
+    		listTabelaEstoque = FXCollections.observableArrayList(iProduto.listaTodos());		
+    		tabelaEstoque.setItems(listTabelaEstoque);
+    		System.out.println("Atualizando a lista de produtos na tabela estoque.");
+    	}else {
+    		infoLabel.setText("Erro: Remova todos os produtos vendidos antes de atualizar.");
+    	}    	
     }
     
     @FXML
     private void atualizarOnMouseEntered(){
+    	atualizarImageView.setCursor(Cursor.HAND);
+    }
+    
+    private void atualizaTabelaEstoque(Produto produtoEstoque) {
+    	listTabelaEstoque.set(listTabelaEstoque.indexOf(produtoEstoque), produtoEstoque);    	
+    }
+    
+    private void atualizaTabelaVendas(Produto produtoVenda) {  	
+    	Integer indice = buscaPorProdutoID(listTabelaVendas, produtoVenda);
+    	if(indice != null) {
+    		Produto p = listTabelaVendas.get(indice);
+    		produtoVenda.setQuantidadeEstoque(produtoVenda.getQuantidadeEstoque() + p.getQuantidadeEstoque());
+    		produtoVenda.setPreco(produtoVenda.getPreco() * produtoVenda.getQuantidadeEstoque());
+    		listTabelaVendas.set(indice, produtoVenda);
+    	}else {
+    		produtoVenda.setPreco(produtoVenda.getPreco() * produtoVenda.getQuantidadeEstoque());
+    		listTabelaVendas.add(produtoVenda);
+    	}    	
+    }
+    
+    private Integer buscaPorProdutoID(ObservableList<Produto> lista, Produto produto) {
+    	for (Produto p : lista) {
+			if(p.equals(produto))
+				return lista.indexOf(p);
+		}
+    	return null;
+    }
+    
+    private Double atualizaValorTotalCompra() {
+    	Double somaPrecoCompra = 0.0;
+    	for (Produto produto : listTabelaVendas) {
+    		somaPrecoCompra += produto.getPreco();
+		}
+    	return somaPrecoCompra;
+    }
+
+    private void quantidadeSlider(Integer max){
+    	quantidadeSlider.setMin(1);
+    	quantidadeSlider.setMax(max);
     	
+    	quantidadeSlider.valueProperty().addListener(
+			(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+			Double vD = (newValue.doubleValue());
+			String vS = "" + vD.intValue();
+			quantidadeTextField.setText(vS);
+		});
+	}
+    
+    private Produto atribuirProdutoAProduto(Produto produto, Integer quantidade){
+    	Produto produtoNovo = new Produto();
+    	produtoNovo.setId(produto.getId());
+    	produtoNovo.setNome(produto.getNome());
+    	produtoNovo.setDescricao(produto.getDescricao());
+    	produtoNovo.setEstoqueMinimo(produto.getEstoqueMinimo());
+    	produtoNovo.setPreco(produto.getPreco());
+    	produtoNovo.setQuantidadeEstoque(quantidade);
+    	
+    	return produtoNovo;    	
     }
     
 	public AnchorPane getJanelaCaixaAnchorPane() {
@@ -268,6 +435,55 @@ public class CaixaController {
 
 	public void setQuantidadeSlider(Slider quantidadeSlider) {
 		this.quantidadeSlider = quantidadeSlider;
+	}
+
+	public Produto getProdutoEstoque() {
+		return produtoEstoque;
+	}
+
+	public void setProdutoEstoque(Produto produtoEstoque) {
+		this.produtoEstoque = produtoEstoque;
+	}
+
+	public Produto getProdutoVenda() {
+		return produtoVenda;
+	}
+
+	public void setProdutoVenda(Produto produtoVenda) {
+		this.produtoVenda = produtoVenda;
+	}
+
+	public ObservableList<Produto> getListTabelaEstoque() {
+		return listTabelaEstoque;
+	}
+
+	public void setListTabelaEstoque(ObservableList<Produto> listTabelaEstoque) {
+		this.listTabelaEstoque = listTabelaEstoque;
+	}
+
+
+	public ObservableList<Produto> getListTabelaVendas() {
+		return listTabelaVendas;
+	}
+
+	public void setListTabelaVendas(ObservableList<Produto> listTabelaVendas) {
+		this.listTabelaVendas = listTabelaVendas;
+	}
+
+	public InitialContext getIc() {
+		return ic;
+	}
+
+	public void setIc(InitialContext ic) {
+		this.ic = ic;
+	}
+
+	public IProduto getiProduto() {
+		return iProduto;
+	}
+
+	public void setiProduto(IProduto iProduto) {
+		this.iProduto = iProduto;
 	}
 
 	public ImageView getAtualizarImageView() {
