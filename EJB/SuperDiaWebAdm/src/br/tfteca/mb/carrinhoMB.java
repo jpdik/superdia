@@ -38,6 +38,10 @@ public class carrinhoMB {
 		itemVenda = new ItemVenda();
 	}
 	
+	public void finalizaCompra() {
+		iCarrinho.finalizaCompra();
+	}
+	
 	public void remove(ItemVenda itemVenda) {
 		iCarrinho.remove(itemVenda);
 	}

@@ -1,7 +1,5 @@
 package br.com.modelo;
 
-import java.util.Objects;
-
 public class ItemVenda{
 
 	private Long id;
@@ -33,13 +31,27 @@ public class ItemVenda{
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		ItemVenda itemVendaObj = (ItemVenda) obj;
-		return itemVendaObj.getProduto().getId() == getProduto().getId();
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((produto == null) ? 0 : produto.hashCode());
+		return result;
 	}
-	
+
 	@Override
-    public int hashCode() {
-        return Objects.hash(produto.getId(), produto.getNome(), produto.getDescricao());
-    }
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ItemVenda other = (ItemVenda) obj;
+		if (produto == null) {
+			if (other.produto != null)
+				return false;
+		} else if (!produto.equals(other.produto))
+			return false;
+		return true;
+	}
 }
