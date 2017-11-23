@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <HBox alignment="CENTER_LEFT" layoutX="95.0" layoutY="40.0" prefHeight="59.0" prefWidth="410.0" spacing="20.0">
+         <children>
+            <Label text="TIPO PAGAMENTO:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <RadioButton mnemonicParsing="false" text="Dinheiro">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Cartão">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </RadioButton>
+         </children>
+      </HBox>
+      <VBox layoutX="38.0" layoutY="99.0" prefHeight="288.0" prefWidth="525.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="59.0" prefWidth="371.0" spacing="24.0">
+               <children>
+                  <Label text="VALOR COMPRA:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField prefHeight="32.0" prefWidth="219.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="57.0" prefWidth="450.0" spacing="43.0">
+               <children>
+                  <Label text="\% DESCONTO:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField prefHeight="32.0" prefWidth="219.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="59.0" prefWidth="371.0" spacing="28.0">
+               <children>
+                  <Label text="TOTAL A PAGAR:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField prefHeight="32.0" prefWidth="219.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="59.0" prefWidth="371.0" spacing="20.0">
+               <children>
+                  <Label text="VALOR RECEBIDO:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField prefHeight="32.0" prefWidth="219.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="59.0" prefWidth="371.0" spacing="20.0">
+               <children>
+                  <Label text="TROCO:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField prefHeight="46.0" prefWidth="219.0">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
