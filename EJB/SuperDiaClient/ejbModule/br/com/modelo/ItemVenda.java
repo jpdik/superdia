@@ -1,6 +1,10 @@
 package br.com.modelo;
 
-public class ItemVenda{
+import java.io.Serializable;
+
+public class ItemVenda implements Serializable{
+
+	private static final long serialVersionUID = -5321666390642515517L;
 
 	private Long id;
 	private Produto produto;

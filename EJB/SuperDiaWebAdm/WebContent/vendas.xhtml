@@ -5,42 +5,43 @@ xmlns:f="http://java.sun.com/jsf/core"
 xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-	<title>Vendas</title>
+	<title>Vendas realizadas</title>
 </h:head>
 
 <h:body>
-	
-	<h:form>
-		<h:selectOneMenu value="#{carrinhoMB.idProduto}" id="produto" >
-			
-			<f:selectItem itemLabel="Selecione o Produto" />
-			<f:selectItems value="#{carrinhoMB.produtos}" var="produto"
-				itemValue="#{produto.id}" itemLabel="#{produto.nome}" />								
-		</h:selectOneMenu>
-		
-		<h:outputLabel value="Qtde" for="qtde"></h:outputLabel>
-		<h:inputText value="#{carrinhoMB.itemVenda.quantidade}" id="qtde"></h:inputText>
-		
-		<h:commandButton value="Adicionar" action="#{carrinhoMB.adiciona}"></h:commandButton>
-		<h:commandButton value="Finalizar" action="#{carrinhoMB.finalizaCompra}"></h:commandButton>
-	</h:form>
-	
 	<h:form id="lista">
-		<h2>Itens no carrinho</h2>
-		<h:dataTable value="#{carrinhoMB.itemVendas}" var="i" border="1">
+		<h2>Vendas realizadas</h2>
+		<h:dataTable value="#{vendaMB.vendas}" var="v" border="1">
+			
 			<h:column>
-				<f:facet name="header">Produto</f:facet>
-				#{i.produto.nome}
+				<f:facet name="header">Id</f:facet>
+				#{v.id}
 			</h:column>
-		
+			
 			<h:column>
-				<f:facet name="header">Quantidade</f:facet>
-				#{i.quantidade}
+				<f:facet name="header">Cliente</f:facet>
+				#{v.usuario}
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">data</f:facet>
+				<h:outputText value="#{v.data.time}">
+					<f:convertDateTime timeZone="America/Sao_Paulo" pattern="dd-MM-yyyy HH:mm"/>
+				</h:outputText>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Lista de Produtos</f:facet>
+				<h:selectOneMenu>
+					<f:selectItem itemLabel="Qtde - Produto" />
+					<f:selectItems value="#{v.itensVenda}" var="item"
+						itemValue="#{item.quantidade}" itemLabel="#{ item.quantidade} - #{item.produto.nome}" />								
+				</h:selectOneMenu>
 			</h:column>
 			
 			<h:column>
 				<f:facet name="header">Ações</f:facet>
-				<h:commandLink value="Remover" action="#{carrinhoMB.remove(i)}"/>
+				<h:commandLink value="Remover" action="#{vendaMB.remove(v)}"/>
 			</h:column>
 		</h:dataTable>
 	</h:form>

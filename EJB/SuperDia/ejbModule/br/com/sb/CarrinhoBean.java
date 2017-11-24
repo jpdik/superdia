@@ -1,6 +1,7 @@
 package br.com.sb;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,8 +12,10 @@ import javax.ejb.Stateful;
 
 import br.com.interfacebean.ICarrinho;
 import br.com.interfacebean.IProduto;
+import br.com.interfacebean.IVenda;
 import br.com.modelo.ItemVenda;
 import br.com.modelo.Produto;
+import br.com.modelo.Venda;
 
 @Stateful
 @Remote(ICarrinho.class)
@@ -20,6 +23,9 @@ public class CarrinhoBean implements ICarrinho{
 	
 	@EJB
 	private IProduto iProduto;
+	
+	@EJB
+	private IVenda iVenda;
 	
 	private Set<ItemVenda> itensVenda = new HashSet<>();
 	
@@ -54,6 +60,16 @@ public class CarrinhoBean implements ICarrinho{
 	@Override
 	public boolean finalizaCompra() {
 		atualizaEstoque();
+		
+		// Registra um nova venda
+		Venda venda = new Venda();
+		venda.setData(Calendar.getInstance());
+		venda.setItensVenda(listaTodos());
+		
+		// Pegar o usuário atual
+		venda.setUsuario(null);
+		
+		iVenda.adiciona(venda);
 		
 		// Limpa carrinho
 		limpa();
