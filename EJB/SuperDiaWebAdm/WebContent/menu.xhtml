@@ -11,8 +11,13 @@ xmlns:f="http://java.sun.com/jsp/jstl/core">
 <h:body>
 	<h1>Menu</h1>
 	Bem vindo: #{loginMB.usuario.usuario} ID: #{loginMB.usuario.id}
+
 	<h:form>
 		<h:commandLink value="Sair" action="#{loginMB.logout}"></h:commandLink>
+		
+		<h:commandLink action="produto.xhtml">produtos</h:commandLink>
+		<h:commandLink action="usuario.xhtml">Usuarios</h:commandLink>
 	</h:form>
+	
 </h:body>
 </html>

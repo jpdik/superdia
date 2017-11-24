@@ -34,7 +34,8 @@ public class LoginMB {
 	
 	public String autentica() {
 		Usuario usuario = iAutentica.autentica(this.usuario);
-		if(usuario != null && usuario.getPerfil().equals(Usuario.perfis.Administrador)) {
+		
+		if(usuario != null && usuario.getPerfil().equals(Usuario.perfis.Administrador.toString())) {
 			this.usuario = usuario;
 			return "menu.xhtml?redirect-faces=true";
 		}

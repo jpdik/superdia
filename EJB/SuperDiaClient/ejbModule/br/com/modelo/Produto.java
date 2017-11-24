@@ -19,8 +19,8 @@ public class Produto implements Serializable {
 	private String nome;
 	private String descricao;
 	private Double preco;
-	private int estoqueMinimo;
-	private int quantidadeEstoque;
+	private Integer estoqueMinimo;
+	private Integer quantidadeEstoque;
 	
 	public Long getId() {
 		return id;
@@ -54,19 +54,19 @@ public class Produto implements Serializable {
 		this.preco = preco;
 	}
 	
-	public int getEstoqueMinimo() {
+	public Integer getEstoqueMinimo() {
 		return estoqueMinimo;
 	}
 
-	public void setEstoqueMinimo(int estoqueMinimo) {
+	public void setEstoqueMinimo(Integer estoqueMinimo) {
 		this.estoqueMinimo = estoqueMinimo;
 	}
 
-	public int getQuantidadeEstoque() {
+	public Integer getQuantidadeEstoque() {
 		return quantidadeEstoque;
 	}
 
-	public void setQuantidadeEstoque(int quantidadeEstoque) {
+	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
 

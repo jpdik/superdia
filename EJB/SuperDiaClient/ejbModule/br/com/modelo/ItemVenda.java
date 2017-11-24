@@ -8,7 +8,7 @@ public class ItemVenda implements Serializable{
 
 	private Long id;
 	private Produto produto;
-	private int quantidade;
+	private Integer quantidade;
 	
 	public Long getId() {
 		return id;
@@ -26,11 +26,11 @@ public class ItemVenda implements Serializable{
 		this.produto = produto;
 	}
 
-	public int getQuantidade() {
+	public Integer getQuantidade() {
 		return quantidade;
 	}
 
-	public void setQuantidade(int quantidade) {
+	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
 
