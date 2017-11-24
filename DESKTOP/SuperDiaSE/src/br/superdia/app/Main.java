@@ -12,7 +12,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {			
 			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("/br/superdia/views/Login.fxml"));
-			Scene scene = new Scene(root,400,400);
+			Scene scene = new Scene(root,350,350);
 			scene.getStylesheets().add(getClass().getResource("/br/superdia/views/css/Login.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Autenticação - SuperDia");

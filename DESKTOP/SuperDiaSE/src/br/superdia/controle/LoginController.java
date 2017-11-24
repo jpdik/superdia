@@ -11,8 +11,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -30,9 +31,6 @@ public class LoginController {
 
     @FXML
     private Button cancelarButton;
-
-    @FXML
-    private Label msgErroLabel;
 
     @FXML
     private TextField usuarioTextField;
@@ -63,9 +61,12 @@ public class LoginController {
     	usuario.setSenha(senhaPasswordField.getText());
     	usuario = iAutentica.autentica(usuario);
     	System.out.println(usuario);
-    	if(usuario == null)
-    		msgErroLabel.setText("ERRO: Usuário Inexistente.");
-    	else if(usuario.getPerfil().equalsIgnoreCase("Caixa")) {
+    	if(usuario == null) {    		
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Erro - Autenticação");
+    		alert.setHeaderText("Usuário Inexistente.");
+    		alert.show();
+    	}else if(usuario.getPerfil().equalsIgnoreCase("Caixa")) {
     		System.out.println("Ir para o caixa realizar a compra");
     		try {
 				janelaCaixaFXMLLoader = new FXMLLoader(getClass().getResource("/br/superdia/views/Caixa.fxml"));
@@ -76,7 +77,7 @@ public class LoginController {
 				caixaController = (CaixaController) janelaCaixaFXMLLoader.getController();
 				caixaController.getOperadorTextField().setText(usuario.getUsuario());
 				
-				primaryStage = (Stage) msgErroLabel.getScene().getWindow();
+				primaryStage = (Stage) usuarioTextField.getScene().getWindow();
 				primaryStage.setScene(janelaCaixaScene);
 				primaryStage.setTitle("Caixa");
 				primaryStage.centerOnScreen();
@@ -85,7 +86,11 @@ public class LoginController {
 				e.printStackTrace();
 			}    		
     	}else {
-    		msgErroLabel.setText("ERRO: O usuário de perfil (" + usuario.getPerfil() + ") NÃO pode ter acesso ao sistema.");
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Erro - Autenticação");
+    		alert.setHeaderText("Perfil Inválido.");
+    		alert.setContentText("ERRO: O usuário de perfil (" + usuario.getPerfil() + ") NÃO pode ter acesso ao sistema.");
+    		alert.show();
     	}
     	
     }
@@ -98,7 +103,6 @@ public class LoginController {
     private void limparCampos() {
     	usuarioTextField.clear();
     	senhaPasswordField.clear();
-    	msgErroLabel.setText("");
     }
 
 	public AnchorPane getJanelaLoginAnchorPane() {
@@ -131,14 +135,6 @@ public class LoginController {
 
 	public void setCancelarButton(Button cancelarButton) {
 		this.cancelarButton = cancelarButton;
-	}
-
-	public Label getMsgErroLabel() {
-		return msgErroLabel;
-	}
-
-	public void setMsgErroLabel(Label msgErroLabel) {
-		this.msgErroLabel = msgErroLabel;
 	}
 
 	public TextField getUsuarioTextField() {

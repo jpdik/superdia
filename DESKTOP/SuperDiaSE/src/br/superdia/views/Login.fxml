@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="janelaLoginAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.superdia.controle.LoginController">
+<AnchorPane fx:id="janelaLoginAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="350.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.superdia.controle.LoginController">
    <children>
       <GridPane layoutX="20.0" layoutY="200.0" prefHeight="125.0" prefWidth="311.0">
         <columnConstraints>
@@ -72,7 +72,6 @@
          </children>
       </GridPane>
       <Label layoutX="100.0" layoutY="29.0" prefHeight="156.0" prefWidth="139.0" />
-      <Label fx:id="msgErroLabel" layoutX="14.0" layoutY="338.0" prefHeight="57.0" prefWidth="328.0" textFill="RED" wrapText="true" />
       <ImageView fitHeight="150.0" fitWidth="172.0" layoutX="115.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="/br/superdia/imagens/login100px.png" />
