@@ -57,7 +57,7 @@ public class LoginController {
 	}
 	
     @FXML
-    private void entrarButtonOnAction() {
+    protected void entrarButtonOnAction() {
     	Usuario usuario = new Usuario();
     	usuario.setUsuario(usuarioTextField.getText());
     	usuario.setSenha(senhaPasswordField.getText());
@@ -91,7 +91,7 @@ public class LoginController {
     }
     
     @FXML
-    private void cancelarButtonOnAction() {
+    protected void cancelarButtonOnAction() {
     	limparCampos();
     }
     

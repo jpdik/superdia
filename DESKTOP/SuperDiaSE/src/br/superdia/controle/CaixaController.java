@@ -94,7 +94,7 @@ public class CaixaController {
     
     
     @FXML
-    private void tabelaEstoqueOnMouseCliked() {
+    protected void tabelaEstoqueOnMouseCliked() {
     	produtoEstoque = tabelaEstoque.getSelectionModel().getSelectedItem();
     	if(produtoEstoque != null){
     		quantidadeSlider(produtoEstoque.getQuantidadeEstoque());
@@ -105,7 +105,7 @@ public class CaixaController {
     }
     
     @FXML
-    private void tabelaVendasOnMouseCliked() {
+    protected void tabelaVendasOnMouseCliked() {
     	produtoVenda = tabelaVendas.getSelectionModel().getSelectedItem();
     	if(produtoVenda != null){
     		quantidadeSlider(produtoVenda.getQuantidadeEstoque());
@@ -116,7 +116,7 @@ public class CaixaController {
     }
 
     @FXML
-    private void adicionarButtonOnAction() {
+    protected void adicionarButtonOnAction() {
     	if(produtoEstoque != null){
     		if(produtoEstoque.getQuantidadeEstoque() > 0) {
 	    		produtoVenda = atribuirProdutoAProduto(produtoEstoque, Integer.parseInt(quantidadeTextField.getText()));
@@ -142,7 +142,7 @@ public class CaixaController {
     }
   
     @FXML
-    private void removerButtonOnAction() {    	
+    protected void removerButtonOnAction() {    	
     	if(produtoVenda != null){
     		int quantTF = Integer.parseInt(quantidadeTextField.getText());
     		int indice = buscaPorProdutoID(listTabelaEstoque, produtoVenda);
@@ -168,7 +168,7 @@ public class CaixaController {
     }
 
     @FXML
-    private void comprarButtonOnAction() {
+    protected void comprarButtonOnAction() {
     	for (Produto produto : listTabelaVendas) {
 			Integer indice = buscaPorProdutoID(listTabelaEstoque, produto);
 			produto = listTabelaEstoque.get(indice);
@@ -181,7 +181,7 @@ public class CaixaController {
     }   
     
     @FXML
-    private void atualizarOnMouseClicked() {    	
+    protected void atualizarOnMouseClicked() {    	
     	if(listTabelaVendas.isEmpty()) {
     		listTabelaEstoque = FXCollections.observableArrayList(iProduto.listaTodos());		
     		tabelaEstoque.setItems(listTabelaEstoque);
@@ -192,7 +192,7 @@ public class CaixaController {
     }
     
     @FXML
-    private void atualizarOnMouseEntered(){
+    protected void atualizarOnMouseEntered(){
     	atualizarImageView.setCursor(Cursor.HAND);
     }
     
