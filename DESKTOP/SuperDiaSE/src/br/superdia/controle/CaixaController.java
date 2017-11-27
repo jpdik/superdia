@@ -11,12 +11,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -59,8 +61,10 @@ public class CaixaController {
     private ObservableList<Produto> listTabelaVendas;
     private InitialContext ic;
     private IProduto iProduto = null;
+    protected Alert alert;
     
     @FXML private void initialize() {
+    	alert = new Alert(null);
     	try {
     		ic = new InitialContext();
     		iProduto = (IProduto) ic.lookup("br.com.interfacebean.IProduto");
@@ -90,6 +94,7 @@ public class CaixaController {
 		tabelaVendas.setItems(listTabelaVendas);
 		quantidadeTextField.setText("1");
 		quantidadeSlider(35);
+		
 	} 
     
     
@@ -97,8 +102,7 @@ public class CaixaController {
     protected void tabelaEstoqueOnMouseCliked() {
     	produtoEstoque = tabelaEstoque.getSelectionModel().getSelectedItem();
     	if(produtoEstoque != null){
-    		quantidadeSlider(produtoEstoque.getQuantidadeEstoque());
-    		infoLabel.setText("");
+    		quantidadeSlider(produtoEstoque.getQuantidadeEstoque());    		
     	}
     	tabelaVendas.getSelectionModel().clearSelection();
     	produtoVenda = null;
@@ -108,8 +112,7 @@ public class CaixaController {
     protected void tabelaVendasOnMouseCliked() {
     	produtoVenda = tabelaVendas.getSelectionModel().getSelectedItem();
     	if(produtoVenda != null){
-    		quantidadeSlider(produtoVenda.getQuantidadeEstoque());
-    		infoLabel.setText("");
+    		quantidadeSlider(produtoVenda.getQuantidadeEstoque());    		
     	}
     	tabelaEstoque.getSelectionModel().clearSelection();
     	produtoEstoque = null;
@@ -131,10 +134,18 @@ public class CaixaController {
 	    		
 	    		valorTotalCompraTextField.setText("R$ " + atualizaValorTotalCompra().toString());
     		}else {
-    			infoLabel.setText("O produto (" + produtoEstoque.getNome() + ") não existe em estoque.");
+    			alert.setAlertType(AlertType.ERROR);
+        		alert.setTitle("Erro - Adicionar");
+        		alert.setHeaderText("Adicionar Produto.");
+        		alert.setContentText("O produto (" + produtoEstoque.getNome() + ") não existe em estoque.");
+        		alert.show();
     		}
     	}else{
-    		infoLabel.setText("Selecione um produto da tabela ESTOQUE antes de clicar em adicionar.");
+    		alert.setAlertType(AlertType.ERROR);
+    		alert.setTitle("Erro - Adicionar");
+    		alert.setHeaderText("Adicionar Produto.");
+    		alert.setContentText("Selecione um produto da tabela ESTOQUE antes de \nclicar em adicionar.");
+    		alert.show();
     	}
     	tabelaEstoque.getSelectionModel().clearSelection();
     	produtoEstoque = null;
@@ -160,7 +171,11 @@ public class CaixaController {
     		}
     		valorTotalCompraTextField.setText("R$ " + atualizaValorTotalCompra().toString());
     	}else{
-    		infoLabel.setText("Selecione um produto da tabela Vendas antes de clicar em remover.");    		
+    		alert.setAlertType(AlertType.ERROR);
+    		alert.setTitle("Erro - Remover");
+    		alert.setHeaderText("Remover Produto.");
+    		alert.setContentText("Selecione um produto da tabela Vendas antes de \nclicar em remover.");
+    		alert.show();
     	}
     	tabelaVendas.getSelectionModel().clearSelection();
     	produtoVenda = null;
@@ -169,15 +184,31 @@ public class CaixaController {
 
     @FXML
     protected void comprarButtonOnAction() {
+    	
     	for (Produto produto : listTabelaVendas) {
 			Integer indice = buscaPorProdutoID(listTabelaEstoque, produto);
 			produto = listTabelaEstoque.get(indice);
 			iProduto.altera(produto);
 		}
-    	listTabelaVendas.clear();
-    	valorTotalCompraTextField.clear();
-    	tabelaVendas.setItems(listTabelaVendas);
-    	System.out.println("Compra finalizada com SUCESSO.");
+    	
+    	if(!listTabelaVendas.isEmpty()) {
+	    	alert.setAlertType(AlertType.INFORMATION);
+			alert.setTitle("Sucesso");
+			alert.setHeaderText("Finalizar Compra.");
+			alert.setContentText("Compra finalizada com SUCESSO!");
+			alert.show();
+			listTabelaVendas.clear();
+	    	valorTotalCompraTextField.clear();
+	    	tabelaVendas.setItems(listTabelaVendas);
+			atualizarOnMouseClicked();
+    	}else {
+    		alert.setAlertType(AlertType.ERROR);
+			alert.setTitle("Erro");
+			alert.setHeaderText("Venda sem Produtos.");
+			alert.setContentText("A lista de produtos vendidos NÃO possui nenhum produto.");
+			alert.show();
+    	}
+    	System.out.println("Compra finalizada com SUCESSO.");    	
     }   
     
     @FXML
@@ -187,7 +218,11 @@ public class CaixaController {
     		tabelaEstoque.setItems(listTabelaEstoque);
     		System.out.println("Atualizando a lista de produtos na tabela estoque.");
     	}else {
-    		infoLabel.setText("Erro: Remova todos os produtos vendidos antes de atualizar.");
+    		alert.setAlertType(AlertType.ERROR);
+    		alert.setTitle("Erro - Atualizar");
+    		alert.setHeaderText("Atualizar Produtos Estoque.");
+    		alert.setContentText("Erro: Remova todos os produtos vendidos antes de atualizar.");
+    		alert.show(); 
     	}    	
     }
     
@@ -493,4 +528,15 @@ public class CaixaController {
 	public void setAtualizarImageView(ImageView atualizarImageView) {
 		this.atualizarImageView = atualizarImageView;
 	}
+
+
+	public Alert getAlert() {
+		return alert;
+	}
+
+
+	public void setAlert(Alert alert) {
+		this.alert = alert;
+	}
+	
 }

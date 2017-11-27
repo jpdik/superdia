@@ -42,9 +42,11 @@ public class LoginController {
 	private Scene janelaCaixaScene;
 	private Stage primaryStage;
 	private CaixaController caixaController;
+	private Alert alert;
 	
 	@FXML
-    private void initialize() {		
+    private void initialize() {
+		alert = new Alert(null);
     	try {
     		ic = new InitialContext();
     		iAutentica = (IAutentica) ic.lookup("br.com.interfacebean.IAutentica");
@@ -62,7 +64,7 @@ public class LoginController {
     	usuario = iAutentica.autentica(usuario);
     	System.out.println(usuario);
     	if(usuario == null) {    		
-    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setAlertType(AlertType.ERROR);
     		alert.setTitle("Erro - Autenticação");
     		alert.setHeaderText("Usuário Inexistente.");
     		alert.show();
@@ -86,7 +88,7 @@ public class LoginController {
 				e.printStackTrace();
 			}    		
     	}else {
-    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setAlertType(AlertType.ERROR);
     		alert.setTitle("Erro - Autenticação");
     		alert.setHeaderText("Perfil Inválido.");
     		alert.setContentText("ERRO: O usuário de perfil (" + usuario.getPerfil() + ") NÃO pode ter acesso ao sistema.");
@@ -200,5 +202,14 @@ public class LoginController {
 	public void setCaixaController(CaixaController caixaController) {
 		this.caixaController = caixaController;
 	}
+
+	public Alert getAlert() {
+		return alert;
+	}
+
+	public void setAlert(Alert alert) {
+		this.alert = alert;
+	}
+	
 	
 }
