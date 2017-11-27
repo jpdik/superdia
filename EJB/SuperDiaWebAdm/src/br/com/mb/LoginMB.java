@@ -1,4 +1,4 @@
-package br.tfteca.mb;
+package br.com.mb;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;

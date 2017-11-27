@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
@@ -18,18 +19,33 @@ public class UsuarioBean implements IUsuario {
 	EntityManager em;
 	
 	@Override
-	public void adiciona(Usuario usuario) {
-		em.persist(usuario);
+	public boolean adiciona(Usuario usuario) {
+		try {
+			em.persist(usuario);
+			return true;
+		}catch (EntityExistsException e) {
+			return false;
+		}
 	}
 
 	@Override
-	public void altera(Usuario usuario) {
-		em.merge(usuario);
+	public boolean altera(Usuario usuario) {
+		try {
+			em.merge(usuario);
+			return true;
+		}catch (IllegalArgumentException e) {
+			return false;
+		}
 	}
 
 	@Override
-	public void remove(Usuario usuario) {
-		em.remove(em.merge(usuario));
+	public boolean remove(Usuario usuario) {
+		try {
+			em.remove(em.merge(usuario));
+			return true;
+		}catch (IllegalArgumentException e) {
+			return false;
+		}
 	}
 
 	@Override

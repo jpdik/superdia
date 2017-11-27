@@ -1,4 +1,4 @@
-package br.tfteca.mb;
+package br.com.mb;
 
 import java.util.List;
 

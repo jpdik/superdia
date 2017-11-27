@@ -2,6 +2,7 @@ package br.com.sb;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -15,18 +16,33 @@ public class ClienteBean implements ICliente {
 	EntityManager em;
 	
 	@Override
-	public void autoAdiciona(Usuario usuario) {
-		em.persist(usuario);
+	public boolean autoAdiciona(Usuario usuario) {
+		try {
+			em.persist(usuario);
+			return true;
+		} catch (EntityExistsException e) {
+			return false;
+		}
 	}
 
 	@Override
-	public void autoAltera(Usuario usuario) {
-		em.merge(usuario);
+	public boolean autoAltera(Usuario usuario) {
+		try {
+			em.merge(usuario);
+			return true;
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
 	}
 
 	@Override
-	public void autoRemove(Usuario usuario) {
-		em.remove(em.merge(usuario));
+	public boolean autoRemove(Usuario usuario) {
+		try {
+			em.remove(em.merge(usuario));
+			return true;
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
 	}
 
 }
