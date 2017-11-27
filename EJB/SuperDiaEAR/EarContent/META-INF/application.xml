@@ -2,6 +2,9 @@
 <application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/application_7.xsd" version="7">
   <display-name>SuperDiaEAR</display-name>
   <module>
+    <ejb>SuperDia.jar</ejb>
+  </module>
+  <module>
     <web>
       <web-uri>SuperDiaWebAdm.war</web-uri>
       <context-root>SuperDiaWebAdm</context-root>
@@ -12,8 +15,5 @@
       <web-uri>SuperDiaJAXRS.war</web-uri>
       <context-root>SuperDiaJAXRS</context-root>
     </web>
-  </module>
-  <module>
-    <ejb>SuperDia.jar</ejb>
   </module>
 </application>
