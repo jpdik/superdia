@@ -1,10 +1,15 @@
 package br.superdia.controle;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import br.com.interfacebean.ICarrinho;
 import br.com.interfacebean.IProduto;
+import br.com.modelo.ItemVenda;
 import br.com.modelo.Produto;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -61,6 +66,7 @@ public class CaixaController {
     private ObservableList<Produto> listTabelaVendas;
     private InitialContext ic;
     private IProduto iProduto = null;
+    private ICarrinho iCarrinho = null;
     protected Alert alert;
     
     @FXML private void initialize() {
@@ -68,6 +74,7 @@ public class CaixaController {
     	try {
     		ic = new InitialContext();
     		iProduto = (IProduto) ic.lookup("br.com.interfacebean.IProduto");
+    		iCarrinho = (ICarrinho) ic.lookup("br.com.interfacebean.ICarrinho");
     	} catch (NamingException e) {
     		System.err.println(e.getMessage());
     		System.exit(0);
@@ -180,36 +187,7 @@ public class CaixaController {
     	tabelaVendas.getSelectionModel().clearSelection();
     	produtoVenda = null;
     	produtoEstoque = null;
-    }
-
-    @FXML
-    protected void comprarButtonOnAction() {
-    	
-    	for (Produto produto : listTabelaVendas) {
-			Integer indice = buscaPorProdutoID(listTabelaEstoque, produto);
-			produto = listTabelaEstoque.get(indice);
-			iProduto.altera(produto);
-		}
-    	
-    	if(!listTabelaVendas.isEmpty()) {
-	    	alert.setAlertType(AlertType.INFORMATION);
-			alert.setTitle("Sucesso");
-			alert.setHeaderText("Finalizar Compra.");
-			alert.setContentText("Compra finalizada com SUCESSO!");
-			alert.show();
-			listTabelaVendas.clear();
-	    	valorTotalCompraTextField.clear();
-	    	tabelaVendas.setItems(listTabelaVendas);
-			atualizarOnMouseClicked();
-    	}else {
-    		alert.setAlertType(AlertType.ERROR);
-			alert.setTitle("Erro");
-			alert.setHeaderText("Venda sem Produtos.");
-			alert.setContentText("A lista de produtos vendidos NÃO possui nenhum produto.");
-			alert.show();
-    	}
-    	System.out.println("Compra finalizada com SUCESSO.");    	
-    }   
+    }    
     
     @FXML
     protected void atualizarOnMouseClicked() {    	
@@ -229,6 +207,47 @@ public class CaixaController {
     @FXML
     protected void atualizarOnMouseEntered(){
     	atualizarImageView.setCursor(Cursor.HAND);
+    }
+    
+    @FXML
+    protected void comprarButtonOnAction() {    	
+    	if(!listTabelaVendas.isEmpty()) {
+    		for (Produto produto : listTabelaVendas) {
+    			Integer indice = buscaPorProdutoID(listTabelaEstoque, produto);
+    			produto = listTabelaEstoque.get(indice);
+    			iProduto.altera(produto);
+    		}
+	    	alert.setAlertType(AlertType.INFORMATION);
+			alert.setTitle("Sucesso");
+			alert.setHeaderText("Finalizar Compra.");
+			alert.setContentText("Compra finalizada com SUCESSO!");
+			alert.show();
+			listTabelaVendas.clear();
+	    	valorTotalCompraTextField.clear();
+	    	tabelaVendas.setItems(listTabelaVendas);
+			atualizarOnMouseClicked();
+    	}else {
+    		alert.setAlertType(AlertType.ERROR);
+			alert.setTitle("Erro");
+			alert.setHeaderText("Venda sem Produtos.");
+			alert.setContentText("A lista de produtos vendidos NÃO possui nenhum produto.");
+			alert.show();
+    	}
+    	System.out.println("Compra finalizada com SUCESSO.");    	
+    }
+    
+    //e viva a gambiarra
+    private void addItensVendaAoCarrinho(){ 
+    	ObservableList<Produto> estoque = FXCollections.observableArrayList(iProduto.listaTodos());
+    	ItemVenda itemVenda;
+    	for (Produto produtoVendido : listTabelaVendas) {
+			itemVenda = new ItemVenda();			
+			Integer indice = buscaPorProdutoID(estoque, produtoVendido);
+			Produto produtoEst = estoque.get(indice);
+			itemVenda.setProduto(produtoEst);
+			itemVenda.setQuantidade(produtoVendido.getQuantidadeEstoque());
+			iCarrinho.adiciona(itemVenda);
+		}
     }
     
     private void atualizaTabelaEstoque(Produto produtoEstoque) {
