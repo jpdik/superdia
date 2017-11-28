@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -8,21 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox alignment="CENTER" layoutX="14.0" layoutY="238.0" prefHeight="78.0" prefWidth="401.0" spacing="20.0">
-         <children>
-            <Label text="TROCO:">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <TextField editable="false" prefHeight="46.0" prefWidth="219.0">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font>
-            </TextField>
-         </children>
-      </HBox>
-      <AnchorPane prefHeight="59.0" prefWidth="613.0" style="-fx-background-color: BLUE;">
+      <AnchorPane prefHeight="59.0" prefWidth="613.0" style="-fx-background-color: black;">
          <children>
             <Label layoutX="35.0" layoutY="12.0" text="Finalizar Compra" textFill="WHITE">
                <font>
@@ -31,38 +18,85 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="-1.0" layoutY="368.0" prefHeight="32.0" prefWidth="613.0" style="-fx-background-color: #56a9e0;" />
-      <HBox alignment="CENTER_LEFT" layoutX="31.0" layoutY="171.0" prefHeight="59.0" prefWidth="385.0" spacing="24.0">
+      <Pane layoutX="10.0" layoutY="216.0" prefHeight="87.0" prefWidth="594.0" style="-fx-border-color: black; -fx-border-radius: 10;">
+         <children>
+            <HBox alignment="CENTER" layoutX="28.0" layoutY="14.0" prefHeight="59.0" prefWidth="555.0" spacing="20.0">
+               <children>
+                  <Label text="TROCO:">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="trocoTextField" editable="false" prefHeight="46.0" prefWidth="370.0" promptText="Valor do troco do cliente.">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+      </Pane>
+      <Pane layoutX="10.0" layoutY="68.0" prefHeight="139.0" prefWidth="594.0" style="-fx-border-color: black; -fx-border-radius: 10;" />
+      <AnchorPane layoutX="-1.0" layoutY="368.0" prefHeight="32.0" prefWidth="613.0" style="-fx-background-color: black;" />
+      <HBox alignment="CENTER_LEFT" layoutX="31.0" layoutY="153.0" prefHeight="46.0" prefWidth="568.0" spacing="24.0">
          <children>
             <Label text="VALOR COMPRA:">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField editable="false" prefHeight="32.0" prefWidth="219.0" />
+            <TextField fx:id="valorCompraTextField" editable="false" prefHeight="32.0" prefWidth="406.0" promptText="R$ 00,00" />
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="118.0" prefHeight="59.0" prefWidth="385.0" spacing="20.0">
+      <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="112.0" prefHeight="46.0" prefWidth="568.0" spacing="20.0">
          <children>
             <Label text="VALOR RECEBIDO:">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField prefHeight="32.0" prefWidth="219.0" />
+            <TextField fx:id="valorRecebidoTextField" prefHeight="32.0" prefWidth="407.0" promptText="R$ 00,00" />
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="65.0" layoutY="59.0" prefHeight="59.0" prefWidth="351.0" spacing="24.0">
+      <HBox alignment="CENTER_LEFT" layoutX="65.0" layoutY="77.0" prefHeight="35.0" prefWidth="520.0" spacing="24.0">
          <children>
             <Label text="Nº CARTÃO:">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField prefHeight="32.0" prefWidth="219.0" />
+            <TextField fx:id="numeroCartaoTextField" prefHeight="32.0" prefWidth="405.0" promptText="Campo não obrigatório" />
          </children>
       </HBox>
-      <Button layoutX="476.0" layoutY="118.0" mnemonicParsing="false" text="Concluir" />
-      <Button layoutX="482.0" layoutY="188.0" mnemonicParsing="false" text="Cancelar" />
+      <Button fx:id="concluirButton" layoutX="112.0" layoutY="312.0" mnemonicParsing="false" onAction="#concluirButtonOnAction" onKeyPressed="#concluirOnKeyPressed" prefHeight="46.0" prefWidth="168.0" text="Concluir">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="/br/superdia/imagens/ok.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip text="Clique aqui ou pressione a tecla ENTER para concluir." />
+         </tooltip>
+      </Button>
+      <Button fx:id="cancelarButton" layoutX="309.0" layoutY="312.0" mnemonicParsing="false" onAction="#cancelarButtonOnAction" onKeyPressed="#cancelarOnKeyPressed" prefHeight="46.0" prefWidth="168.0" text="Cancelar">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="34.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="/br/superdia/imagens/botaoCancelar.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip text="Clique aqui ou pressione a tecla ESC para cancelar." />
+         </tooltip>
+      </Button>
    </children>
 </AnchorPane>
