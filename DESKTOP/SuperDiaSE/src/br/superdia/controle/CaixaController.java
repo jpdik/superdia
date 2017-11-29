@@ -1,9 +1,6 @@
 package br.superdia.controle;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -11,22 +8,28 @@ import br.com.interfacebean.ICarrinho;
 import br.com.interfacebean.IProduto;
 import br.com.modelo.ItemVenda;
 import br.com.modelo.Produto;
+import br.superdia.app.Main;
+import br.superdia.enumeracoes.Tela;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 public class CaixaController {
 
 	@FXML
@@ -67,10 +70,27 @@ public class CaixaController {
     private InitialContext ic;
     private IProduto iProduto = null;
     private ICarrinho iCarrinho = null;
-    protected Alert alert;
+    protected Alert alert;    
+   	private Stage primaryStage;  	
+   	
     
-    @FXML private void initialize() {
+    public CaixaController() {
+		primaryStage = Main.getPrimaryStage();
+    }
+   
+	@FXML private void initialize() {
     	alert = new Alert(null);
+    	
+    	Main.addOnChangeScreenListener(new Main.OnChangeScreen() {
+			
+			@Override
+			public void onScreenChanged(String newScreen, Object userData) {
+				
+				System.out.println("Caixa Nova tela:" + newScreen + ", " + userData);
+				
+			}
+		});    	
+    	
     	try {
     		ic = new InitialContext();
     		iProduto = (IProduto) ic.lookup("br.com.interfacebean.IProduto");
@@ -212,20 +232,17 @@ public class CaixaController {
     @FXML
     protected void comprarButtonOnAction() {    	
     	if(!listTabelaVendas.isEmpty()) {
-    		for (Produto produto : listTabelaVendas) {
-    			Integer indice = buscaPorProdutoID(listTabelaEstoque, produto);
-    			produto = listTabelaEstoque.get(indice);
-    			iProduto.altera(produto);
-    		}
-	    	alert.setAlertType(AlertType.INFORMATION);
-			alert.setTitle("Sucesso");
-			alert.setHeaderText("Finalizar Compra.");
-			alert.setContentText("Compra finalizada com SUCESSO!");
-			alert.show();
+    		
+    		System.out.println("Ir para a janela de Pagamento finalizar a compra.");
+    		Main.changeScreen(Tela.PAGAMENTO.getTela());
+			primaryStage.setTitle("Pagamento");
+			primaryStage.centerOnScreen();
+    		
+	    	/*
 			listTabelaVendas.clear();
 	    	valorTotalCompraTextField.clear();
 	    	tabelaVendas.setItems(listTabelaVendas);
-			atualizarOnMouseClicked();
+			atualizarOnMouseClicked();*/			
     	}else {
     		alert.setAlertType(AlertType.ERROR);
 			alert.setTitle("Erro");
@@ -557,5 +574,14 @@ public class CaixaController {
 	public void setAlert(Alert alert) {
 		this.alert = alert;
 	}
-	
+
+
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
+
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+	}
 }

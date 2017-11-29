@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.superdia.controle.PagamentoController">
    <children>
       <AnchorPane prefHeight="59.0" prefWidth="613.0" style="-fx-background-color: black;">
          <children>
@@ -27,7 +27,7 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="trocoTextField" editable="false" prefHeight="46.0" prefWidth="370.0" promptText="Valor do troco do cliente.">
+                  <TextField fx:id="trocoTextField" editable="false" prefHeight="46.0" prefWidth="370.0" promptText="Valor troco do cliente.">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
@@ -83,7 +83,7 @@
             <Tooltip text="Clique aqui ou pressione a tecla ENTER para concluir." />
          </tooltip>
       </Button>
-      <Button fx:id="cancelarButton" layoutX="309.0" layoutY="312.0" mnemonicParsing="false" onAction="#cancelarButtonOnAction" onKeyPressed="#cancelarOnKeyPressed" prefHeight="46.0" prefWidth="168.0" text="Cancelar">
+      <Button fx:id="cancelarButton" layoutX="309.0" layoutY="312.0" mnemonicParsing="false" onAction="#cancelarButtonOnAction" prefHeight="46.0" prefWidth="168.0" text="Cancelar">
          <font>
             <Font size="18.0" />
          </font>

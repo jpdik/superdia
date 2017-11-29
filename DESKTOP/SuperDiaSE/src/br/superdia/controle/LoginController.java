@@ -1,18 +1,18 @@
 package br.superdia.controle;
 
-import java.io.IOException;
-
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import br.com.interfacebean.IAutentica;
 import br.com.modelo.Usuario;
+import br.superdia.app.Main;
+import br.superdia.enumeracoes.Tela;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -37,16 +37,24 @@ public class LoginController {
     
     private InitialContext ic;
     private IAutentica iAutentica = null; 
-    private FXMLLoader janelaCaixaFXMLLoader;
-	private Parent janelaCaixaParent;
-	private Scene janelaCaixaScene;
 	private Stage primaryStage;
-	private CaixaController caixaController;
 	private Alert alert;
-	
+		
+	public LoginController() {
+	}
+
 	@FXML
     private void initialize() {
 		alert = new Alert(null);
+		Main.addOnChangeScreenListener(new Main.OnChangeScreen() {
+			
+			@Override
+			public void onScreenChanged(String newScreen, Object userData) {
+				System.out.println("Login Nova tela:" + newScreen + ", " + userData);
+				
+			}
+		});
+		
     	try {
     		ic = new InitialContext();
     		iAutentica = (IAutentica) ic.lookup("br.com.interfacebean.IAutentica");
@@ -70,23 +78,11 @@ public class LoginController {
     		alert.show();
     	}else if(usuario.getPerfil().equalsIgnoreCase("Caixa")) {
     		System.out.println("Ir para o caixa realizar a compra");
-    		try {
-				janelaCaixaFXMLLoader = new FXMLLoader(getClass().getResource("/br/superdia/views/Caixa.fxml"));
-				janelaCaixaParent = (Parent) janelaCaixaFXMLLoader.load();
-				janelaCaixaScene = new Scene(janelaCaixaParent);
-				janelaCaixaScene.getStylesheets().add(getClass().getResource("/br/superdia/views/css/Caixa.css").toExternalForm());
-				
-				caixaController = (CaixaController) janelaCaixaFXMLLoader.getController();
-				caixaController.getOperadorTextField().setText(usuario.getUsuario());
-				
-				primaryStage = (Stage) usuarioTextField.getScene().getWindow();
-				primaryStage.setScene(janelaCaixaScene);
-				primaryStage.setTitle("Caixa");
-				primaryStage.centerOnScreen();
-				primaryStage.show();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}    		
+    		Main.usuarioLogado = usuario;
+    		Main.changeScreen(Tela.CAIXA.getTela(), usuario);
+			primaryStage = Main.getPrimaryStage();
+			primaryStage.setTitle("Caixa");
+			primaryStage.centerOnScreen();				
     	}else {
     		alert.setAlertType(AlertType.ERROR);
     		alert.setTitle("Erro - Autenticação");
@@ -163,29 +159,6 @@ public class LoginController {
 		this.iAutentica = iAutentica;
 	}
 
-	public FXMLLoader getJanelaCaixaFXMLLoader() {
-		return janelaCaixaFXMLLoader;
-	}
-
-	public void setJanelaCaixaFXMLLoader(FXMLLoader janelaCaixaFXMLLoader) {
-		this.janelaCaixaFXMLLoader = janelaCaixaFXMLLoader;
-	}
-
-	public Parent getJanelaCaixaParent() {
-		return janelaCaixaParent;
-	}
-
-	public void setJanelaCaixaParent(Parent janelaCaixaParent) {
-		this.janelaCaixaParent = janelaCaixaParent;
-	}
-
-	public Scene getJanelaCaixaScene() {
-		return janelaCaixaScene;
-	}
-
-	public void setJanelaCaixaScene(Scene janelaCaixaScene) {
-		this.janelaCaixaScene = janelaCaixaScene;
-	}
 
 	public Stage getPrimaryStage() {
 		return primaryStage;
@@ -193,14 +166,6 @@ public class LoginController {
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-	}
-
-	public CaixaController getCaixaController() {
-		return caixaController;
-	}
-
-	public void setCaixaController(CaixaController caixaController) {
-		this.caixaController = caixaController;
 	}
 
 	public Alert getAlert() {
