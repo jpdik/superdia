@@ -5,14 +5,11 @@ import javax.naming.NamingException;
 
 import br.com.interfacebean.IAutentica;
 import br.com.modelo.Usuario;
-import br.superdia.app.Main;
+import br.superdia.app.App;
 import br.superdia.enumeracoes.Tela;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -46,7 +43,7 @@ public class LoginController {
 	@FXML
     private void initialize() {
 		alert = new Alert(null);
-		Main.addOnChangeScreenListener(new Main.OnChangeScreen() {
+		App.addOnChangeScreenListener(new App.OnChangeScreen() {
 			
 			@Override
 			public void onScreenChanged(String newScreen, Object userData) {
@@ -78,9 +75,10 @@ public class LoginController {
     		alert.show();
     	}else if(usuario.getPerfil().equalsIgnoreCase("Caixa")) {
     		System.out.println("Ir para o caixa realizar a compra");
-    		Main.usuarioLogado = usuario;
-    		Main.changeScreen(Tela.CAIXA.getTela(), usuario);
-			primaryStage = Main.getPrimaryStage();
+    		App.usuarioLogado = usuario;
+    		App.changeScreen(Tela.CAIXA.getTela(), usuario);
+    		App.caixaController.getOperadorTextField().setText(usuario.getUsuario());
+			primaryStage = App.getPrimaryStage();
 			primaryStage.setTitle("Caixa");
 			primaryStage.centerOnScreen();				
     	}else {

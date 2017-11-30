@@ -8,15 +8,13 @@ import br.com.interfacebean.ICarrinho;
 import br.com.interfacebean.IProduto;
 import br.com.modelo.ItemVenda;
 import br.com.modelo.Produto;
-import br.superdia.app.Main;
+import br.superdia.app.App;
 import br.superdia.enumeracoes.Tela;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -27,7 +25,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 public class CaixaController {
@@ -75,13 +72,13 @@ public class CaixaController {
    	
     
     public CaixaController() {
-		primaryStage = Main.getPrimaryStage();
+		primaryStage = App.getPrimaryStage();
     }
    
 	@FXML private void initialize() {
     	alert = new Alert(null);
     	
-    	Main.addOnChangeScreenListener(new Main.OnChangeScreen() {
+    	App.addOnChangeScreenListener(new App.OnChangeScreen() {
 			
 			@Override
 			public void onScreenChanged(String newScreen, Object userData) {
@@ -234,10 +231,14 @@ public class CaixaController {
     	if(!listTabelaVendas.isEmpty()) {
     		
     		System.out.println("Ir para a janela de Pagamento finalizar a compra.");
-    		Main.changeScreen(Tela.PAGAMENTO.getTela());
+    		App.changeScreen(Tela.PAGAMENTO.getTela());
 			primaryStage.setTitle("Pagamento");
 			primaryStage.centerOnScreen();
     		
+			addItensVendaAoCarrinho();
+			
+			App.pagamentoController.getValorCompraTextField().setText(valorTotalCompraTextField.getText());
+			
 	    	/*
 			listTabelaVendas.clear();
 	    	valorTotalCompraTextField.clear();
