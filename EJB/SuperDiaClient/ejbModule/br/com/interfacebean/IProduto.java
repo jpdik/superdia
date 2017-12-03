@@ -8,20 +8,23 @@ public interface IProduto {
 	/**
 	 * Adiciona um produto ao estoque.
 	 * @param produto o produto a ser adicionado ao estoque.
+	 * @return <b>true</b> se foi adicionado com sucesso ou <b>false</b> caso contrário.
 	 */
-	void adiciona(Produto produto);
+	boolean adiciona(Produto produto);
 	
 	/**
 	 * Altera um produto no estoque.
 	 * @param produto o produto a ser alterado no estoque.
+	 * @return <b>true</b> se foi alterado com sucesso ou <b>talse</b> caso contrário.
 	 */
-	void altera(Produto produto);
+	boolean altera(Produto produto);
 	
 	/**
 	 * Remove um produto do estoque. 
 	 * @param produto o produto a ser removido do estoque.
+	 * @return <b>true</b> se foi removido com sucesso ou <b>talse</b> caso contrário.
 	 */
-	void remove(Produto produto);
+	boolean remove(Produto produto);
 	
 	/**
 	 * Lista todos produtos do estoque.

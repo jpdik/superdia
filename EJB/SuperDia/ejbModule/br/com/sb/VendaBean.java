@@ -4,9 +4,10 @@ import java.util.List;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 
 import br.com.interfacebean.IVenda;
 import br.com.modelo.Venda;
@@ -19,20 +20,31 @@ public class VendaBean implements IVenda {
 	EntityManager em;
 
 	@Override
-	public void adiciona(Venda venda) {
-		em.persist(venda);
+	public boolean adiciona(Venda venda) {
+		try {
+			em.persist(venda);
+			return true;
+		} catch (EntityExistsException | IllegalArgumentException e) {
+			return false;
+		}
 	}
 
 	@Override
-	public void remove(Venda venda) {
-		em.remove(em.merge(venda));
+	public boolean remove(Venda venda) {
+		try {
+			em.remove(em.merge(venda));
+			return true;
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Venda> listaTodos() {
-		Query query = em.createQuery("SELECT v FROM Venda v");
+		CriteriaQuery<Venda> vendaQuery = em.getCriteriaBuilder().createQuery(Venda.class);
 		
-		return query.getResultList();
+		vendaQuery.select(vendaQuery.from(Venda.class));
+		
+		return em.createQuery(vendaQuery).getResultList();
 	}	
 }

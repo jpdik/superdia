@@ -8,14 +8,16 @@ public interface IVenda {
 	/**
 	 * Persiste uma venda efetuada.
 	 * @param venda a venda a ser persistida.
+	 * @return <b>true</b> se foi adicionado com sucesso ou <b>false</b> caso contrário.
 	 */
-	void adiciona(Venda venda);
+	boolean adiciona(Venda venda);
 	
 	/**
 	 * Remove uma venda persistida no banco de dados.
 	 * @param venda a venda a ser removida.
+	 * @return <b>true</b> se foi removido com sucesso ou <b>false</b> caso contrário.
 	 */
-	void remove(Venda venda);
+	boolean remove(Venda venda);
 	
 	/**
 	 * Lista todas vendas efetuadas e persistidas no banco de dados.
