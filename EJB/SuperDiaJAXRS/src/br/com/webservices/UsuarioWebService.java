@@ -3,10 +3,13 @@ package br.com.webservices;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import br.com.interfacebean.IAutentica;
 import br.com.interfacebean.ICliente;
@@ -43,10 +46,10 @@ public class UsuarioWebService {
     		return "Falha na Autenticação.";
     }
     
-    @GET
-    @Produces("text/plain")
-    @Path("/cadastrar/{usuario}/{senha}")
-    public String Cadastrar(@PathParam("usuario") String user, @PathParam("senha") String pass) {
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/cadastrar")
+    public String Cadastrar(@FormParam("usuario") String user, @FormParam("senha") String pass) {
     	Usuario usuario = new Usuario(user, pass);
     	if(icliente.autoAdiciona(usuario))
     		return "Cadastrado com sucesso!";
