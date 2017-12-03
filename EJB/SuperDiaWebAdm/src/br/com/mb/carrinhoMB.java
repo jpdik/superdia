@@ -5,11 +5,14 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import br.com.interfacebean.ICarrinho;
 import br.com.interfacebean.IProduto;
 import br.com.modelo.ItemVenda;
 import br.com.modelo.Produto;
+import br.com.modelo.Usuario;
 
 @ManagedBean
 @SessionScoped
@@ -38,8 +41,26 @@ public class carrinhoMB {
 		itemVenda = new ItemVenda();
 	}
 	
-	public void finalizaCompra() {
-		iCarrinho.finalizaCompra();
+	/*
+	 * Permite recuperar o usuário ativo da sessão. Esse usuário e armazenado ao realizar login
+	 */
+	public Usuario carregaUsuarioAtivo() {		
+		FacesContext ctx = FacesContext.getCurrentInstance();
+		HttpSession sessao = (HttpSession) ctx.getExternalContext().getSession(false);
+		return ((LoginMB) sessao.getAttribute("loginMB")).usuario;
+    }
+	
+	public String finalizaCompra() {
+		Usuario usuario = carregaUsuarioAtivo();
+		
+		// Caso tenha usuário ativo na sessão finaliza compra, 
+		// caso contrário redireciona para página de login. Após realizar o login o usuário
+		// pode concluir a compra.
+		if (usuario.getId() != null) {
+			iCarrinho.finalizaCompra(usuario);
+			return "";
+		}else
+			return "login";
 	}
 	
 	public void remove(ItemVenda itemVenda) {

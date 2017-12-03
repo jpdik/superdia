@@ -15,6 +15,7 @@ import br.com.interfacebean.IProduto;
 import br.com.interfacebean.IVenda;
 import br.com.modelo.ItemVenda;
 import br.com.modelo.Produto;
+import br.com.modelo.Usuario;
 import br.com.modelo.Venda;
 
 @Stateful
@@ -58,17 +59,15 @@ public class CarrinhoBean implements ICarrinho{
 	}
 
 	@Override
-	public boolean finalizaCompra() {
+	public boolean finalizaCompra(Usuario usuario) {
 		atualizaEstoque();
 		
 		// Registra um nova venda
 		Venda venda = new Venda();
 		venda.setData(Calendar.getInstance());
 		venda.setItensVenda(listaTodos());
-		
-		// Pegar o usuário atual
-		venda.setUsuario(null);
-		
+		venda.setUsuario(usuario);
+
 		iVenda.adiciona(venda);
 		
 		// Limpa carrinho

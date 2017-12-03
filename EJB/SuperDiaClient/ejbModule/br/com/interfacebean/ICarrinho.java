@@ -3,6 +3,7 @@ package br.com.interfacebean;
 import java.util.List;
 
 import br.com.modelo.ItemVenda;
+import br.com.modelo.Usuario;
 
 public interface ICarrinho {
 	/**
@@ -36,5 +37,5 @@ public interface ICarrinho {
 	 * atualizados no estoque.
 	 * @return <b>true</b> se a operação foi realizada com sucesso. Caso contrário <b>false</b>.
 	 */
-	boolean finalizaCompra();
+	boolean finalizaCompra(Usuario usuario);
 }
