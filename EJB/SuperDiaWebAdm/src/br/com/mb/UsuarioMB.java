@@ -35,13 +35,17 @@ public class UsuarioMB {
 	}
 	
 	public void grava(){
-		iUsuario.adiciona(usuario);
+		System.out.println(usuario.getPerfil());
+		if(usuario.getId() == null)
+			iUsuario.adiciona(usuario);
+		else
+			iUsuario.altera(usuario);
 	}
 	
 	public List<String> getPerfis() {
 		List<String> perfis = new ArrayList<>();
 		for(Usuario.perfis perfil : Usuario.perfis.values())
-			perfis.add(perfil.toString());
+			perfis.add(perfil.name());
 		return perfis;
 	}
 	

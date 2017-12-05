@@ -18,7 +18,7 @@ public class ClienteBean implements ICliente {
 	@Override
 	public boolean autoAdiciona(Usuario usuario) {
 		try {
-			usuario.setPerfil(Usuario.perfis.Cliente);
+			usuario.setPerfil(Usuario.perfis.Cliente.name());
 			em.persist(usuario);
 			return true;
 		} catch (EntityExistsException e) {
@@ -29,7 +29,7 @@ public class ClienteBean implements ICliente {
 	@Override
 	public boolean autoAltera(Usuario usuario) {
 		try {
-			usuario.setPerfil(Usuario.perfis.Cliente);
+			usuario.setPerfil(Usuario.perfis.Cliente.name());
 			em.merge(usuario);
 			return true;
 		} catch (IllegalArgumentException e) {

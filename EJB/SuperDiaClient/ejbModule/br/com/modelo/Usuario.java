@@ -58,10 +58,10 @@ public class Usuario implements Serializable {
 	public String getPerfil() {
 		return perfil;
 	}
-	public void setPerfil(Usuario.perfis perfil) {
+	public void setPerfil(String perfil) {
 		for(Usuario.perfis i : Usuario.perfis.values())
-			if(perfil.equals(i)){
-				this.perfil = perfil.toString();
+			if(perfil.equals(i.name())){
+				this.perfil = perfil;
 				return;
 			}
 		this.perfil = perfis.Cliente.toString();
