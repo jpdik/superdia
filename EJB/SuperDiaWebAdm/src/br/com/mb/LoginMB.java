@@ -47,6 +47,6 @@ public class LoginMB {
 	
 	public String logout() {
 		usuario = new Usuario();
-		return "login.xhtml?redirect-faces=true";
+		return "login";
 	}
 }

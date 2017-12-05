@@ -2,7 +2,7 @@
     <wb-module deploy-name="SuperDiaWebAdm">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="SuperDiaWebAdm"/>
         <property name="java-output-path" value="/SuperDiaWebAdm/build/classes"/>
+        <property name="context-root" value="SuperDiaWebAdm"/>
     </wb-module>
 </project-modules>

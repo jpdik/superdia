@@ -1,0 +1,67 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Oficina Mecânica</title>
+	<h:outputStylesheet library="css" name="style.css" />
+	<h:outputScript name="jsf.js" library="javax.faces" target="head"></h:outputScript>
+</h:head>
+<h:body>
+	<div id="cabecalho">
+		<h1>
+			<a href="menu.xhtml" id="logo">Painel Administrativo</a>
+		</h1>
+		<div id="usuarioLogado">
+			<h:form rendered="#{not empty loginMB.usuario.usuario}">
+					Logado como: #{loginMB.usuario.usuario}
+					<h:commandLink action="#{loginMB.logout}" value="   Sair   "
+					styleClass="btn btn-primary" />
+			</h:form>
+		</div>
+	</div>
+	<div id="menubar">
+		<h:form rendered="#{not empty loginMB.usuario.usuario}">
+			<p:growl id="messages" showDetail="true" />
+	
+			<p:tieredMenu style="width:200px">
+				<p:menuitem value="Usuário" action="usuario?redirect-faces=true"
+						update="messages" icon="ui-icon-person" />
+				<p:submenu label="Produto" icon="ui-icon-suitcase">
+					<p:menuitem value="Cadastrar" action="#{menuView.save}"
+						update="messages" icon="ui-icon-disk" />
+					<p:menuitem value="Alterar" action="#{menuView.update}"
+						update="messages" icon="ui-icon-transfer-e-w" />
+					<p:menuitem value="Excluir" action="#{menuView.update}"
+						update="messages" icon="ui-icon-trash" />
+					<p:menuitem value="Listar Todos" action="#{menuView.update}"
+						update="messages" icon="ui-icon-info" />
+				</p:submenu>
+				<p:submenu label="Vendas" icon="ui-icon-cart">
+					<p:menuitem value="Cadastrar" action="#{menuView.save}"
+						update="messages" icon="ui-icon-disk" />
+					<p:menuitem value="Alterar" action="#{menuView.update}"
+						update="messages" icon="ui-icon-transfer-e-w" />
+					<p:menuitem value="Excluir" action="#{menuView.update}"
+						update="messages" icon="ui-icon-trash" />
+					<p:menuitem value="Listar Todos" action="#{menuView.update}"
+						update="messages" icon="ui-icon-info" />
+				</p:submenu>
+				<p:separator />
+				<p:menuitem value="Sair" action="#{loginMB.logout}"
+						update="messages" icon="ui-icon-closethick" />
+			</p:tieredMenu>
+		</h:form>
+	</div>
+
+
+	<div id="conteudo">
+		<ui:insert name="corpo" />
+	</div>
+
+	<div id="rodape">Copyright 2017. Todos os Direitos reservados.</div>
+</h:body>
+</html>
