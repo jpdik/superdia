@@ -27,7 +27,7 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="trocoTextField" editable="false" prefHeight="46.0" prefWidth="370.0" promptText="Valor troco do cliente.">
+                  <TextField fx:id="trocoTextField" editable="false" onMouseClicked="#trocoOnMouseCliked" prefHeight="46.0" prefWidth="370.0" promptText="Valor troco do cliente.">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
@@ -55,7 +55,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="valorRecebidoTextField" prefHeight="32.0" prefWidth="407.0" promptText="R$ 00,00" />
+            <TextField fx:id="valorRecebidoTextField" onKeyPressed="#valorRecebidoOnKeyPressed" prefHeight="32.0" prefWidth="407.0" promptText="R$ 00,00" />
          </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" layoutX="65.0" layoutY="77.0" prefHeight="35.0" prefWidth="520.0" spacing="24.0">

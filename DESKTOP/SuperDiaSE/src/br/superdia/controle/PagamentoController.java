@@ -1,12 +1,14 @@
 package br.superdia.controle;
 
 import br.superdia.app.App;
+import br.superdia.enumeracoes.Mascaras;
 import br.superdia.enumeracoes.Tela;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
@@ -54,10 +56,36 @@ public class PagamentoController {
 	    	
 		}
 	    
+		private String trocaVirgulaPorPonto(String valor) {
+			return valor.replace(',', '.');
+		}
+		
+		private void calculaTroco() {
+			Double valorRecebido, valorCompra;
+	    	if(valorRecebidoTextField.getText().equals("")) {
+	    		System.out.println("exibir mensagem de erro valor recebido nao informado");
+	    	}else if(!valorRecebidoTextField.getText().matches(Mascaras.VALOR.getMascara())){
+	    		System.out.println("exibir mensagem de erro informando que o dado informado NÃO é um número");
+	    	}else {
+	    		valorRecebido = Double.parseDouble(trocaVirgulaPorPonto(valorRecebidoTextField.getText()));
+	    		valorCompra = Double.parseDouble(valorCompraTextField.getText());	    	
+	    		if(valorRecebido < valorCompra) {
+	    			System.out.println("exibir mensagem de erro informando que o valor recebido é menor do que o valor da compra");
+	    		}else {
+	    			Double troco = valorRecebido - valorCompra;
+	    			trocoTextField.setText(troco.toString());
+	    		}
+	    	}
+		}
+		
 	    @FXML
 	    void concluirButtonOnAction() {
 	    	System.out.println("Clicou em concluir");
 	    	
+	    	calculaTroco();
+	    	
+	    	
+	    	/*
 	    	Double valorRecebido;
 	    	Integer numeroCartao;
 	    	System.out.println(valorRecebidoTextField.getText());
@@ -74,12 +102,12 @@ public class PagamentoController {
 	    	try {
 		    	numeroCartao = Integer.parseInt(numeroCartaoTextField.getText());
 		    } catch (Exception e) {
-				e.getMessage();/*
+				e.getMessage();
 				alert.setAlertType(AlertType.ERROR);
 				alert.setTitle("Erro");				
 				alert.setContentText("O dado referente ao número do cartão informado NÃO e um número.");
-				alert.show();*/
-			}
+				alert.show();
+			}*/
 	    	
 	    	/*
 	    	alert.setAlertType(AlertType.INFORMATION);
@@ -114,6 +142,18 @@ public class PagamentoController {
 	    void concluirOnKeyPressed(KeyEvent event) {
 	    	
 	    	System.out.println("Concluir --> keyEvent.getCode(): " + event.getCode());
+	    }
+	    
+	    @FXML
+	    void trocoOnMouseCliked() {
+	    	calculaTroco();
+	    }
+	    
+	    @FXML
+	    void valorRecebidoOnKeyPressed(KeyEvent event) {
+	    	if(event.getCode() == KeyCode.ENTER) {
+	    		calculaTroco();
+	    	}
 	    }
 
 	   	public TextField getValorCompraTextField() {

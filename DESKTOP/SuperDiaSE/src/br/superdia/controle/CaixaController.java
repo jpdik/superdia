@@ -237,7 +237,7 @@ public class CaixaController {
     		
 			addItensVendaAoCarrinho();
 			
-			App.pagamentoController.getValorCompraTextField().setText(valorTotalCompraTextField.getText());
+			App.pagamentoController.getValorCompraTextField().setText(atualizaValorTotalCompra().toString());
 			
 	    	/*
 			listTabelaVendas.clear();
