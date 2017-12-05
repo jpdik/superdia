@@ -68,7 +68,7 @@
             <TextField fx:id="numeroCartaoTextField" prefHeight="32.0" prefWidth="405.0" promptText="Campo não obrigatório" />
          </children>
       </HBox>
-      <Button fx:id="concluirButton" layoutX="112.0" layoutY="312.0" mnemonicParsing="false" onAction="#concluirButtonOnAction" onKeyPressed="#concluirOnKeyPressed" prefHeight="46.0" prefWidth="168.0" text="Concluir">
+      <Button fx:id="concluirButton" layoutX="112.0" layoutY="312.0" mnemonicParsing="false" onAction="#concluirButtonOnAction" prefHeight="46.0" prefWidth="168.0" text="Concluir">
          <font>
             <Font size="18.0" />
          </font>
