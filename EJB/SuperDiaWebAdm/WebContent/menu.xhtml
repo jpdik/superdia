@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/WEB-INF/_template.xhtml">
 	<ui:define name="corpo">
 		<h:messages />
@@ -12,19 +13,34 @@
 				#{loginMB.usuario.id}</h1>
 
 			<h:form>
-				<h:commandLink value="Sair" action="#{loginMB.logout}"></h:commandLink>
-				<br></br>
+				<p:growl id="msgs" showDetail="true" />
 
-				<h:commandLink action="login">login</h:commandLink>
-				<br></br>
-				<h:commandLink action="produto">produtos</h:commandLink>
-				<br></br>
-				<h:commandLink action="usuario">Usuarios</h:commandLink>
-				<br></br>
-				<h:commandLink action="loja">Carrinho</h:commandLink>
-				<br></br>
-				<h:commandLink action="vendas">Vendas</h:commandLink>
+				<h:commandLink action="usuario?faces-redirect=true">
+					<p:panel id="usuario" header="Usuário" class="panel">
+						<h:panelGrid columns="2" cellpadding="10">
+							<p:graphicImage width="150px" height="150px" library="imagens" name="usuario-logo.png" />
+							<h:outputText class="infofield" value="O cadastro/alteração/exclusão e listagem de usuários são realizados aqui."/>
+						</h:panelGrid>
+					</p:panel>
+				</h:commandLink>
+				<h:commandLink action="produto?faces-redirect=true">
+					<p:panel id="produto" header="Produto" class="panel">
+						<h:panelGrid columns="2" cellpadding="10">
+							<p:graphicImage width="150px" height="150px" library="imagens" name="produto-icone.png" />
+							<h:outputText class="infofield" value="Controle de estoque e alterações de produtos é feita aqui." />
+						</h:panelGrid>
+					</p:panel>
+				</h:commandLink>
+				<h:commandLink action="vendas?faces-redirect=true">
+					<p:panel id="vendas" header="Vendas" class="panel">
+						<h:panelGrid columns="2" cellpadding="10">
+							<p:graphicImage width="150px" height="150px" library="imagens" name="vendas-logo.png"/>
+							<h:outputText class="infofield" value="Todo o histório de vendas e lucros estam aqui." />
+						</h:panelGrid>
+					</p:panel>
+				</h:commandLink>
 			</h:form>
+
 		</div>
 	</ui:define>
 </ui:composition>

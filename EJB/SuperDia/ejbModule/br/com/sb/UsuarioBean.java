@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 
 import br.com.interfacebean.IUsuario;
@@ -20,32 +20,29 @@ public class UsuarioBean implements IUsuario {
 	
 	@Override
 	public boolean adiciona(Usuario usuario) {
-		try {
+		if(!entityExists(usuario)) {
 			em.persist(usuario);
 			return true;
-		}catch (EntityExistsException e) {
-			return false;
 		}
+		return false;
 	}
 
 	@Override
 	public boolean altera(Usuario usuario) {
-		try {
+		if(entityExists(usuario)) {
 			em.merge(usuario);
 			return true;
-		}catch (IllegalArgumentException e) {
-			return false;
 		}
+		return false;
 	}
 
 	@Override
 	public boolean remove(Usuario usuario) {
-		try {
+		if(entityExists(usuario)) {
 			em.remove(em.merge(usuario));
 			return true;
-		}catch (IllegalArgumentException e) {
-			return false;
 		}
+		return false;
 	}
 
 	@Override
@@ -55,6 +52,19 @@ public class UsuarioBean implements IUsuario {
 		cq.select(cq.from(Usuario.class));
 		
 		return em.createQuery(cq).getResultList();
+	}
+	
+	private boolean entityExists(Usuario usuario) {
+		try {
+			Query q = em.createQuery("SELECT u FROM Usuario u WHERE u.usuario = :usuario");
+			
+			q.setParameter("usuario", usuario.getUsuario());
+			
+			q.getSingleResult();
+			return true;
+		}catch (Exception e) {
+			return false;
+		}
 	}
 
 }

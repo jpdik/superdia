@@ -90,7 +90,7 @@ td.Muito.Baixa, td.Muito.Baixo {
 	display: inline;
     border: 4px solid #ffffff;
     border-radius: 20px;
-    padding: 10px 13px 10px 70px;
+    padding: 10px 13px 12px 70px;
     border-color: white;
     color: white;
     text-decoration: none;
@@ -104,24 +104,6 @@ td.Muito.Baixa, td.Muito.Baixo {
     background-position: 13px 2px;
     background-size: 45px 45px;
 }
-#usuarioLogado  {
-	font-size: 17;
-	color: white;
-	display: block;
-	float: right;
-	right: 50%;
-	margin-right: -450px;
-	position: absolute;
-	top: 35px;
-}
-#usuarioLogado a {
-	color: #ffff60;
-	padding: 8px;
-	text-decoration: none;	
-}
-#usuarioLogado a:hover {
-	text-decoration: underline;
-}
 .jquery-ui-themeswitcher-trigger {
 	position: absolute;
 	float: right;
@@ -134,15 +116,24 @@ td.Muito.Baixa, td.Muito.Baixo {
 	float: left;
 }
 
+.ui-state-disabled{
+	opacity: 1;
+	background-color: white;
+	-webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.5);
+     -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.5);
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
 .ui-menu{
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 120vh;
 }
 
 #main {
 	float: left;
-	padding:10px 10px;
+	padding:10px 40px;
+	width: 80%;
 }
 
 #autentica, section {
@@ -221,9 +212,22 @@ input:after {
 	margin-bottom: 5px;
 	width: 600px !important;
 }
-input[type=submit], button {
+
+#campos {
 	margin: 0 auto;
-	margin-left: 140px;
+	width:40%;
+}
+
+#botoes {
+	margin: 0 auto;
+	margin-top: 15px;
+	width:20%;
+}
+
+input[type=submit], button {
+	float: left;
+	margin: 0 auto;
+	margin-left: 5px;
 }
 
 .buttonCentro{
@@ -254,17 +258,16 @@ form {
 	margin-bottom:10px;
 	position: relative;
 	text-align: left;
+	width: 0 auto;
 }
 
 form fieldset {
-	padding: 10px 0px 10px 10px;
-	margin: 5px 0 10px 0;
-	text-align: left;
-	width: 887px;
+	width: 0 auto;
+	padding: 10px 30px 30px 30px;
 }
 
 form .ui-fieldset {
-	width: 873px;
+	width: 0 auto;
 }
 
 #login{
@@ -1050,46 +1053,23 @@ input[type="submit"].btn.btn-mini {
 
 /*Menu Principal*/
 
-#logoMenu h1{
-	width: 300%;
-	margin-top: 5%;
-	text-align: justify;
-	margin-left: 150%;
-	padding-top: 35%;
+a:link { 
+	text-decoration:none; 
+} 
+
+.panel{
+	margin: 40px;
 }
 
-#logoMenu a {
-    color: #000;
-    text-align: center;
-    text-decoration: none;
-}
-
-#logoMenu a:hover {
-    text-decoration: underline;
-}
-
-.logos{
-	margin-left: 25%;
-	width: 120px;
-	height: 120px;
-}
-
-#logoClientes{
-	background-image: url("#{resource['imagens/cadUsuario.png']}");
-    background-repeat: no-repeat;
-}
-
-#logoVeiculos{    
-    background-image: url("#{resource['imagens/cadVeiculo.png']}");
-    background-repeat: no-repeat;
-}
-  
-#logoOrdens{  
-    background-image: url("#{resource['imagens/cadOS.png']}");
-    background-repeat: no-repeat;
-}
- 
-#logoPecas{   
-    background-image: url("#{resource['imagens/cadPeca.png']}");
-    background-repeat: no-repeat;
+.infofield{
+	display:block;
+	position:relative;
+	overflow:hidden;
+	color:#2B2926;
+	text-align:left;
+	height:auto;
+	margin: 10px 10px 10px 60px;
+	clear: both;
+	font-size: x-large;
+	width: 100%;
 }

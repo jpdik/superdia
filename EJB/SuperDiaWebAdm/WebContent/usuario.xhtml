@@ -5,62 +5,74 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	<ui:composition template="/WEB-INF/_template.xhtml">
-		<ui:define name="corpo">
-	    	<div id="main">
-				<h:form id="cadastro">
-					<p:messages styleClass="erros"></p:messages>
-					<fieldset>
-						<legend><h:outputText value="Usuario" /></legend>
-						
-						<h2>
-							<h:outputText value="#{empty usuarioMB.usuario.id ? 'Cadastrar Usuario' : 'Alterar Usuario'}"></h:outputText> 			
-						</h2>
-						
+<ui:composition template="/WEB-INF/_template.xhtml">
+	<ui:define name="corpo">
+		<div id="main">
+			<h:form id="cadastro">
+				<p:messages styleClass="erros"></p:messages>
+				<fieldset>
+					<legend>
+						<h:outputText value="Usuario" />
+					</legend>
+
+					<h2>
+						<h:outputText
+							value="#{empty usuarioMB.usuario.id ? 'Cadastrar Usuario' : 'Alterar Usuario'}"></h:outputText>
+					</h2>
+
+					<div id="campos">
 						<p:outputLabel value="Login:" for="login" />
 						<p:inputText id="login" value="#{usuarioMB.usuario.usuario}" />
 						<p:outputLabel value="Senha:" for="senha" />
-						<p:password id="senha" value="#{usuarioMB.usuario.senha}"/>
-						
+						<p:password id="senha" value="#{usuarioMB.usuario.senha}" />
+
 						<h:outputLabel value="Perfil:" />
-							<h:selectOneMenu value="#{usuarioMB.usuario.perfil}">
+						<h:selectOneMenu value="#{usuarioMB.usuario.perfil}">
 							<f:selectItems value="#{usuarioMB.perfis}" var="perfil"
-							itemValue="#{perfil}" itemLabel="#{perfil}"/>
+								itemValue="#{perfil}" itemLabel="#{perfil}" />
 						</h:selectOneMenu>
-						
+					</div>
+					<div id="botoes">
 						<h:commandButton value="Gravar" action="#{usuarioMB.grava}">
 							<f:ajax execute="@form" render=":cadastro :lista"></f:ajax>
 						</h:commandButton>
-						
-						<h:commandButton value="Cancelar" rendered="#{not empty usuarioMB.usuario.id}" action="#{usuarioMB.cancela}">
+
+						<h:commandButton value="Cancelar"
+							rendered="#{not empty usuarioMB.usuario.id}"
+							action="#{usuarioMB.cancela}">
 							<f:ajax render=":cadastro"></f:ajax>
 						</h:commandButton>
-					</fieldset>
-				</h:form>
-				
-				<h:form id="lista">
-					<p:dataTable value="#{usuarioMB.usuarios}" var="usuario" styleClass="dados" rowClasses="impar, par" paginator="true" rows="4">
-						<p:column filterBy="#{usuario.usuario}">
-							<f:facet name="header">Usuario</f:facet>
+					</div>
+				</fieldset>
+			</h:form>
+
+			<h:form id="lista">
+				<p:dataTable value="#{usuarioMB.usuarios}" var="usuario"
+					styleClass="dados" rowClasses="impar, par" paginator="true"
+					rows="10">
+					<p:column filterBy="#{usuario.usuario}">
+						<f:facet name="header">Usuario</f:facet>
 							#{usuario.usuario}
 						</p:column>
-						<p:column filterBy="#{usuario.perfil}">
-							<f:facet name="header">Perfil</f:facet>
+					<p:column filterBy="#{usuario.perfil}">
+						<f:facet name="header">Perfil</f:facet>
 							#{usuario.perfil}
 						</p:column>
-						<p:column>
-							<f:facet name="header">Ações</f:facet>				
-							<h:commandLink value="Alterar" styleClass="btn">
-								<f:setPropertyActionListener value="#{usuario}" target="#{usuarioMB.usuario}"></f:setPropertyActionListener>
-								<f:ajax render=":cadastro"></f:ajax>
-							</h:commandLink>
-							<h:commandLink action="#{usuarioMB.remove(usuario)}" value="Remover" styleClass="btn btn-danger">
-								<f:ajax render="@form"></f:ajax>
-							</h:commandLink>
-						</p:column>
-					</p:dataTable>
-				</h:form>
-			</div>
-		</ui:define>
-	</ui:composition>
+					<p:column>
+						<f:facet name="header">Ações</f:facet>
+						<h:commandLink value="Alterar" styleClass="btn">
+							<f:setPropertyActionListener value="#{usuario}"
+								target="#{usuarioMB.usuario}"></f:setPropertyActionListener>
+							<f:ajax render=":cadastro"></f:ajax>
+						</h:commandLink>
+						<h:commandLink action="#{usuarioMB.remove(usuario)}"
+							value="Remover" styleClass="btn btn-danger">
+							<f:ajax render="@form"></f:ajax>
+						</h:commandLink>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
 </html>

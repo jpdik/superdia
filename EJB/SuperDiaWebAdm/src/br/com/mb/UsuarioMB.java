@@ -1,6 +1,7 @@
 package br.com.mb;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -31,15 +32,20 @@ public class UsuarioMB {
 	}
 	
 	public List<Usuario> getUsuarios() {
-		return iUsuario.listaTodos();		
+		List<Usuario> usuarios = iUsuario.listaTodos();
+		Collections.reverse(usuarios);
+		return usuarios;		
 	}
 	
 	public void grava(){
-		System.out.println(usuario.getPerfil());
-		if(usuario.getId() == null)
-			iUsuario.adiciona(usuario);
-		else
-			iUsuario.altera(usuario);
+		if(!usuario.getSenha().isEmpty()) {
+			if(usuario.getId() == null) {
+				iUsuario.adiciona(usuario);
+			}
+			else
+				iUsuario.altera(usuario);
+			cancela();
+		}
 	}
 	
 	public List<String> getPerfis() {
