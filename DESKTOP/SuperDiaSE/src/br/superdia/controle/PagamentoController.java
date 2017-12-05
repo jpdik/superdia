@@ -72,10 +72,17 @@ public class PagamentoController {
 	    		if(valorRecebido < valorCompra) {
 	    			System.out.println("exibir mensagem de erro informando que o valor recebido é menor do que o valor da compra");
 	    		}else {
-	    			Double troco = valorRecebido - valorCompra;
+	    			Double troco = valorRecebido - valorCompra;	    			
 	    			trocoTextField.setText(troco.toString());
 	    		}
 	    	}
+		}
+		
+		private void limpaCampos() {
+			numeroCartaoTextField.clear();
+	    	valorRecebidoTextField.clear();
+	    	valorCompraTextField.clear();
+	    	trocoTextField.clear();
 		}
 		
 	    @FXML
@@ -85,48 +92,10 @@ public class PagamentoController {
 	    	calculaTroco();
 	    	
 	    	
-	    	/*
-	    	Double valorRecebido;
-	    	Integer numeroCartao;
-	    	System.out.println(valorRecebidoTextField.getText());
-	    	try {	    		
-	    		valorRecebido = Double.parseDouble(valorRecebidoTextField.getText());
-			} catch (Exception e) {
-				e.getMessage();
-				alert.setAlertType(AlertType.ERROR);
-				alert.setTitle("Erro");				
-				alert.setContentText("O valor recebido informado NÃO e um número.");
-				alert.show();
-			}
-	    	
-	    	try {
-		    	numeroCartao = Integer.parseInt(numeroCartaoTextField.getText());
-		    } catch (Exception e) {
-				e.getMessage();
-				alert.setAlertType(AlertType.ERROR);
-				alert.setTitle("Erro");				
-				alert.setContentText("O dado referente ao número do cartão informado NÃO e um número.");
-				alert.show();
-			}*/
-	    	
-	    	/*
-	    	alert.setAlertType(AlertType.INFORMATION);
-			alert.setTitle("Sucesso");
-			alert.setHeaderText("Finalizar Compra.");
-			alert.setContentText("Compra finalizada com SUCESSO!");
-			alert.show();*/
-			
-			/*limpar os campos da janela caixa
-			
-			
-			App.changeScreen(Tela.CAIXA.getTela());
-			primaryStage.setTitle("Caixa");
-			primaryStage.centerOnScreen();*/
-			
-			numeroCartaoTextField.clear();
+			/*numeroCartaoTextField.clear();
 	    	valorRecebidoTextField.clear();
 	    	valorCompraTextField.clear();
-	    	trocoTextField.clear();	
+	    	trocoTextField.clear();	*/
 	    }
 	    
 	    @FXML
@@ -136,14 +105,9 @@ public class PagamentoController {
 			primaryStage = App.getPrimaryStage();
 			primaryStage.setTitle("Caixa");
 			primaryStage.centerOnScreen();
+			limpaCampos();
 	    }
-	    	    
-	    @FXML
-	    void concluirOnKeyPressed(KeyEvent event) {
-	    	
-	    	System.out.println("Concluir --> keyEvent.getCode(): " + event.getCode());
-	    }
-	    
+
 	    @FXML
 	    void trocoOnMouseCliked() {
 	    	calculaTroco();

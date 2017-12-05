@@ -41,9 +41,7 @@ public class App extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	
+	}	
 	
 	public static void changeScreen(String screen, Object userData) {
 		switch (screen) {
