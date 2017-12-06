@@ -1,79 +1,115 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-xmlns:f="http://java.sun.com/jsf/core"
-xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-	<title>Produto</title>
-</h:head>
-
-<h:body>
-	<h2>
-		<h:outputText value="Novo Produto" rendered="#{empty produtoMB.produto.id}"></h:outputText>
-		<h:outputText value="Editar Produto" rendered="#{not empty produtoMB.produto.id}"></h:outputText>
-	</h2>
-	
-	<h:form>
-		<h:panelGrid columns="2">
-			<h:outputLabel value="Nome" for="nome"></h:outputLabel>
-			<h:inputText value="#{produtoMB.produto.nome}" id="nome"></h:inputText>
+<ui:composition template="/WEB-INF/_template.xhtml">
+	<ui:define name="corpo">
+		<div id="main">
+			<h:form id="cadastro">
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+				<fieldset>
+					<legend>
+						<h:outputText style="font-size: 25px"
+							value="#{empty produtoMB.produto.id ? 'Cadastrar Produto' : 'Editar Produto'}">
+						</h:outputText>
+					</legend>
+					
+					<div id="campos">
+						<h:outputLabel value="Nome" for="nome"></h:outputLabel>
+						<h:inputText value="#{produtoMB.produto.nome}" id="nome" required="true"/>
+						
+						<h:outputLabel value="Descricão" for="descricao"></h:outputLabel>
+						<h:inputText value="#{produtoMB.produto.descricao}" id="descricao"></h:inputText>
+						
+						<h:outputLabel value="Preço" for="preco"></h:outputLabel>
+						<h:inputText value="#{produtoMB.produto.preco}" id="preco"></h:inputText>
+						
+						<h:outputLabel value="Estoque mínimo" for="estoqueMinimo"></h:outputLabel>
+						<h:inputText value="#{produtoMB.produto.estoqueMinimo}" id="estoqueMinimo"></h:inputText>
+						
+						<h:outputLabel value="Quantidade em estoque" for="qtde"></h:outputLabel>
+						<h:inputText value="#{produtoMB.produto.quantidadeEstoque}" id="qtde"></h:inputText>
+					</div>
+					<div id="botoes">	
+						<h:commandButton value="Gravar" action="#{produtoMB.gravar}">
+							<f:ajax execute="@form" render=":cadastro :lista"></f:ajax>	
+						</h:commandButton>
+						
+						<h:commandButton value="Cancelar" action="#{produtoMB.cancela}"
+									rendered="#{not empty produtoMB.produto.id}">
+							<f:ajax render=":cadastro"></f:ajax>
+						</h:commandButton>
+					</div>
+				</fieldset>
+			</h:form>
 			
-			<h:outputLabel value="Descricão" for="descricao"></h:outputLabel>
-			<h:inputText value="#{produtoMB.produto.descricao}" id="descricao"></h:inputText>
 			
-			<h:outputLabel value="Preço" for="preco"></h:outputLabel>
-			<h:inputText value="#{produtoMB.produto.preco}" id="preco"></h:inputText>
-			
-			<h:outputLabel value="Estoque mínimo" for="estoqueMinimo"></h:outputLabel>
-			<h:inputText value="#{produtoMB.produto.estoqueMinimo}" id="estoqueMinimo"></h:inputText>
-			
-			<h:outputLabel value="Quantidade em estoque" for="qtde"></h:outputLabel>
-			<h:inputText value="#{produtoMB.produto.quantidadeEstoque}" id="qtde"></h:inputText>
-			
-			<h:commandButton value="Gravar" action="#{produtoMB.gravar}"></h:commandButton>
-			<h:commandButton value="Cancelar" action="#{produtoMB.cancela}"></h:commandButton>
-			
-		</h:panelGrid>
-	</h:form>
-	
-	<h:form id="lista">
-		<h2>Lista de Produtos</h2>
-		<h:dataTable value="#{produtoMB.produtos}" var="p" border="1">
-			<h:column>
-				<f:facet name="header">Nome</f:facet>
-				#{p.nome}
-			</h:column>
-			<h:column>
-				<f:facet name="header">Descrição</f:facet>
-				#{p.descricao}
-			</h:column>
-			<h:column>
-				<f:facet name="header">Preço</f:facet>
-				#{p.preco}
-			</h:column>
-			
-			<h:column>
-				<f:facet name="header">Estoque mínimo</f:facet>
-				#{p.estoqueMinimo}
-			</h:column>
-			
-			<h:column>
-				<f:facet name="header">Quantidade estoque</f:facet>
-				#{p.quantidadeEstoque}
-			</h:column>
-			
-			<h:column>
-				<f:facet name="header">Ações</f:facet>
-			
-				<h:commandLink value="Alterar" styleClass="btn">
-					<f:setPropertyActionListener value="#{p}" target="#{produtoMB.produto}"></f:setPropertyActionListener>
-				</h:commandLink>
-				<h:commandLink value="Remover" action="#{produtoMB.remove(p)}"/>
-				
-			</h:column>
-		</h:dataTable>
-	</h:form>
-	
-</h:body>
+			<h:form id="lista">
+				<p:dataTable value="#{produtoMB.produtos}" var="p" styleClass="dados" rowClasses="impar, par" paginator="true"
+					rows="10">
+					
+					<p:column>
+						<f:facet name="header">Id</f:facet>
+						#{p.id}
+					</p:column>
+					
+					<p:column filterBy="#{p.nome}">
+						<f:facet name="header">Nome</f:facet>
+						#{p.nome}
+					</p:column>
+					
+					<p:column filterBy="#{p.descricao}">
+						<f:facet name="header">Descrição</f:facet>
+						#{p.descricao}
+					</p:column>
+					<p:column>
+						<f:facet name="header">Preço</f:facet>
+						
+						<h:outputText value="#{p.preco}" >
+							<f:convertNumber pattern="R$ #0.00"/>
+						</h:outputText>
+						
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Estoque mínimo</f:facet>
+						#{p.estoqueMinimo}
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Quantidade estoque</f:facet>
+						#{p.quantidadeEstoque}
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Alerta de estoque</f:facet>
+						<h:graphicImage
+							rendered="#{p.quantidadeEstoque le p.estoqueMinimo}" 
+							value="resources/imagens/alert.gif"/>
+						
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Ações</f:facet>
+					
+						<h:commandLink value="Alterar" styleClass="btn">
+							<f:setPropertyActionListener value="#{p}" target="#{produtoMB.produto}"/>
+							<f:ajax render=":cadastro"></f:ajax>
+						</h:commandLink>
+						
+						<h:commandLink value="Remover" action="#{produtoMB.remove(p)}" styleClass="btn btn-danger"
+							onclick="return confirm('Deseja realmente excluir o produto?');">
+							<f:ajax render="@form"></f:ajax>
+						</h:commandLink>
+						
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
 </html>
