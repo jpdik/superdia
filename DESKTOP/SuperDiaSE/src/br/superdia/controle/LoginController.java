@@ -76,7 +76,7 @@ public class LoginController {
     	}else if(usuario.getPerfil().equalsIgnoreCase("Caixa")) {
     		System.out.println("Ir para o caixa realizar a compra");
     		App.usuarioLogado = usuario;
-    		App.changeScreen(Tela.CAIXA.getTela(), usuario);
+    		App.changeScreen(Tela.CAIXA.getTela());
     		App.caixaController.getOperadorTextField().setText(usuario.getUsuario());
 			primaryStage = App.getPrimaryStage();
 			primaryStage.setTitle("Caixa");

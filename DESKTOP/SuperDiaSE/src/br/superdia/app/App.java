@@ -9,11 +9,9 @@ import br.superdia.controle.LoginController;
 import br.superdia.controle.PagamentoController;
 import br.superdia.enumeracoes.Tela;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 
@@ -48,29 +46,18 @@ public class App extends Application {
 		case "login":
 			primaryStage.setScene(loginScene);
 			notifyAllListeners(Tela.LOGIN.getTela(), userData);
-			/*sceneOnKeyPressed(loginScene);*/
 			break;
 		case "caixa":
 			primaryStage.setScene(caixaScene);
 			notifyAllListeners(Tela.CAIXA.getTela(), userData);
-			/*sceneOnKeyPressed(caixaScene);*/
 			break;
 		case "pagamento":
 			primaryStage.setScene(pagamentoScene);
 			notifyAllListeners(Tela.PAGAMENTO.getTela(), userData);
-			/*sceneOnKeyPressed(pagamentoScene);*/
 			break;
 		}
 	}
-	
-	public static void sceneOnKeyPressed(Scene scene) {
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent event) {
-				System.out.println("TEste: " + event.getCode());
-			}
-		});
-	}
-	
+		
 	public static void changeScreen(String screen) {
 		changeScreen(screen, null);
 	}

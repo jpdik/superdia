@@ -1,7 +1,8 @@
 package br.superdia.controle;
 
+import br.com.interfacebean.ICarrinho;
+import br.com.modelo.ItemVenda;
 import br.superdia.app.App;
-import br.superdia.enumeracoes.Mascaras;
 import br.superdia.enumeracoes.Tela;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -32,51 +33,57 @@ public class PagamentoController {
 	    private TextField valorRecebidoTextField;
 
 	    private Stage primaryStage;
-		private Alert alert;
-	    
-		
+	    private ICarrinho iCarrinho = null;
 		
 	    public PagamentoController() {
 			primaryStage = App.getPrimaryStage();
-	    	System.err.println("PagamentoController --> construtor default: " + App.usuarioLogado);
 	    }
 
 		@FXML
 	    private void initialize() {
-
-	    	System.err.println("PagamentoController --> initialize: " + App.usuarioLogado);
-			alert = new Alert(null);
 	    	App.addOnChangeScreenListener(new App.OnChangeScreen() {				
 				@Override
 				public void onScreenChanged(String newScreen, Object userData) {
 					System.out.println("Pagamento Nova tela:" + newScreen + ", " + userData);
-					
+					iCarrinho = (ICarrinho) userData;
 				}
-			});
-	    	
+			});	    	
 		}
 	    
 		private String trocaVirgulaPorPonto(String valor) {
 			return valor.replace(',', '.');
 		}
 		
+		private void alertMessage(String titulo, String header, String conteudo, AlertType alertType) {
+			Alert alert = new Alert(alertType);
+    		alert.setTitle(titulo);
+    		alert.setHeaderText(header);
+    		alert.setContentText(conteudo);
+    		alert.getModality();    		
+    		alert.showAndWait();
+		}
+				
 		private void calculaTroco() {
 			Double valorRecebido, valorCompra;
-	    	if(valorRecebidoTextField.getText().equals("")) {
-	    		System.out.println("exibir mensagem de erro valor recebido nao informado");
-	    	}else if(!valorRecebidoTextField.getText().matches(Mascaras.VALOR.getMascara())){
-	    		System.out.println("exibir mensagem de erro informando que o dado informado NÃO é um número");
-	    	}else {
-	    		valorRecebido = Double.parseDouble(trocaVirgulaPorPonto(valorRecebidoTextField.getText()));
-	    		valorCompra = Double.parseDouble(valorCompraTextField.getText());	    	
-	    		if(valorRecebido < valorCompra) {
+			try {
+				valorRecebido = Double.parseDouble(trocaVirgulaPorPonto(valorRecebidoTextField.getText()));
+				valorCompra = Double.parseDouble(valorCompraTextField.getText());
+				
+				if(valorRecebido < valorCompra) {
+					alertMessage("ERRO", "Valor Menor", "O valor recebido e menor que o valor da compra.", AlertType.ERROR);
 	    			System.out.println("exibir mensagem de erro informando que o valor recebido é menor do que o valor da compra");
 	    		}else {
-	    			Double troco = valorRecebido - valorCompra;	    			
+	    			Double troco = valorRecebido - valorCompra;
 	    			trocoTextField.setText(troco.toString());
 	    		}
-	    	}
-		}
+				
+				System.out.println(valorRecebido);
+			} catch (NumberFormatException e) {
+				alertMessage("ERRO", "Valor Recebido.", e.getMessage(), AlertType.ERROR);
+				System.err.println("Aqui: " + e.getMessage());
+			}
+	    	
+		}		
 		
 		private void limpaCampos() {
 			numeroCartaoTextField.clear();
@@ -87,15 +94,37 @@ public class PagamentoController {
 		
 	    @FXML
 	    void concluirButtonOnAction() {
-	    	System.out.println("Clicou em concluir");
-	    	
-	    	calculaTroco();
-	    	
-	    	
-			/*numeroCartaoTextField.clear();
-	    	valorRecebidoTextField.clear();
-	    	valorCompraTextField.clear();
-	    	trocoTextField.clear();	*/
+	    	//calculaTroco();
+	    	if(trocoTextField.getText().isEmpty()) {
+	    		alertMessage("ERRO", "Troco", "Sistema não calculou o troco.", AlertType.ERROR);
+	    	}else {
+	    		limpaCampos();
+	    		//Alterando campos da janela caixa
+	    		App.caixaController.getListTabelaVendas().clear();
+	    		App.caixaController.getValorTotalCompraTextField().clear();
+	    		App.caixaController.getTabelaVendas().setItems(App.caixaController.getListTabelaVendas());
+	    		/*
+	    		App.caixaController.setProdutoEstoque(null);
+	    		App.caixaController.setProdutoVenda(null);
+	    		App.caixaController.getTabelaEstoque().getSelectionModel().clearSelection();*/
+	    		
+	    		App.caixaController.getListTabelaEstoque().clear();
+	    		App.caixaController.getTabelaEstoque().setItems(App.caixaController.getListTabelaEstoque());	    		
+	    		App.caixaController.atualizarOnMouseClicked();
+	    		
+	    		alertMessage("Finalizado", null, "Compra concluida com SUCESSO.", AlertType.INFORMATION);	    		
+	    		System.out.println("Usuario Logado: " + App.usuarioLogado);
+	    		for (ItemVenda iterable_element : iCarrinho.listaTodos()) {
+					System.out.println("No Pagamento Item Venda: " + iterable_element.getProduto().getNome());
+				}
+	    		iCarrinho.finalizaCompra(App.usuarioLogado);
+	    		
+	    		App.changeScreen(Tela.CAIXA.getTela());
+				primaryStage = App.getPrimaryStage();
+				primaryStage.setTitle("Caixa");
+				primaryStage.centerOnScreen();
+				
+	    	}
 	    }
 	    
 	    @FXML

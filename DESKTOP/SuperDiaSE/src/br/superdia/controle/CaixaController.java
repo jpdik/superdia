@@ -67,7 +67,6 @@ public class CaixaController {
     private InitialContext ic;
     private IProduto iProduto = null;
     private ICarrinho iCarrinho = null;
-    protected Alert alert;    
    	private Stage primaryStage;  	
    	
     
@@ -75,9 +74,7 @@ public class CaixaController {
 		primaryStage = App.getPrimaryStage();
     }
    
-	@FXML private void initialize() {
-    	alert = new Alert(null);
-    	
+	@FXML private void initialize() {    	
     	App.addOnChangeScreenListener(new App.OnChangeScreen() {
 			
 			@Override
@@ -125,6 +122,7 @@ public class CaixaController {
     @FXML
     protected void tabelaEstoqueOnMouseCliked() {
     	produtoEstoque = tabelaEstoque.getSelectionModel().getSelectedItem();
+    	System.out.println("Clicou na tabela estoque: " + produtoEstoque.getNome() + " quantidade: " + produtoEstoque.getQuantidadeEstoque());
     	if(produtoEstoque != null){
     		quantidadeSlider(produtoEstoque.getQuantidadeEstoque());    		
     	}
@@ -158,18 +156,12 @@ public class CaixaController {
 	    		
 	    		valorTotalCompraTextField.setText("R$ " + atualizaValorTotalCompra().toString());
     		}else {
-    			alert.setAlertType(AlertType.ERROR);
-        		alert.setTitle("Erro - Adicionar");
-        		alert.setHeaderText("Adicionar Produto.");
-        		alert.setContentText("O produto (" + produtoEstoque.getNome() + ") não existe em estoque.");
-        		alert.show();
+    			alertMessage("Erro - Adicionar", "Adicionar Produto.", "O produto "
+    					+ "(" + produtoEstoque.getNome() + ") não existe em estoque.", AlertType.ERROR);
     		}
     	}else{
-    		alert.setAlertType(AlertType.ERROR);
-    		alert.setTitle("Erro - Adicionar");
-    		alert.setHeaderText("Adicionar Produto.");
-    		alert.setContentText("Selecione um produto da tabela ESTOQUE antes de \nclicar em adicionar.");
-    		alert.show();
+    		alertMessage("Erro - Adicionar", "Adicionar Produto.", "Selecione um produto da tabela"
+    				+ " ESTOQUE antes de \nclicar em adicionar.", AlertType.ERROR);
     	}
     	tabelaEstoque.getSelectionModel().clearSelection();
     	produtoEstoque = null;
@@ -195,11 +187,8 @@ public class CaixaController {
     		}
     		valorTotalCompraTextField.setText("R$ " + atualizaValorTotalCompra().toString());
     	}else{
-    		alert.setAlertType(AlertType.ERROR);
-    		alert.setTitle("Erro - Remover");
-    		alert.setHeaderText("Remover Produto.");
-    		alert.setContentText("Selecione um produto da tabela Vendas antes de \nclicar em remover.");
-    		alert.show();
+    		alertMessage("Erro - Remover", "Remover Produto.", "Selecione um produto da tabela "
+    				+ "Vendas antes de \nclicar em remover.", AlertType.ERROR);
     	}
     	tabelaVendas.getSelectionModel().clearSelection();
     	produtoVenda = null;
@@ -209,15 +198,13 @@ public class CaixaController {
     @FXML
     protected void atualizarOnMouseClicked() {    	
     	if(listTabelaVendas.isEmpty()) {
+    		listTabelaEstoque.clear();
+    		tabelaEstoque.setItems(listTabelaEstoque);
     		listTabelaEstoque = FXCollections.observableArrayList(iProduto.listaTodos());		
     		tabelaEstoque.setItems(listTabelaEstoque);
     		System.out.println("Atualizando a lista de produtos na tabela estoque.");
     	}else {
-    		alert.setAlertType(AlertType.ERROR);
-    		alert.setTitle("Erro - Atualizar");
-    		alert.setHeaderText("Atualizar Produtos Estoque.");
-    		alert.setContentText("Erro: Remova todos os produtos vendidos antes de atualizar.");
-    		alert.show(); 
+    		alertMessage("Erro - Atualizar", "Atualizar Produtos Estoque.", "Atualizar Produtos Estoque.", AlertType.ERROR);
     	}    	
     }
     
@@ -228,31 +215,28 @@ public class CaixaController {
     
     @FXML
     protected void comprarButtonOnAction() {    	
-    	if(!listTabelaVendas.isEmpty()) {
-    		
-    		System.out.println("Ir para a janela de Pagamento finalizar a compra.");
-    		App.changeScreen(Tela.PAGAMENTO.getTela());
-			primaryStage.setTitle("Pagamento");
-			primaryStage.centerOnScreen();
+    	if(!listTabelaVendas.isEmpty()) {    		
     		
 			addItensVendaAoCarrinho();
 			
 			App.pagamentoController.getValorCompraTextField().setText(atualizaValorTotalCompra().toString());
 			
-	    	/*
-			listTabelaVendas.clear();
-	    	valorTotalCompraTextField.clear();
-	    	tabelaVendas.setItems(listTabelaVendas);
-			atualizarOnMouseClicked();*/			
+			App.changeScreen(Tela.PAGAMENTO.getTela(), iCarrinho);
+			primaryStage.setTitle("Pagamento");
+			primaryStage.centerOnScreen();
     	}else {
-    		alert.setAlertType(AlertType.ERROR);
-			alert.setTitle("Erro");
-			alert.setHeaderText("Venda sem Produtos.");
-			alert.setContentText("A lista de produtos vendidos NÃO possui nenhum produto.");
-			alert.show();
+    		alertMessage("Erro", "Venda sem Produtos.", "A lista de produtos vendidos NÃO possui nenhum produto.", AlertType.ERROR);
     	}
-    	System.out.println("Compra finalizada com SUCESSO.");    	
     }
+    
+    private void alertMessage(String titulo, String header, String conteudo, AlertType alertType) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(titulo);
+		alert.setHeaderText(header);
+		alert.setContentText(conteudo);
+		alert.getModality();	
+		alert.showAndWait();
+	}
     
     //e viva a gambiarra
     private void addItensVendaAoCarrinho(){ 
@@ -266,6 +250,10 @@ public class CaixaController {
 			itemVenda.setQuantidade(produtoVendido.getQuantidadeEstoque());
 			iCarrinho.adiciona(itemVenda);
 		}
+    	System.out.println("Produtos no carrinho");
+    	for (ItemVenda produto : iCarrinho.listaTodos()) {
+			System.out.println("Produto ItemVenda: " + produto.getProduto().getNome());
+		};
     }
     
     private void atualizaTabelaEstoque(Produto produtoEstoque) {
@@ -565,18 +553,7 @@ public class CaixaController {
 	public void setAtualizarImageView(ImageView atualizarImageView) {
 		this.atualizarImageView = atualizarImageView;
 	}
-
-
-	public Alert getAlert() {
-		return alert;
-	}
-
-
-	public void setAlert(Alert alert) {
-		this.alert = alert;
-	}
-
-
+	
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
