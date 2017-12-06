@@ -35,20 +35,15 @@ public class LoginController {
     private InitialContext ic;
     private IAutentica iAutentica = null; 
 	private Stage primaryStage;
-	private Alert alert;
 		
-	public LoginController() {
-	}
+	public LoginController() {}
 
 	@FXML
     private void initialize() {
-		alert = new Alert(null);
-		App.addOnChangeScreenListener(new App.OnChangeScreen() {
-			
+		App.addOnChangeScreenListener(new App.OnChangeScreen() {			
 			@Override
 			public void onScreenChanged(String newScreen, Object userData) {
-				System.out.println("Login Nova tela:" + newScreen + ", " + userData);
-				
+				System.out.println("Tela Login: " + newScreen + ", " + userData);				
 			}
 		});
 		
@@ -68,11 +63,8 @@ public class LoginController {
     	usuario.setSenha(senhaPasswordField.getText());
     	usuario = iAutentica.autentica(usuario);
     	System.out.println(usuario);
-    	if(usuario == null) {    		
-    		alert.setAlertType(AlertType.ERROR);
-    		alert.setTitle("Erro - Autenticação");
-    		alert.setHeaderText("Usuário Inexistente.");
-    		alert.show();
+    	if(usuario == null) {
+    		alertMessage("Erro - Autenticação", "Usuário Inexistente.", null, AlertType.ERROR);
     	}else if(usuario.getPerfil().equalsIgnoreCase("Caixa")) {
     		System.out.println("Ir para o caixa realizar a compra");
     		App.usuarioLogado = usuario;
@@ -82,11 +74,9 @@ public class LoginController {
 			primaryStage.setTitle("Caixa");
 			primaryStage.centerOnScreen();				
     	}else {
-    		alert.setAlertType(AlertType.ERROR);
-    		alert.setTitle("Erro - Autenticação");
-    		alert.setHeaderText("Perfil Inválido.");
-    		alert.setContentText("ERRO: O usuário de perfil (" + usuario.getPerfil() + ") NÃO pode ter acesso ao sistema.");
-    		alert.show();
+    		alertMessage("Erro - Autenticação", "Perfil Inválido.",
+    				"ERRO: O usuário de perfil (" + usuario.getPerfil() + ") "
+    				+ "NÃO pode ter acesso ao sistema.", AlertType.ERROR);
     	}
     	
     }
@@ -95,6 +85,15 @@ public class LoginController {
     protected void cancelarButtonOnAction() {
     	limparCampos();
     }
+    
+    protected void alertMessage(String titulo, String header, String conteudo, AlertType alertType) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(titulo);
+		alert.setHeaderText(header);
+		alert.setContentText(conteudo);
+		alert.getModality();    		
+		alert.showAndWait();
+	}
     
     private void limparCampos() {
     	usuarioTextField.clear();
@@ -157,7 +156,6 @@ public class LoginController {
 		this.iAutentica = iAutentica;
 	}
 
-
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
@@ -165,14 +163,4 @@ public class LoginController {
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
-
-	public Alert getAlert() {
-		return alert;
-	}
-
-	public void setAlert(Alert alert) {
-		this.alert = alert;
-	}
-	
-	
 }

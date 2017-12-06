@@ -18,7 +18,6 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -54,9 +53,6 @@ public class CaixaController {
     private TextField operadorTextField, valorTotalCompraTextField, quantidadeTextField;    
 
     @FXML
-    private Label infoLabel;
-
-    @FXML
     private Slider quantidadeSlider;
     
     @FXML private ImageView atualizarImageView;
@@ -67,23 +63,17 @@ public class CaixaController {
     private InitialContext ic;
     private IProduto iProduto = null;
     private ICarrinho iCarrinho = null;
-   	private Stage primaryStage;  	
-   	
+   	private Stage primaryStage;   	
     
     public CaixaController() {
-    	System.err.println("Executando construtor default CaixaController");
 		primaryStage = App.getPrimaryStage();		
     }
    
 	@FXML private void initialize() {
-		System.err.println("Executando initialize Caixa Controller");
-    	App.addOnChangeScreenListener(new App.OnChangeScreen() {
-			
+    	App.addOnChangeScreenListener(new App.OnChangeScreen() {			
 			@Override
-			public void onScreenChanged(String newScreen, Object userData) {
-				
-				System.out.println("Caixa Nova tela:" + newScreen + ", " + userData);
-				
+			public void onScreenChanged(String newScreen, Object userData) {				
+				System.out.println("Tela Caixa: " + newScreen + ", " + userData);				
 			}
 		});    	
     	
@@ -116,15 +106,12 @@ public class CaixaController {
 		listTabelaVendas = FXCollections.observableArrayList();
 		tabelaVendas.setItems(listTabelaVendas);
 		quantidadeTextField.setText("1");
-		quantidadeSlider(35);
-		
-	} 
-    
+		quantidadeSlider(1);		
+	}    
     
     @FXML
     protected void tabelaEstoqueOnMouseCliked() {
     	produtoEstoque = tabelaEstoque.getSelectionModel().getSelectedItem();
-    	System.out.println("Clicou na tabela estoque: " + produtoEstoque.getNome() + " quantidade: " + produtoEstoque.getQuantidadeEstoque());
     	if(produtoEstoque != null){
     		quantidadeSlider(produtoEstoque.getQuantidadeEstoque());    		
     	}
@@ -156,7 +143,7 @@ public class CaixaController {
 	    		atualizaTabelaVendas(produtoVenda);
 	    		tabelaVendas.setItems(listTabelaVendas);
 	    		
-	    		valorTotalCompraTextField.setText("R$ " + atualizaValorTotalCompra().toString());
+	    		valorTotalCompraTextField.setText("R$ " + String.format("%.2f", atualizaValorTotalCompra()));
     		}else {
     			alertMessage("Erro - Adicionar", "Adicionar Produto.", "O produto "
     					+ "(" + produtoEstoque.getNome() + ") não existe em estoque.", AlertType.ERROR);
@@ -187,7 +174,7 @@ public class CaixaController {
     			indice = buscaPorProdutoID(listTabelaVendas, produtoVenda);
     			listTabelaVendas.set(indice, produtoVenda);      		
     		}
-    		valorTotalCompraTextField.setText("R$ " + atualizaValorTotalCompra().toString());
+    		valorTotalCompraTextField.setText("R$ " + String.format("%.2f", atualizaValorTotalCompra()));
     	}else{
     		alertMessage("Erro - Remover", "Remover Produto.", "Selecione um produto da tabela "
     				+ "Vendas antes de \nclicar em remover.", AlertType.ERROR);
@@ -213,7 +200,7 @@ public class CaixaController {
     		
 			addItensVendaAoCarrinho();
 			
-			App.pagamentoController.getValorCompraTextField().setText(atualizaValorTotalCompra().toString());
+			App.pagamentoController.getValorCompraTextField().setText(String.format("%.2f", atualizaValorTotalCompra()));
 			
 			App.changeScreen(Tela.PAGAMENTO.getTela(), iCarrinho);
 			primaryStage.setTitle("Pagamento");
@@ -227,7 +214,6 @@ public class CaixaController {
     	if(listTabelaVendas.isEmpty()) {
     		listTabelaEstoque = FXCollections.observableArrayList(iProduto.listaTodos());		
     		tabelaEstoque.setItems(listTabelaEstoque);
-    		System.out.println("Atualizando a lista de produtos na tabela estoque.");
     	}else {
     		alertMessage("Erro - Atualizar", "Atualizar Produtos Estoque.", "Atualizar Produtos Estoque.", AlertType.ERROR);
     	}
@@ -253,10 +239,6 @@ public class CaixaController {
 			itemVenda.setQuantidade(produtoVendido.getQuantidadeEstoque());
 			iCarrinho.adiciona(itemVenda);
 		}
-    	System.out.println("Produtos no carrinho");
-    	for (ItemVenda produto : iCarrinho.listaTodos()) {
-			System.out.println("Produto ItemVenda: " + produto.getProduto().getNome());
-		};
     }
     
     private void atualizaTabelaEstoque(Produto produtoEstoque) {
@@ -484,14 +466,6 @@ public class CaixaController {
 		this.quantidadeTextField = quantidadeTextField;
 	}
 
-	public Label getInfoLabel() {
-		return infoLabel;
-	}
-
-	public void setInfoLabel(Label infoLabel) {
-		this.infoLabel = infoLabel;
-	}
-
 	public Slider getQuantidadeSlider() {
 		return quantidadeSlider;
 	}
@@ -560,9 +534,12 @@ public class CaixaController {
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
-
-
+	
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
+
+	public ICarrinho getiCarrinho() {
+		return iCarrinho;
+	}	
 }
