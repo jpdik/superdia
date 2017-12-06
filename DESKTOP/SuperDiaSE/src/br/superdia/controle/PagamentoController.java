@@ -74,7 +74,7 @@ public class PagamentoController {
 	    			System.out.println("exibir mensagem de erro informando que o valor recebido é menor do que o valor da compra");
 	    		}else {
 	    			Double troco = valorRecebido - valorCompra;
-	    			trocoTextField.setText(troco.toString());
+	    			trocoTextField.setText(String.format("%.2f", troco));
 	    		}
 				
 				System.out.println(valorRecebido);
@@ -102,28 +102,26 @@ public class PagamentoController {
 	    		//Alterando campos da janela caixa
 	    		App.caixaController.getListTabelaVendas().clear();
 	    		App.caixaController.getValorTotalCompraTextField().clear();
-	    		App.caixaController.getTabelaVendas().setItems(App.caixaController.getListTabelaVendas());
-	    		/*
-	    		App.caixaController.setProdutoEstoque(null);
-	    		App.caixaController.setProdutoVenda(null);
-	    		App.caixaController.getTabelaEstoque().getSelectionModel().clearSelection();*/
-	    		
+	    		App.caixaController.getTabelaVendas().setItems(App.caixaController.getListTabelaVendas());	    		
 	    		App.caixaController.getListTabelaEstoque().clear();
-	    		App.caixaController.getTabelaEstoque().setItems(App.caixaController.getListTabelaEstoque());	    		
-	    		App.caixaController.atualizarOnMouseClicked();
+	    		App.caixaController.getTabelaEstoque().setItems(App.caixaController.getListTabelaEstoque());
+	    		
+	    		
 	    		
 	    		alertMessage("Finalizado", null, "Compra concluida com SUCESSO.", AlertType.INFORMATION);	    		
+	    		
 	    		System.out.println("Usuario Logado: " + App.usuarioLogado);
 	    		for (ItemVenda iterable_element : iCarrinho.listaTodos()) {
 					System.out.println("No Pagamento Item Venda: " + iterable_element.getProduto().getNome());
 				}
+	    		
 	    		iCarrinho.finalizaCompra(App.usuarioLogado);
 	    		
+	    		App.caixaController.atualizarOnMouseClicked();
 	    		App.changeScreen(Tela.CAIXA.getTela());
 				primaryStage = App.getPrimaryStage();
 				primaryStage.setTitle("Caixa");
-				primaryStage.centerOnScreen();
-				
+				primaryStage.centerOnScreen();				
 	    	}
 	    }
 	    

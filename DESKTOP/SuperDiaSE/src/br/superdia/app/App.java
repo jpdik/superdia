@@ -95,7 +95,7 @@ public class App extends Application {
 		return primaryStage;
 	}
 	
-	//------------------------------
+	//-----------------------------
 	
 	private static ArrayList<OnChangeScreen> listeners = new ArrayList<>();
 	

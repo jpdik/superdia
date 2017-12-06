@@ -71,10 +71,12 @@ public class CaixaController {
    	
     
     public CaixaController() {
-		primaryStage = App.getPrimaryStage();
+    	System.err.println("Executando construtor default CaixaController");
+		primaryStage = App.getPrimaryStage();		
     }
    
-	@FXML private void initialize() {    	
+	@FXML private void initialize() {
+		System.err.println("Executando initialize Caixa Controller");
     	App.addOnChangeScreenListener(new App.OnChangeScreen() {
 			
 			@Override
@@ -197,15 +199,7 @@ public class CaixaController {
     
     @FXML
     protected void atualizarOnMouseClicked() {    	
-    	if(listTabelaVendas.isEmpty()) {
-    		listTabelaEstoque.clear();
-    		tabelaEstoque.setItems(listTabelaEstoque);
-    		listTabelaEstoque = FXCollections.observableArrayList(iProduto.listaTodos());		
-    		tabelaEstoque.setItems(listTabelaEstoque);
-    		System.out.println("Atualizando a lista de produtos na tabela estoque.");
-    	}else {
-    		alertMessage("Erro - Atualizar", "Atualizar Produtos Estoque.", "Atualizar Produtos Estoque.", AlertType.ERROR);
-    	}    	
+    	atualizaTabelaEstoque();
     }
     
     @FXML
@@ -229,6 +223,15 @@ public class CaixaController {
     	}
     }
     
+    private void atualizaTabelaEstoque() {
+    	if(listTabelaVendas.isEmpty()) {
+    		listTabelaEstoque = FXCollections.observableArrayList(iProduto.listaTodos());		
+    		tabelaEstoque.setItems(listTabelaEstoque);
+    		System.out.println("Atualizando a lista de produtos na tabela estoque.");
+    	}else {
+    		alertMessage("Erro - Atualizar", "Atualizar Produtos Estoque.", "Atualizar Produtos Estoque.", AlertType.ERROR);
+    	}
+    }
     private void alertMessage(String titulo, String header, String conteudo, AlertType alertType) {
 		Alert alert = new Alert(alertType);
 		alert.setTitle(titulo);

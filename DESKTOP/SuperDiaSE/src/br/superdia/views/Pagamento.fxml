@@ -27,9 +27,9 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="trocoTextField" editable="false" onMouseClicked="#trocoOnMouseCliked" prefHeight="46.0" prefWidth="370.0" promptText="Valor troco do cliente.">
+                  <TextField fx:id="trocoTextField" alignment="CENTER" editable="false" onMouseClicked="#trocoOnMouseCliked" prefHeight="46.0" prefWidth="370.0" promptText="Valor troco do cliente.">
                      <font>
-                        <Font name="System Bold Italic" size="18.0" />
+                        <Font name="System Bold Italic" size="20.0" />
                      </font>
                   </TextField>
                </children>
@@ -45,7 +45,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="valorCompraTextField" editable="false" prefHeight="32.0" prefWidth="406.0" promptText="R$ 00,00" />
+            <TextField fx:id="valorCompraTextField" alignment="CENTER" editable="false" prefHeight="32.0" prefWidth="406.0" promptText="R$ 00,00" />
          </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="112.0" prefHeight="46.0" prefWidth="568.0" spacing="20.0">
@@ -55,7 +55,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="valorRecebidoTextField" onKeyPressed="#valorRecebidoOnKeyPressed" prefHeight="32.0" prefWidth="407.0" promptText="R$ 00,00" />
+            <TextField fx:id="valorRecebidoTextField" alignment="CENTER" onKeyPressed="#valorRecebidoOnKeyPressed" prefHeight="32.0" prefWidth="407.0" promptText="R$ 00,00" />
          </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" layoutX="65.0" layoutY="77.0" prefHeight="35.0" prefWidth="520.0" spacing="24.0">
@@ -65,7 +65,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="numeroCartaoTextField" prefHeight="32.0" prefWidth="405.0" promptText="Campo não obrigatório" />
+            <TextField fx:id="numeroCartaoTextField" alignment="CENTER" prefHeight="32.0" prefWidth="405.0" promptText="Campo não obrigatório para compras em dinheiro." />
          </children>
       </HBox>
       <Button fx:id="concluirButton" layoutX="112.0" layoutY="312.0" mnemonicParsing="false" onAction="#concluirButtonOnAction" prefHeight="46.0" prefWidth="168.0" text="Concluir">
