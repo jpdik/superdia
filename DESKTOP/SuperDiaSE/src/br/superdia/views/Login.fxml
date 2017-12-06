@@ -23,11 +23,11 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="usuarioTextField" GridPane.columnIndex="1" />
-            <PasswordField fx:id="senhaPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="usuarioTextField" onKeyPressed="#usuarioOnKeyPressed" GridPane.columnIndex="1" />
+            <PasswordField fx:id="senhaPasswordField" onKeyPressed="#senhaOnKeyPressed" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
-                  <Button fx:id="entrarButton" mnemonicParsing="false" onAction="#entrarButtonOnAction" prefHeight="40.0" prefWidth="102.0" text="Entrar" textAlignment="CENTER">
+                  <Button fx:id="entrarButton" mnemonicParsing="false" onAction="#entrarButtonOnAction" onKeyPressed="#entrarOnKeyPressed" prefHeight="40.0" prefWidth="102.0" text="Entrar" textAlignment="CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -39,7 +39,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="cancelarButton" mnemonicParsing="false" onAction="#cancelarButtonOnAction" prefHeight="40.0" prefWidth="112.0" text="Cancelar" textAlignment="CENTER">
+                  <Button fx:id="cancelarButton" mnemonicParsing="false" onAction="#cancelarButtonOnAction" onKeyPressed="#cancelarOnKeyPressed" prefHeight="40.0" prefWidth="112.0" text="Cancelar" textAlignment="CENTER">
                      <font>
                         <Font size="14.0" />
                      </font>

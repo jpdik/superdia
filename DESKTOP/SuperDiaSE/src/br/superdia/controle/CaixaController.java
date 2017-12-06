@@ -15,7 +15,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -200,7 +199,7 @@ public class CaixaController {
     		
 			addItensVendaAoCarrinho();
 			
-			App.pagamentoController.getValorCompraTextField().setText(String.format("%.2f", atualizaValorTotalCompra()));
+			App.pagamentoController.getValorCompraTextField().setText("R$ " + String.format("%.2f", atualizaValorTotalCompra()));
 			
 			App.changeScreen(Tela.PAGAMENTO.getTela(), iCarrinho);
 			primaryStage.setTitle("Pagamento");
@@ -219,12 +218,7 @@ public class CaixaController {
     	}
     }
     private void alertMessage(String titulo, String header, String conteudo, AlertType alertType) {
-		Alert alert = new Alert(alertType);
-		alert.setTitle(titulo);
-		alert.setHeaderText(header);
-		alert.setContentText(conteudo);
-		alert.getModality();	
-		alert.showAndWait();
+		App.loginController.alertMessage(titulo, header, conteudo, alertType);
 	}
     
     //e viva a gambiarra
@@ -266,7 +260,7 @@ public class CaixaController {
     	return null;
     }
     
-    private Double atualizaValorTotalCompra() {
+    protected Double atualizaValorTotalCompra() {
     	Double somaPrecoCompra = 0.0;
     	for (Produto produto : listTabelaVendas) {
     		somaPrecoCompra += produto.getPreco();

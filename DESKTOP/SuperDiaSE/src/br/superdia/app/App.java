@@ -54,6 +54,7 @@ public class App extends Application {
 		case "pagamento":
 			primaryStage.setScene(pagamentoScene);
 			notifyAllListeners(Tela.PAGAMENTO.getTela(), userData);
+			pagamentoController.getValorRecebidoTextField().requestFocus();
 			break;
 		}
 	}

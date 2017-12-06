@@ -68,7 +68,7 @@
             <TextField fx:id="numeroCartaoTextField" alignment="CENTER" prefHeight="32.0" prefWidth="405.0" promptText="Campo não obrigatório para compras em dinheiro." />
          </children>
       </HBox>
-      <Button fx:id="concluirButton" layoutX="112.0" layoutY="312.0" mnemonicParsing="false" onAction="#concluirButtonOnAction" prefHeight="46.0" prefWidth="168.0" text="Concluir">
+      <Button fx:id="concluirButton" layoutX="112.0" layoutY="312.0" mnemonicParsing="false" onAction="#concluirButtonOnAction" onKeyPressed="#concluirOnKeyPressed" prefHeight="46.0" prefWidth="168.0" text="Concluir">
          <font>
             <Font size="18.0" />
          </font>
@@ -83,7 +83,7 @@
             <Tooltip text="Clique aqui ou pressione a tecla ENTER para concluir." />
          </tooltip>
       </Button>
-      <Button fx:id="cancelarButton" layoutX="309.0" layoutY="312.0" mnemonicParsing="false" onAction="#cancelarButtonOnAction" prefHeight="46.0" prefWidth="168.0" text="Cancelar">
+      <Button fx:id="cancelarButton" layoutX="309.0" layoutY="312.0" mnemonicParsing="false" onAction="#cancelarButtonOnAction" onKeyPressed="#cancelarOnKeyPressed" prefHeight="46.0" prefWidth="168.0" text="Cancelar">
          <font>
             <Font size="18.0" />
          </font>
