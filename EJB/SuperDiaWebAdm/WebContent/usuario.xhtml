@@ -12,13 +12,10 @@
 				<p:messages styleClass="erros"></p:messages>
 				<fieldset>
 					<legend>
-						<h:outputText value="Usuario" />
+						<h:outputText style="font-size: 25px"
+							value="#{empty usuarioMB.usuario.id ? 'Cadastrar Usuario' : 'Alterar Usuario'}">
+						</h:outputText>
 					</legend>
-
-					<h2>
-						<h:outputText
-							value="#{empty usuarioMB.usuario.id ? 'Cadastrar Usuario' : 'Alterar Usuario'}"></h:outputText>
-					</h2>
 
 					<div id="campos">
 						<p:outputLabel value="Login:" for="login" />
@@ -66,8 +63,8 @@
 							<f:ajax render=":cadastro"></f:ajax>
 						</h:commandLink>
 						<h:commandLink action="#{usuarioMB.remove(usuario)}"
-							value="Remover" styleClass="btn btn-danger">
-							<f:ajax render="@form"></f:ajax>
+							value="Remover" styleClass="btn btn-danger" onclick="return confirm('Deseja realmente excluir o usuario?');">
+							<f:ajax render="@form :lista"></f:ajax>
 						</h:commandLink>
 					</p:column>
 				</p:dataTable>
