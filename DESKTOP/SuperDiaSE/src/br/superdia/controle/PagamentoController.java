@@ -3,6 +3,7 @@ package br.superdia.controle;
 import br.com.interfacebean.ICarrinho;
 import br.com.modelo.ItemVenda;
 import br.superdia.app.App;
+import br.superdia.app.OnChangeScreen;
 import br.superdia.enumeracoes.Tela;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -35,18 +36,19 @@ public class PagamentoController {
     private ICarrinho iCarrinho = null;
 	
     public PagamentoController() {
-		primaryStage = App.getPrimaryStage();
+    	primaryStage = App.gerenciadorDeJanelas.getPrimaryStage();
     }
 
 	@FXML
     private void initialize() {
-    	App.addOnChangeScreenListener(new App.OnChangeScreen() {				
+		App.gerenciadorDeJanelas.addOnChangeScreenListener(new OnChangeScreen() {
+			
 			@Override
 			public void onScreenChanged(String newScreen, Object userData) {
 				System.out.println("Pagamento Nova tela:" + newScreen + ", " + userData);
-				iCarrinho = (ICarrinho) userData;
+				iCarrinho = (ICarrinho) userData;				
 			}
-		});	    	
+		});		   	
 	}
 	
     @FXML
@@ -92,12 +94,13 @@ public class PagamentoController {
     }
     
     private void cancelarCompra() {
-    	App.changeScreen(Tela.CAIXA.getTela());
-		primaryStage = App.getPrimaryStage();
+    	App.gerenciadorDeJanelas.changeScreen(Tela.CAIXA.getTela());
+    	primaryStage = App.gerenciadorDeJanelas.getPrimaryStage();
+    	
 		primaryStage.setTitle("Caixa");
 		primaryStage.centerOnScreen();
 		limpaCampos();
-		App.caixaController.getTabelaVendas().requestFocus();
+		App.gerenciadorDeJanelas.getCaixaController().getTabelaVendas().requestFocus();		
     }
 
     private void concluirCompra() {
@@ -106,27 +109,28 @@ public class PagamentoController {
     	}else {
     		limpaCampos();
     		//Alterando campos da janela caixa
-    		App.caixaController.getListTabelaVendas().clear();
-    		App.caixaController.getValorTotalCompraTextField().clear();
-    		App.caixaController.getTabelaVendas().setItems(App.caixaController.getListTabelaVendas());	    		
-    		App.caixaController.getListTabelaEstoque().clear();
-    		App.caixaController.getTabelaEstoque().setItems(App.caixaController.getListTabelaEstoque());	    		
-    		
+    		App.gerenciadorDeJanelas.getCaixaController().getListTabelaVendas().clear();
+    		App.gerenciadorDeJanelas.getCaixaController().getValorTotalCompraTextField().clear();
+    		App.gerenciadorDeJanelas.getCaixaController().getTabelaVendas().setItems(App.gerenciadorDeJanelas.getCaixaController().getListTabelaVendas());	    		
+    		App.gerenciadorDeJanelas.getCaixaController().getListTabelaEstoque().clear();
+    		App.gerenciadorDeJanelas.getCaixaController().getTabelaEstoque().setItems(App.gerenciadorDeJanelas.getCaixaController().getListTabelaEstoque());	 
+    		App.gerenciadorDeJanelas.getCaixaController().getListTabelaVendas().clear();
+    	    		
     		alertMessage("Finalizado", null, "Compra concluida com SUCESSO.", AlertType.INFORMATION);	    		
     		
-    		System.out.println("Usuario Logado: " + App.usuarioLogado);
+    		System.out.println("Usuario Logado: " + App.gerenciadorDeJanelas.getUsuarioLogado());
     		for (ItemVenda iterable_element : iCarrinho.listaTodos()) {
 				System.out.println("No Pagamento Item Venda: " + iterable_element.getProduto().getNome());
 			}
     		
-    		iCarrinho.finalizaCompra(App.usuarioLogado);
+    		iCarrinho.finalizaCompra(App.gerenciadorDeJanelas.getUsuarioLogado());
     		
-    		App.caixaController.atualizarOnMouseClicked();
-    		App.changeScreen(Tela.CAIXA.getTela());
-			primaryStage = App.getPrimaryStage();
+    		App.gerenciadorDeJanelas.getCaixaController().atualizarOnMouseClicked();
+    		App.gerenciadorDeJanelas.changeScreen(Tela.CAIXA.getTela());
+			primaryStage = App.gerenciadorDeJanelas.getPrimaryStage();
 			primaryStage.setTitle("Caixa");
-			primaryStage.centerOnScreen();				
-    	}
+			primaryStage.centerOnScreen();
+    	}    	
     }
     
     private String trocaVirgulaPorPonto(String valor) {
@@ -134,14 +138,14 @@ public class PagamentoController {
 	}
 	
 	private void alertMessage(String titulo, String header, String conteudo, AlertType alertType) {
-		App.loginController.alertMessage(titulo, header, conteudo, alertType);
+		App.gerenciadorDeJanelas.getLoginController().alertMessage(titulo, header, conteudo, alertType);
 	}
 			
 	private void calculaTroco() {
 		Double valorRecebido, valorCompra;
 		try {
 			valorRecebido = Double.parseDouble(trocaVirgulaPorPonto(valorRecebidoTextField.getText()));
-			valorCompra = App.caixaController.atualizaValorTotalCompra();
+			valorCompra = App.gerenciadorDeJanelas.getCaixaController().atualizaValorTotalCompra();
 			
 			if(valorRecebido < valorCompra) {
 				alertMessage("ERRO", "Valor Menor", "O valor recebido e menor que o valor da compra.", AlertType.ERROR);

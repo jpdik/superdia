@@ -9,6 +9,7 @@ import br.com.interfacebean.IProduto;
 import br.com.modelo.ItemVenda;
 import br.com.modelo.Produto;
 import br.superdia.app.App;
+import br.superdia.app.OnChangeScreen;
 import br.superdia.enumeracoes.Tela;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -65,16 +66,19 @@ public class CaixaController {
    	private Stage primaryStage;   	
     
     public CaixaController() {
-		primaryStage = App.getPrimaryStage();		
+    	primaryStage = App.gerenciadorDeJanelas.getPrimaryStage();
     }
    
 	@FXML private void initialize() {
-    	App.addOnChangeScreenListener(new App.OnChangeScreen() {			
+		
+		App.gerenciadorDeJanelas.addOnChangeScreenListener(new OnChangeScreen() {
+			
 			@Override
-			public void onScreenChanged(String newScreen, Object userData) {				
-				System.out.println("Tela Caixa: " + newScreen + ", " + userData);				
+			public void onScreenChanged(String newScreen, Object userData) {
+				System.out.println("Tela Caixa: " + newScreen + ", " + userData);
+				
 			}
-		});    	
+		});
     	
     	try {
     		ic = new InitialContext();
@@ -198,10 +202,9 @@ public class CaixaController {
     	if(!listTabelaVendas.isEmpty()) {    		
     		
 			addItensVendaAoCarrinho();
+			App.gerenciadorDeJanelas.getPagamentoController().getValorCompraTextField().setText("R$ " + String.format("%.2f", atualizaValorTotalCompra()));
+			App.gerenciadorDeJanelas.changeScreen(Tela.PAGAMENTO.getTela(), iCarrinho);
 			
-			App.pagamentoController.getValorCompraTextField().setText("R$ " + String.format("%.2f", atualizaValorTotalCompra()));
-			
-			App.changeScreen(Tela.PAGAMENTO.getTela(), iCarrinho);
 			primaryStage.setTitle("Pagamento");
 			primaryStage.centerOnScreen();
     	}else {
@@ -218,7 +221,7 @@ public class CaixaController {
     	}
     }
     private void alertMessage(String titulo, String header, String conteudo, AlertType alertType) {
-		App.loginController.alertMessage(titulo, header, conteudo, alertType);
+    	App.gerenciadorDeJanelas.getLoginController().alertMessage(titulo, header, conteudo, alertType);
 	}
     
     //e viva a gambiarra

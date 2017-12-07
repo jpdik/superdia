@@ -6,6 +6,8 @@ import javax.naming.NamingException;
 import br.com.interfacebean.IAutentica;
 import br.com.modelo.Usuario;
 import br.superdia.app.App;
+import br.superdia.app.GerenciadorDeJanelas;
+import br.superdia.app.OnChangeScreen;
 import br.superdia.enumeracoes.Tela;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -42,12 +44,16 @@ public class LoginController {
 
 	@FXML
     private void initialize() {
-		App.addOnChangeScreenListener(new App.OnChangeScreen() {			
+		primaryStage = App.gerenciadorDeJanelas.getPrimaryStage();
+		App.gerenciadorDeJanelas.addOnChangeScreenListener(new OnChangeScreen() {
+			
 			@Override
 			public void onScreenChanged(String newScreen, Object userData) {
-				System.out.println("Tela Login: " + newScreen + ", " + userData);				
+				System.out.println("Tela Login: " + newScreen + ", " + userData);
+				
 			}
 		});
+		
 		
     	try {
     		ic = new InitialContext();
@@ -132,11 +138,11 @@ public class LoginController {
     		alertMessage("Erro - Autenticação", "Usuário Inexistente.", null, AlertType.ERROR);
     	}else if(usuario.getPerfil().equalsIgnoreCase("Caixa")) {
     		System.out.println("Ir para o caixa realizar a compra");
-    		App.usuarioLogado = usuario;
-    		App.changeScreen(Tela.CAIXA.getTela());
-    		App.caixaController.getOperadorTextField().setText(usuario.getUsuario());
-    		App.caixaController.getTabelaEstoque().requestFocus();
-			primaryStage = App.getPrimaryStage();
+    		App.gerenciadorDeJanelas.setUsuarioLogado(usuario);
+    		App.gerenciadorDeJanelas.changeScreen(Tela.CAIXA.getTela());
+    		App.gerenciadorDeJanelas.getCaixaController().getOperadorTextField().setText(usuario.getUsuario());
+    		App.gerenciadorDeJanelas.getCaixaController().getTabelaEstoque().requestFocus();
+    		primaryStage = App.gerenciadorDeJanelas.getPrimaryStage();    		
 			primaryStage.setTitle("Caixa");
 			primaryStage.centerOnScreen();				
     	}else {
