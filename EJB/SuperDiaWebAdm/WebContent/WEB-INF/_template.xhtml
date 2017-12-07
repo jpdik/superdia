@@ -31,17 +31,10 @@
 						
 					<p:menuitem value="Produto" action="produto?faces-redirect=true"
 						update="messages" icon="ui-icon-suitcase" />
+						
+					<p:menuitem value="Vendas" action="vendas?faces-redirect=true"
+						update="messages" icon="ui-icon-cart" />
 					
-					<p:submenu label="Vendas" icon="ui-icon-cart">
-						<p:menuitem value="Cadastrar" action="#{menuView.save}"
-							update="messages" icon="ui-icon-disk" />
-						<p:menuitem value="Alterar" action="#{menuView.update}"
-							update="messages" icon="ui-icon-transfer-e-w" />
-						<p:menuitem value="Excluir" action="#{menuView.update}"
-							update="messages" icon="ui-icon-trash" />
-						<p:menuitem value="Listar Todos" action="#{menuView.update}"
-							update="messages" icon="ui-icon-info" />
-					</p:submenu>
 					<p:separator />
 					<p:menuitem value="Sair" action="#{loginMB.logout}"
 						update="messages" icon="ui-icon-closethick" />

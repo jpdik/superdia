@@ -1,50 +1,100 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-xmlns:f="http://java.sun.com/jsf/core"
-xmlns:h="http://java.sun.com/jsf/html">
+xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<title>Vendas realizadas</title>
 </h:head>
 
-<h:body>
-	<h:form id="lista">
-		<h2>Vendas realizadas</h2>
-		<h:dataTable value="#{vendaMB.vendas}" var="v" border="1">
-			
-			<h:column>
-				<f:facet name="header">Id</f:facet>
-				#{v.id}
-			</h:column>
-			
-			<h:column>
-				<f:facet name="header">Cliente</f:facet>
-				#{v.usuario.usuario}
-			</h:column>
-			
-			<h:column>
-				<f:facet name="header">data</f:facet>
-				<h:outputText value="#{v.data.time}">
-					<f:convertDateTime timeZone="America/Sao_Paulo" pattern="dd-MM-yyyy HH:mm"/>
+<ui:composition template="/WEB-INF/_template.xhtml">
+	<ui:define name="corpo">
+		<div id="main">
+			<h:form id="lista">
+				<h:outputText style="font-size: 25px"
+					value="Relatório de vendas">
 				</h:outputText>
-			</h:column>
-			
-			<h:column>
-				<f:facet name="header">Lista de Produtos</f:facet>
-				<h:selectOneMenu>
-					<f:selectItem itemLabel="Qtde - Produto" />
-					<f:selectItems value="#{v.itensVenda}" var="item"
-						itemValue="#{item.quantidade}" itemLabel="#{ item.quantidade} - #{item.produto.nome}" />								
-				</h:selectOneMenu>
-			</h:column>
-			
-			<h:column>
-				<f:facet name="header">Ações</f:facet>
-				<h:commandLink value="Remover" action="#{vendaMB.remove(v)}"/>
-			</h:column>
-		</h:dataTable>
-	</h:form>
-	
-</h:body>
+				<p:dataTable value="#{vendaMB.vendas}"  var="v" styleClass="dados" rowClasses="impar, par" paginator="true"
+					rows="10">
+					
+					<p:column>
+						<f:facet name="header">Id</f:facet>
+						#{v.id}
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Cliente</f:facet>
+						#{v.usuario.usuario}
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Perfil</f:facet>
+						#{v.usuario.perfil}
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Valor Total</f:facet>
+						<h:outputText value="#{vendaMB.valorTotal(v.itensVenda)}" >
+							<f:convertNumber pattern="R$ #0.00"/>
+						</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Data e Hora</f:facet>
+						<h:outputText value="#{v.data.time}">
+							<f:convertDateTime timeZone="America/Sao_Paulo" pattern="dd/MM/yyyy - HH:mm:ss" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Produtos</f:facet>
+						<p:commandButton id="produtosBtn" value="Produtos" styleClass="btn" icon="ui-icon-person"/>
+						<p:overlayPanel for="produtosBtn" hideEffect="fade" dynamic="true" style="width:600px">
+					        <p:dataTable var="item" value="#{v.itensVenda}" styleClass="dados" rowClasses="impar, par" paginator="true"
+					rows="10" >
+					            <p:column headerText="Id">
+					                <h:outputText value="#{item.produto.id}" />
+					            </p:column>
+					            
+					            <p:column headerText="Nome">
+					                <h:outputText value="#{item.produto.nome}" />
+					            </p:column>
+					            
+					            <p:column headerText="Descrição">
+					                <h:outputText value="#{item.produto.descricao}" />
+					            </p:column>
+					            
+					            <p:column>
+									<f:facet name="header">Preço Unitário</f:facet>
+									
+									<h:outputText value="#{item.produto.preco}" >
+										<f:convertNumber pattern="R$ #0.00"/>
+									</h:outputText>
+									
+								</p:column>
+					            
+					            <p:column headerText="Quantidade">
+					                <h:outputText value="#{item.quantidade}" />
+					            </p:column>					            
+					 
+					        </p:dataTable>
+    					</p:overlayPanel>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Ações</f:facet>
+						<h:commandLink value="Remover" action="#{vendaMB.remove(v)}" styleClass="btn btn-danger"
+							onclick="return confirm('Deseja realmente excluir esta venda?');">
+							<f:ajax render="@form :lista"></f:ajax>
+						</h:commandLink>
+					</p:column>
+					
+				</p:dataTable>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>	
 </html>
