@@ -8,8 +8,8 @@ import br.com.interfacebean.ICarrinho;
 import br.com.interfacebean.IProduto;
 import br.com.modelo.ItemVenda;
 import br.com.modelo.Produto;
-import br.superdia.app.App;
-import br.superdia.app.OnChangeScreen;
+import br.superdia.app.SuperdiaApp;
+import br.superdia.app.utils.OnChangeScreen;
 import br.superdia.enumeracoes.Tela;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -66,16 +66,17 @@ public class CaixaController {
    	private Stage primaryStage;   	
     
     public CaixaController() {
-    	primaryStage = App.gerenciadorDeJanelas.getPrimaryStage();
+    	primaryStage = SuperdiaApp.gerenciadorDeJanelas.getPrimaryStage();
     }
    
 	@FXML private void initialize() {
 		
-		App.gerenciadorDeJanelas.addOnChangeScreenListener(new OnChangeScreen() {
+		SuperdiaApp.gerenciadorDeJanelas.addOnChangeScreenListener(new OnChangeScreen() {
 			
 			@Override
 			public void onScreenChanged(String newScreen, Object userData) {
-				System.out.println("Tela Caixa: " + newScreen + ", " + userData);
+				if(newScreen.equals(Tela.CAIXA.getTela()))
+					System.out.println("Tela Caixa: " + newScreen + ", " + userData);
 				
 			}
 		});
@@ -202,8 +203,8 @@ public class CaixaController {
     	if(!listTabelaVendas.isEmpty()) {    		
     		
 			addItensVendaAoCarrinho();
-			App.gerenciadorDeJanelas.getPagamentoController().getValorCompraTextField().setText("R$ " + String.format("%.2f", atualizaValorTotalCompra()));
-			App.gerenciadorDeJanelas.changeScreen(Tela.PAGAMENTO.getTela(), iCarrinho);
+			SuperdiaApp.gerenciadorDeJanelas.getPagamentoController().getValorCompraTextField().setText("R$ " + String.format("%.2f", atualizaValorTotalCompra()));
+			SuperdiaApp.gerenciadorDeJanelas.changeScreen(Tela.PAGAMENTO.getTela(), iCarrinho);
 			
 			primaryStage.setTitle("Pagamento");
 			primaryStage.centerOnScreen();
@@ -221,7 +222,7 @@ public class CaixaController {
     	}
     }
     private void alertMessage(String titulo, String header, String conteudo, AlertType alertType) {
-    	App.gerenciadorDeJanelas.getLoginController().alertMessage(titulo, header, conteudo, alertType);
+    	SuperdiaApp.gerenciadorDeJanelas.getLoginController().alertMessage(titulo, header, conteudo, alertType);
 	}
     
     //e viva a gambiarra

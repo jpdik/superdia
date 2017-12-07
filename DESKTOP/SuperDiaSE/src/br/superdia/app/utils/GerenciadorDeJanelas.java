@@ -1,4 +1,4 @@
-package br.superdia.app;
+package br.superdia.app.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class GerenciadorDeJanelas {
 	}
 	
 	public void changeScreen(String screen, Object userData) {
-		switch (screen) {
+		switch (screen) {		
 		case "login":
 			primaryStage.setScene(loginScene);
 			notifyAllListeners(Tela.LOGIN.getTela(), userData);

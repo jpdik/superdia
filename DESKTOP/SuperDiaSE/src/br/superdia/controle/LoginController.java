@@ -5,18 +5,17 @@ import javax.naming.NamingException;
 
 import br.com.interfacebean.IAutentica;
 import br.com.modelo.Usuario;
-import br.superdia.app.App;
-import br.superdia.app.GerenciadorDeJanelas;
-import br.superdia.app.OnChangeScreen;
+import br.superdia.app.SuperdiaApp;
+import br.superdia.app.utils.OnChangeScreen;
 import br.superdia.enumeracoes.Tela;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -44,12 +43,13 @@ public class LoginController {
 
 	@FXML
     private void initialize() {
-		primaryStage = App.gerenciadorDeJanelas.getPrimaryStage();
-		App.gerenciadorDeJanelas.addOnChangeScreenListener(new OnChangeScreen() {
+		primaryStage = SuperdiaApp.gerenciadorDeJanelas.getPrimaryStage();
+		SuperdiaApp.gerenciadorDeJanelas.addOnChangeScreenListener(new OnChangeScreen() {
 			
 			@Override
 			public void onScreenChanged(String newScreen, Object userData) {
-				System.out.println("Tela Login: " + newScreen + ", " + userData);
+				if(newScreen.equals(Tela.LOGIN.getTela()))
+					System.out.println("Tela Login: " + newScreen + ", " + userData);
 				
 			}
 		});
@@ -65,17 +65,17 @@ public class LoginController {
 	}
 	
     @FXML
-    protected void entrarButtonOnAction() {
+    private void entrarButtonOnAction() {
     	fazerLogin();
     }
     
     @FXML
-    protected void cancelarButtonOnAction() {
+    private void cancelarButtonOnAction() {
     	limparCampos();
     }
     
     @FXML
-    protected void entrarOnKeyPressed(KeyEvent event) {
+    private void entrarOnKeyPressed(KeyEvent event) {
     	if(event.getCode() == KeyCode.ENTER) {
     		fazerLogin();
     	}else if(event.getCode() == KeyCode.ESCAPE) {
@@ -88,7 +88,7 @@ public class LoginController {
     }
     
     @FXML
-    protected void cancelarOnKeyPressed(KeyEvent event) {
+    private void cancelarOnKeyPressed(KeyEvent event) {
     	if(event.getCode() == KeyCode.ENTER) {
 			limparCampos();
     	}else if(event.getCode() == KeyCode.ESCAPE) {
@@ -97,7 +97,7 @@ public class LoginController {
     }
     
     @FXML
-    protected void usuarioOnKeyPressed(KeyEvent event){
+    private void usuarioOnKeyPressed(KeyEvent event){
     	if(event.getCode() == KeyCode.ENTER) {
 			entrarButton.requestFocus();
     	}else if(event.getCode() == KeyCode.ESCAPE) {
@@ -106,7 +106,7 @@ public class LoginController {
     }
     
     @FXML
-    protected void senhaOnKeyPressed(KeyEvent event){
+    private void senhaOnKeyPressed(KeyEvent event){
     	if(event.getCode() == KeyCode.ENTER) {
 			entrarButton.requestFocus();
     	}else if(event.getCode() == KeyCode.ESCAPE) {
@@ -133,16 +133,14 @@ public class LoginController {
     	usuario.setUsuario(usuarioTextField.getText());
     	usuario.setSenha(senhaPasswordField.getText());
     	usuario = iAutentica.autentica(usuario);
-    	System.out.println(usuario);
     	if(usuario == null) {
     		alertMessage("Erro - Autenticação", "Usuário Inexistente.", null, AlertType.ERROR);
     	}else if(usuario.getPerfil().equalsIgnoreCase("Caixa")) {
-    		System.out.println("Ir para o caixa realizar a compra");
-    		App.gerenciadorDeJanelas.setUsuarioLogado(usuario);
-    		App.gerenciadorDeJanelas.changeScreen(Tela.CAIXA.getTela());
-    		App.gerenciadorDeJanelas.getCaixaController().getOperadorTextField().setText(usuario.getUsuario());
-    		App.gerenciadorDeJanelas.getCaixaController().getTabelaEstoque().requestFocus();
-    		primaryStage = App.gerenciadorDeJanelas.getPrimaryStage();    		
+    		SuperdiaApp.gerenciadorDeJanelas.setUsuarioLogado(usuario);
+    		SuperdiaApp.gerenciadorDeJanelas.changeScreen(Tela.CAIXA.getTela());
+    		SuperdiaApp.gerenciadorDeJanelas.getCaixaController().getOperadorTextField().setText(usuario.getUsuario());
+    		SuperdiaApp.gerenciadorDeJanelas.getCaixaController().getTabelaEstoque().requestFocus();
+    		primaryStage = SuperdiaApp.gerenciadorDeJanelas.getPrimaryStage();    		
 			primaryStage.setTitle("Caixa");
 			primaryStage.centerOnScreen();				
     	}else {
@@ -215,4 +213,5 @@ public class LoginController {
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
+	
 }

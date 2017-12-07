@@ -1,14 +1,14 @@
 package br.superdia.app;
 	
+import br.superdia.app.utils.GerenciadorDeJanelas;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 
-public class App extends Application {
+public class SuperdiaApp extends Application {
 	
 	public static GerenciadorDeJanelas gerenciadorDeJanelas;	
-	private Stage primaryStage;
-	
+	private Stage primaryStage;	
 	
 	@Override
 	public void start(Stage primaryStage) {

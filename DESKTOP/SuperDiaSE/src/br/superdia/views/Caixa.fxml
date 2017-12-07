@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="janelaCaixaAnchorPane" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.superdia.controle.CaixaController">
+<AnchorPane fx:id="janelaCaixaAnchorPane" prefHeight="768.0" prefWidth="1024.0" stylesheets="@css/Caixa.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.superdia.controle.CaixaController">
    <children>
       <HBox alignment="CENTER" layoutX="19.0" layoutY="31.0" prefHeight="55.0" prefWidth="997.0" spacing="15.0">
          <children>
