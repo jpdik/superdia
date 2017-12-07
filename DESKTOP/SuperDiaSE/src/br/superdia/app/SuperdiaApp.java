@@ -13,7 +13,7 @@ public class SuperdiaApp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			this.gerenciadorDeJanelas = new GerenciadorDeJanelas(primaryStage);
+			SuperdiaApp.gerenciadorDeJanelas = new GerenciadorDeJanelas(primaryStage);
 			this.primaryStage = gerenciadorDeJanelas.getPrimaryStage();
 			gerenciadorDeJanelas.janelasApp();
 			
