@@ -10,7 +10,7 @@
 	<ui:define name="corpo">
 		<div id="main">
 			<h:form id="cadastro">
-				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+				<p:messages id="messages" autoUpdate="true" closable="true" />
 				<fieldset>
 					<legend>
 						<h:outputText style="font-size: 25px"
@@ -19,21 +19,23 @@
 					</legend>
 					
 					<div id="campos">
-						<h:outputLabel value="Nome" for="nome"></h:outputLabel>
-						<h:inputText value="#{produtoMB.produto.nome}" id="nome" required="true"/>
+						<p:outputLabel value="Nome" for="nome"></p:outputLabel>
+						<p:inputText value="#{produtoMB.produto.nome}" id="nome" required="true"
+						requiredMessage="Informe um nome para o produto!"/>
 						
-						<h:outputLabel value="Descricão" for="descricao"></h:outputLabel>
-						<h:inputText value="#{produtoMB.produto.descricao}" id="descricao"></h:inputText>
+						<p:outputLabel value="Descricão" for="descricao"></p:outputLabel>
+						<p:inputText value="#{produtoMB.produto.descricao}" id="descricao"></p:inputText>
 						
-						<h:outputLabel value="Preço" for="preco"></h:outputLabel>
-						<h:inputText value="#{produtoMB.produto.preco}" id="preco"></h:inputText>
+						<p:outputLabel value="Preço" for="preco"></p:outputLabel>
+						<p:inputText value="#{produtoMB.produto.preco}" id="preco"></p:inputText>
 						
-						<h:outputLabel value="Estoque mínimo" for="estoqueMinimo"></h:outputLabel>
-						<h:inputText value="#{produtoMB.produto.estoqueMinimo}" id="estoqueMinimo"></h:inputText>
+						<p:outputLabel value="Estoque mínimo" for="estoqueMinimo"></p:outputLabel>
+						<p:inputText value="#{produtoMB.produto.estoqueMinimo}" id="estoqueMinimo"></p:inputText>
 						
-						<h:outputLabel value="Quantidade em estoque" for="qtde"></h:outputLabel>
-						<h:inputText value="#{produtoMB.produto.quantidadeEstoque}" id="qtde"></h:inputText>
+						<p:outputLabel value="Quantidade em estoque" for="qtde"></p:outputLabel>
+						<p:inputText value="#{produtoMB.produto.quantidadeEstoque}" id="qtde"></p:inputText>
 					</div>
+					
 					<div id="botoes">	
 						<h:commandButton value="Gravar" action="#{produtoMB.gravar}">
 							<f:ajax execute="@form" render=":cadastro :lista"></f:ajax>	
@@ -103,7 +105,7 @@
 						
 						<h:commandLink value="Remover" action="#{produtoMB.remove(p)}" styleClass="btn btn-danger"
 							onclick="return confirm('Deseja realmente excluir o produto?');">
-							<f:ajax render="@form"></f:ajax>
+							<f:ajax render="@form :lista"></f:ajax>
 						</h:commandLink>
 						
 					</p:column>

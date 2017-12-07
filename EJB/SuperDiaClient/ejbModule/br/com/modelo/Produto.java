@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Produto implements Serializable {
@@ -16,10 +18,19 @@ public class Produto implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull(message="Defina um nome para o produto!")
 	private String nome;
 	private String descricao;
+	
+	@Min(value=0, message="O preço do produto deve ser válido!")
+	@NotNull(message="Preço do produto não pode ser vazio!")
 	private Double preco;
+	
+	@Min(value=0, message="Estoque mínimo não de ver negativo!")
 	private Integer estoqueMinimo;
+	
+	@Min(value=0, message="Quantidade do produto em estoque não de ver negativa!")
+	@NotNull(message="Necessário informar a quantidade em estoque!")
 	private Integer quantidadeEstoque;
 	
 	public Long getId() {

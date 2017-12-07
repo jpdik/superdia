@@ -34,13 +34,29 @@ public class CarrinhoBean implements ICarrinho{
 	public boolean adiciona(ItemVenda itemVenda) {
 		int qtdeProduto = itemVenda.getProduto().getQuantidadeEstoque();
 		
-		// Verifica se há produto suficiente no estoque, caso não tenha retorna false
-		if (itemVenda.getQuantidade() <= 0 || qtdeProduto <= 0 ||
-				qtdeProduto < itemVenda.getQuantidade())
-			
+		// Verifica quantidade adicionada e estoque do produto são maiores que zero
+		if (itemVenda.getQuantidade() <= 0 || qtdeProduto <= 0)
 			return false;
 		
-		return itensVenda.add(itemVenda);
+		// Verifica se o carrinho já contém o produto
+		boolean produtoNoCarrinho = itensVenda.contains(itemVenda);		
+		if(produtoNoCarrinho){
+			for(ItemVenda i: itensVenda) {
+				if (i.equals(itemVenda)) {
+					itemVenda.setQuantidade(i.getQuantidade() + itemVenda.getQuantidade());
+					break;
+				}
+					
+			}
+		}
+		
+		// Verifica se há produto suficiente no estoque, caso não tenha retorna false
+		if (qtdeProduto < itemVenda.getQuantidade()) return false;
+		
+		if (produtoNoCarrinho) {
+			return itensVenda.remove(itemVenda) && itensVenda.add(itemVenda);
+		}else
+			return itensVenda.add(itemVenda);
 	}
 
 	@Override
