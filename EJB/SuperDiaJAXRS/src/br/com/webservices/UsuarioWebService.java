@@ -43,7 +43,7 @@ public class UsuarioWebService {
     	if(usuario != null)
     		return usuario.toString();
     	else
-    		return "Falha na Autenticação.";
+    		return MessagensJSON.ERRO_USUARIO_INVALIDO.getMensagem();
     }
     
     @POST
