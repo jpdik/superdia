@@ -57,11 +57,11 @@ public class UsuarioWebService {
     		return "Falha no Cadastro(usuário já existente).";
     }
     
-    @GET
-    @Produces("text/plain")
-    @Path("/alterar/{usuarioAntigo}/{senhaAntiga}/{novoUsuario}/{novaSenha}")
-    public String Alterar(@PathParam("usuarioAntigo") String oldUser, @PathParam("senhaAntiga") String oldPass,
-    		@PathParam("novoUsuario") String newUser, @PathParam("novaSenha") String newPass) {
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/alterar")
+    public String Alterar(@FormParam("usuarioAntigo") String oldUser, @FormParam("senhaAntiga") String oldPass,
+    		@FormParam("novoUsuario") String newUser, @FormParam("novaSenha") String newPass) {
     	Usuario usuario = new Usuario(oldUser, oldPass);
     	usuario = iautentica.autentica(usuario);
     	if(usuario != null)
