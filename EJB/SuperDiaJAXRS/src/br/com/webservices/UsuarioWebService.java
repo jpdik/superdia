@@ -3,6 +3,7 @@ package br.com.webservices;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.swing.plaf.metal.MetalPopupMenuSeparatorUI;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -52,9 +53,9 @@ public class UsuarioWebService {
     public String Cadastrar(@FormParam("usuario") String user, @FormParam("senha") String pass) {
     	Usuario usuario = new Usuario(user, pass);
     	if(icliente.autoAdiciona(usuario))
-    		return "Cadastrado com sucesso!";
+    		return MessagensJSON.USUARIO_CADASTRADO_SUCESSO.getMensagem();
     	else
-    		return "Falha no Cadastro(usuário já existente).";
+    		return MessagensJSON.USUARIO_CADASTRADO_FALHA.getMensagem();
     }
     
     @POST
