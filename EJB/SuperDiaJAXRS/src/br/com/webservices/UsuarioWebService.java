@@ -16,7 +16,7 @@ import br.com.interfacebean.ICliente;
 import br.com.modelo.Usuario;
  
 /**
- * @author Joao_Paulo
+ * @author Deborah
  *
  *	ATENÇÃO: Ao realizarem alterações aqui, o servidor glassfish precisa ter seus projetos
  *	limpos (dar um clean em (Project>Clean...) e reiniciado pelo restart. Senão o WebService
@@ -34,10 +34,10 @@ public class UsuarioWebService {
     @EJB
     private ICliente icliente;
     
-    @GET
-    @Produces("text/plain")
-    @Path("/logar/{usuario}/{senha}")
-    public String Logar(@PathParam("usuario") String user, @PathParam("senha") String pass) {
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/logar")
+    public String Logar(@FormParam("usuario") String user, @FormParam("senha") String pass) {
     	Usuario usuario = new Usuario(user, pass);
     	usuario = iautentica.autentica(usuario);
     	if(usuario != null)
