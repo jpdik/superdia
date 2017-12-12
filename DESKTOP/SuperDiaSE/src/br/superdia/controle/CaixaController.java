@@ -9,6 +9,7 @@ import br.com.interfacebean.IProduto;
 import br.com.modelo.ItemVenda;
 import br.com.modelo.Produto;
 import br.superdia.app.SuperdiaApp;
+import br.superdia.app.utils.GerenciadorDeJanelas;
 import br.superdia.app.utils.OnChangeScreen;
 import br.superdia.enumeracoes.Tela;
 import javafx.beans.value.ObservableValue;
@@ -38,10 +39,12 @@ public class CaixaController {
     private TableColumn<Produto, Long> idVendaTableColumn, idEstoqueTableColumn;
     
     @FXML 
-    private TableColumn<Produto, Integer> quantidadeVendaTableColumn, estoqueMinimoEstoqueTableColumn,quantidadeEstoqueTableColumn, estoqueMinimoVendaTableColumn;
+    private TableColumn<Produto, Integer> quantidadeVendaTableColumn, estoqueMinimoEstoqueTableColumn,
+    quantidadeEstoqueTableColumn, estoqueMinimoVendaTableColumn;
 
     @FXML 
-    private TableColumn<Produto, String> nomeEstoqueTableColumn, nomeVendaTableColumn, descricaoEstoqueTableColumn, descricaoVendaTableColumn;
+    private TableColumn<Produto, String> nomeEstoqueTableColumn, nomeVendaTableColumn, 
+    descricaoEstoqueTableColumn, descricaoVendaTableColumn;
 
     @FXML
     private TableColumn<Produto, Double> precoEstoqueTableColumn, precoVendaTableColumn;
@@ -63,26 +66,153 @@ public class CaixaController {
     private InitialContext ic;
     private IProduto iProduto = null;
     private ICarrinho iCarrinho = null;
-   	private Stage primaryStage;   	
+   	private Stage primaryStage;
+    private GerenciadorDeJanelas gerenciadorDeJanelas;
     
     public CaixaController() {
-    	primaryStage = SuperdiaApp.gerenciadorDeJanelas.getPrimaryStage();
+    	gerenciadorDeJanelas = SuperdiaApp.getGerenciadorDeJanelas();
+    	primaryStage = gerenciadorDeJanelas.getPrimaryStage();
     }
-   
-	@FXML private void initialize() {
-		
-		SuperdiaApp.gerenciadorDeJanelas.addOnChangeScreenListener(new OnChangeScreen() {
-			
+
+	public AnchorPane getJanelaCaixaAnchorPane() {
+		return janelaCaixaAnchorPane;
+	}
+
+	public TableView<Produto> getTabelaEstoque() {
+		return tabelaEstoque;
+	}
+
+	public TableView<Produto> getTabelaVendas() {
+		return tabelaVendas;
+	}
+
+	public TableColumn<Produto, Long> getIdVendaTableColumn() {
+		return idVendaTableColumn;
+	}
+
+	public TableColumn<Produto, Long> getIdEstoqueTableColumn() {
+		return idEstoqueTableColumn;
+	}
+
+	public TableColumn<Produto, Integer> getQuantidadeVendaTableColumn() {
+		return quantidadeVendaTableColumn;
+	}
+
+	public TableColumn<Produto, Integer> getEstoqueMinimoEstoqueTableColumn() {
+		return estoqueMinimoEstoqueTableColumn;
+	}
+
+	public TableColumn<Produto, Integer> getQuantidadeEstoqueTableColumn() {
+		return quantidadeEstoqueTableColumn;
+	}
+
+	public TableColumn<Produto, Integer> getEstoqueMinimoVendaTableColumn() {
+		return estoqueMinimoVendaTableColumn;
+	}
+
+	public TableColumn<Produto, String> getNomeEstoqueTableColumn() {
+		return nomeEstoqueTableColumn;
+	}
+
+	public TableColumn<Produto, String> getNomeVendaTableColumn() {
+		return nomeVendaTableColumn;
+	}
+
+	public TableColumn<Produto, String> getDescricaoEstoqueTableColumn() {
+		return descricaoEstoqueTableColumn;
+	}
+
+	public TableColumn<Produto, String> getDescricaoVendaTableColumn() {
+		return descricaoVendaTableColumn;
+	}
+
+	public TableColumn<Produto, Double> getPrecoEstoqueTableColumn() {
+		return precoEstoqueTableColumn;
+	}
+
+	public TableColumn<Produto, Double> getPrecoVendaTableColumn() {
+		return precoVendaTableColumn;
+	}
+
+	public Button getComprarButton() {
+		return comprarButton;
+	}
+
+	public Button getAdicionarButton() {
+		return adicionarButton;
+	}
+
+	public Button getRemoverButton() {
+		return removerButton;
+	}
+
+	public TextField getOperadorTextField() {
+		return operadorTextField;
+	}
+
+	public TextField getValorTotalCompraTextField() {
+		return valorTotalCompraTextField;
+	}
+
+	public TextField getQuantidadeTextField() {
+		return quantidadeTextField;
+	}
+
+	public Slider getQuantidadeSlider() {
+		return quantidadeSlider;
+	}
+
+	public ImageView getAtualizarImageView() {
+		return atualizarImageView;
+	}
+
+	public Produto getProdutoEstoque() {
+		return produtoEstoque;
+	}
+
+	public Produto getProdutoVenda() {
+		return produtoVenda;
+	}
+
+	public ObservableList<Produto> getListTabelaEstoque() {
+		return listTabelaEstoque;
+	}
+
+	public ObservableList<Produto> getListTabelaVendas() {
+		return listTabelaVendas;
+	}
+
+	public InitialContext getIc() {
+		return ic;
+	}
+
+	public IProduto getiProduto() {
+		return iProduto;
+	}
+
+	public ICarrinho getiCarrinho() {
+		return iCarrinho;
+	}
+
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
+	public GerenciadorDeJanelas getGerenciadorDeJanelas() {
+		return gerenciadorDeJanelas;
+	}
+	
+	@FXML private void initialize() {		
+		gerenciadorDeJanelas.addOnChangeScreenListener(new OnChangeScreen() {			
 			@Override
 			public void onScreenChanged(String newScreen, Object userData) {
 				if(newScreen.equals(Tela.CAIXA.getTela()))
-					System.out.println("Tela Caixa: " + newScreen + ", " + userData);
-				
+					System.out.println("Tela Caixa: " + newScreen + ", " + userData);				
 			}
 		});
     	
     	try {
-    		ic = new InitialContext();
+    		ic = gerenciadorDeJanelas.getLoginController().getIc();
     		iProduto = (IProduto) ic.lookup("br.com.interfacebean.IProduto");
     		iCarrinho = (ICarrinho) ic.lookup("br.com.interfacebean.ICarrinho");
     	} catch (NamingException e) {
@@ -114,7 +244,7 @@ public class CaixaController {
 	}    
     
     @FXML
-    protected void tabelaEstoqueOnMouseCliked() {
+    private void tabelaEstoqueOnMouseCliked() {
     	produtoEstoque = tabelaEstoque.getSelectionModel().getSelectedItem();
     	if(produtoEstoque != null){
     		quantidadeSlider(produtoEstoque.getQuantidadeEstoque());    		
@@ -124,7 +254,7 @@ public class CaixaController {
     }
     
     @FXML
-    protected void tabelaVendasOnMouseCliked() {
+    private void tabelaVendasOnMouseCliked() {
     	produtoVenda = tabelaVendas.getSelectionModel().getSelectedItem();
     	if(produtoVenda != null){
     		quantidadeSlider(produtoVenda.getQuantidadeEstoque());    		
@@ -134,10 +264,11 @@ public class CaixaController {
     }
 
     @FXML
-    protected void adicionarButtonOnAction() {
+    private void adicionarButtonOnAction() {
     	if(produtoEstoque != null){
     		if(produtoEstoque.getQuantidadeEstoque() > 0) {
-	    		produtoVenda = atribuirProdutoAProduto(produtoEstoque, Integer.parseInt(quantidadeTextField.getText()));
+	    		produtoVenda = atribuirProdutoAProduto(produtoEstoque, Integer.parseInt(
+	    												quantidadeTextField.getText()));
     				    		
 	    		Integer quantEst = produtoEstoque.getQuantidadeEstoque();
 	    		produtoEstoque.setQuantidadeEstoque(quantEst - produtoVenda.getQuantidadeEstoque());
@@ -162,7 +293,7 @@ public class CaixaController {
     }
   
     @FXML
-    protected void removerButtonOnAction() {    	
+    private void removerButtonOnAction() {    	
     	if(produtoVenda != null){
     		int quantTF = Integer.parseInt(quantidadeTextField.getText());
     		int indice = buscaPorProdutoID(listTabelaEstoque, produtoVenda);
@@ -194,22 +325,23 @@ public class CaixaController {
     }
     
     @FXML
-    protected void atualizarOnMouseEntered(){
+    private void atualizarOnMouseEntered(){
     	atualizarImageView.setCursor(Cursor.HAND);
     }
     
     @FXML
-    protected void comprarButtonOnAction() {    	
+    private void comprarButtonOnAction() {    	
     	if(!listTabelaVendas.isEmpty()) {    		
-    		
 			addItensVendaAoCarrinho();
-			SuperdiaApp.gerenciadorDeJanelas.getPagamentoController().getValorCompraTextField().setText("R$ " + String.format("%.2f", atualizaValorTotalCompra()));
-			SuperdiaApp.gerenciadorDeJanelas.changeScreen(Tela.PAGAMENTO.getTela(), iCarrinho);
+			gerenciadorDeJanelas.getPagamentoController().getValorCompraTextField().
+			setText("R$ " + String.format("%.2f", atualizaValorTotalCompra()));
+			gerenciadorDeJanelas.changeScreen(Tela.PAGAMENTO.getTela(), iCarrinho);
 			
 			primaryStage.setTitle("Pagamento");
 			primaryStage.centerOnScreen();
     	}else {
-    		alertMessage("Erro", "Venda sem Produtos.", "A lista de produtos vendidos NÃO possui nenhum produto.", AlertType.ERROR);
+    		alertMessage("Erro", "Venda sem Produtos.", "A lista de produtos vendidos NÃO "
+    				+ "possui nenhum produto.", AlertType.ERROR);
     	}
     }
     
@@ -218,14 +350,15 @@ public class CaixaController {
     		listTabelaEstoque = FXCollections.observableArrayList(iProduto.listaTodos());		
     		tabelaEstoque.setItems(listTabelaEstoque);
     	}else {
-    		alertMessage("Erro - Atualizar", "Atualizar Produtos Estoque.", "Atualizar Produtos Estoque.", AlertType.ERROR);
+    		alertMessage("Erro - Atualizar", "Atualizar Produtos Estoque.", "A lista de produtos "
+    				+ "vendidos, deve estar vazia\n para que seja possível atualizar a lista de "
+    				+ "produtos\n em estoque.", AlertType.ERROR);
     	}
     }
     private void alertMessage(String titulo, String header, String conteudo, AlertType alertType) {
-    	SuperdiaApp.gerenciadorDeJanelas.getLoginController().alertMessage(titulo, header, conteudo, alertType);
+    	gerenciadorDeJanelas.getLoginController().alertMessage(titulo, header, conteudo, alertType);
 	}
     
-    //e viva a gambiarra
     private void addItensVendaAoCarrinho(){ 
     	ObservableList<Produto> estoque = FXCollections.observableArrayList(iProduto.listaTodos());
     	ItemVenda itemVenda;
@@ -295,249 +428,4 @@ public class CaixaController {
     	
     	return produtoNovo;    	
     }
-    
-	public AnchorPane getJanelaCaixaAnchorPane() {
-		return janelaCaixaAnchorPane;
-	}
-
-	public void setJanelaCaixaAnchorPane(AnchorPane janelaCaixaAnchorPane) {
-		this.janelaCaixaAnchorPane = janelaCaixaAnchorPane;
-	}	
-
-	public TableView<Produto> getTabelaEstoque() {
-		return tabelaEstoque;
-	}
-
-	public void setTabelaEstoque(TableView<Produto> tabelaEstoque) {
-		this.tabelaEstoque = tabelaEstoque;
-	}
-
-	public TableView<Produto> getTabelaVendas() {
-		return tabelaVendas;
-	}
-
-	public void setTabelaVendas(TableView<Produto> tabelaVendas) {
-		this.tabelaVendas = tabelaVendas;
-	}
-
-	public TableColumn<Produto, Long> getIdVendaTableColumn() {
-		return idVendaTableColumn;
-	}
-
-	public void setIdVendaTableColumn(TableColumn<Produto, Long> idVendaTableColumn) {
-		this.idVendaTableColumn = idVendaTableColumn;
-	}
-
-	public TableColumn<Produto, Long> getIdEstoqueTableColumn() {
-		return idEstoqueTableColumn;
-	}
-
-	public void setIdEstoqueTableColumn(TableColumn<Produto, Long> idEstoqueTableColumn) {
-		this.idEstoqueTableColumn = idEstoqueTableColumn;
-	}
-
-	public TableColumn<Produto, Integer> getQuantidadeVendaTableColumn() {
-		return quantidadeVendaTableColumn;
-	}
-
-	public void setQuantidadeVendaTableColumn(TableColumn<Produto, Integer> quantidadeVendaTableColumn) {
-		this.quantidadeVendaTableColumn = quantidadeVendaTableColumn;
-	}
-
-	public TableColumn<Produto, Integer> getEstoqueMinimoEstoqueTableColumn() {
-		return estoqueMinimoEstoqueTableColumn;
-	}
-
-	public void setEstoqueMinimoEstoqueTableColumn(TableColumn<Produto, Integer> estoqueMinimoEstoqueTableColumn) {
-		this.estoqueMinimoEstoqueTableColumn = estoqueMinimoEstoqueTableColumn;
-	}
-
-	public TableColumn<Produto, Integer> getQuantidadeEstoqueTableColumn() {
-		return quantidadeEstoqueTableColumn;
-	}
-
-	public void setQuantidadeEstoqueTableColumn(TableColumn<Produto, Integer> quantidadeEstoqueTableColumn) {
-		this.quantidadeEstoqueTableColumn = quantidadeEstoqueTableColumn;
-	}
-
-	public TableColumn<Produto, Integer> getEstoqueMinimoVendaTableColumn() {
-		return estoqueMinimoVendaTableColumn;
-	}
-
-	public void setEstoqueMinimoVendaTableColumn(TableColumn<Produto, Integer> estoqueMinimoVendaTableColumn) {
-		this.estoqueMinimoVendaTableColumn = estoqueMinimoVendaTableColumn;
-	}
-
-	public TableColumn<Produto, String> getNomeEstoqueTableColumn() {
-		return nomeEstoqueTableColumn;
-	}
-
-	public void setNomeEstoqueTableColumn(TableColumn<Produto, String> nomeEstoqueTableColumn) {
-		this.nomeEstoqueTableColumn = nomeEstoqueTableColumn;
-	}
-
-	public TableColumn<Produto, String> getNomeVendaTableColumn() {
-		return nomeVendaTableColumn;
-	}
-
-	public void setNomeVendaTableColumn(TableColumn<Produto, String> nomeVendaTableColumn) {
-		this.nomeVendaTableColumn = nomeVendaTableColumn;
-	}
-
-	public TableColumn<Produto, String> getDescricaoEstoqueTableColumn() {
-		return descricaoEstoqueTableColumn;
-	}
-
-	public void setDescricaoEstoqueTableColumn(TableColumn<Produto, String> descricaoEstoqueTableColumn) {
-		this.descricaoEstoqueTableColumn = descricaoEstoqueTableColumn;
-	}
-
-	public TableColumn<Produto, String> getDescricaoVendaTableColumn() {
-		return descricaoVendaTableColumn;
-	}
-
-	public void setDescricaoVendaTableColumn(TableColumn<Produto, String> descricaoVendaTableColumn) {
-		this.descricaoVendaTableColumn = descricaoVendaTableColumn;
-	}
-
-	public TableColumn<Produto, Double> getPrecoEstoqueTableColumn() {
-		return precoEstoqueTableColumn;
-	}
-
-	public void setPrecoEstoqueTableColumn(TableColumn<Produto, Double> precoEstoqueTableColumn) {
-		this.precoEstoqueTableColumn = precoEstoqueTableColumn;
-	}
-
-	public TableColumn<Produto, Double> getPrecoVendaTableColumn() {
-		return precoVendaTableColumn;
-	}
-
-	public void setPrecoVendaTableColumn(TableColumn<Produto, Double> precoVendaTableColumn) {
-		this.precoVendaTableColumn = precoVendaTableColumn;
-	}
-
-	public Button getComprarButton() {
-		return comprarButton;
-	}
-
-	public void setComprarButton(Button comprarButton) {
-		this.comprarButton = comprarButton;
-	}
-
-	public Button getAdicionarButton() {
-		return adicionarButton;
-	}
-
-	public void setAdicionarButton(Button adicionarButton) {
-		this.adicionarButton = adicionarButton;
-	}
-
-	public Button getRemoverButton() {
-		return removerButton;
-	}
-
-	public void setRemoverButton(Button removerButton) {
-		this.removerButton = removerButton;
-	}
-
-	public TextField getOperadorTextField() {
-		return operadorTextField;
-	}
-
-	public void setOperadorTextField(TextField operadorTextField) {
-		this.operadorTextField = operadorTextField;
-	}
-
-	public TextField getValorTotalCompraTextField() {
-		return valorTotalCompraTextField;
-	}
-
-	public void setValorTotalCompraTextField(TextField valorTotalCompraTextField) {
-		this.valorTotalCompraTextField = valorTotalCompraTextField;
-	}
-
-	public TextField getQuantidadeTextField() {
-		return quantidadeTextField;
-	}
-
-	public void setQuantidadeTextField(TextField quantidadeTextField) {
-		this.quantidadeTextField = quantidadeTextField;
-	}
-
-	public Slider getQuantidadeSlider() {
-		return quantidadeSlider;
-	}
-
-	public void setQuantidadeSlider(Slider quantidadeSlider) {
-		this.quantidadeSlider = quantidadeSlider;
-	}
-
-	public Produto getProdutoEstoque() {
-		return produtoEstoque;
-	}
-
-	public void setProdutoEstoque(Produto produtoEstoque) {
-		this.produtoEstoque = produtoEstoque;
-	}
-
-	public Produto getProdutoVenda() {
-		return produtoVenda;
-	}
-
-	public void setProdutoVenda(Produto produtoVenda) {
-		this.produtoVenda = produtoVenda;
-	}
-
-	public ObservableList<Produto> getListTabelaEstoque() {
-		return listTabelaEstoque;
-	}
-
-	public void setListTabelaEstoque(ObservableList<Produto> listTabelaEstoque) {
-		this.listTabelaEstoque = listTabelaEstoque;
-	}
-
-
-	public ObservableList<Produto> getListTabelaVendas() {
-		return listTabelaVendas;
-	}
-
-	public void setListTabelaVendas(ObservableList<Produto> listTabelaVendas) {
-		this.listTabelaVendas = listTabelaVendas;
-	}
-
-	public InitialContext getIc() {
-		return ic;
-	}
-
-	public void setIc(InitialContext ic) {
-		this.ic = ic;
-	}
-
-	public IProduto getiProduto() {
-		return iProduto;
-	}
-
-	public void setiProduto(IProduto iProduto) {
-		this.iProduto = iProduto;
-	}
-
-	public ImageView getAtualizarImageView() {
-		return atualizarImageView;
-	}
-
-	public void setAtualizarImageView(ImageView atualizarImageView) {
-		this.atualizarImageView = atualizarImageView;
-	}
-	
-	public Stage getPrimaryStage() {
-		return primaryStage;
-	}
-	
-	public void setPrimaryStage(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-	}
-
-	public ICarrinho getiCarrinho() {
-		return iCarrinho;
-	}	
 }

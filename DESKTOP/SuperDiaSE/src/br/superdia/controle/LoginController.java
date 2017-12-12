@@ -6,6 +6,7 @@ import javax.naming.NamingException;
 import br.com.interfacebean.IAutentica;
 import br.com.modelo.Usuario;
 import br.superdia.app.SuperdiaApp;
+import br.superdia.app.utils.GerenciadorDeJanelas;
 import br.superdia.app.utils.OnChangeScreen;
 import br.superdia.enumeracoes.Tela;
 import javafx.fxml.FXML;
@@ -27,33 +28,66 @@ public class LoginController {
     private PasswordField senhaPasswordField;
 
     @FXML
-    private Button entrarButton;
-
-    @FXML
-    private Button cancelarButton;
+    private Button entrarButton, cancelarButton;
 
     @FXML
     private TextField usuarioTextField;
     
     private InitialContext ic;
     private IAutentica iAutentica = null; 
-	private Stage primaryStage;
+    private Stage primaryStage;
+    private GerenciadorDeJanelas gerenciadorDeJanelas;
 		
-	public LoginController() {}
+	public LoginController() {
+		gerenciadorDeJanelas = SuperdiaApp.getGerenciadorDeJanelas();
+		primaryStage = gerenciadorDeJanelas.getPrimaryStage();
+	}
+	
+	public AnchorPane getJanelaLoginAnchorPane() {
+		return janelaLoginAnchorPane;
+	}
+
+	public PasswordField getSenhaPasswordField() {
+		return senhaPasswordField;
+	}
+
+	public Button getEntrarButton() {
+		return entrarButton;
+	}
+
+	public Button getCancelarButton() {
+		return cancelarButton;
+	}
+
+	public TextField getUsuarioTextField() {
+		return usuarioTextField;
+	}
+
+	public InitialContext getIc() {
+		return ic;
+	}
+
+	public IAutentica getiAutentica() {
+		return iAutentica;
+	}
+
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
+	public GerenciadorDeJanelas getGerenciadorDeJanelas() {
+		return gerenciadorDeJanelas;
+	}
 
 	@FXML
-    private void initialize() {
-		primaryStage = SuperdiaApp.gerenciadorDeJanelas.getPrimaryStage();
-		SuperdiaApp.gerenciadorDeJanelas.addOnChangeScreenListener(new OnChangeScreen() {
-			
+    private void initialize() {		
+		gerenciadorDeJanelas.addOnChangeScreenListener(new OnChangeScreen() {			
 			@Override
 			public void onScreenChanged(String newScreen, Object userData) {
 				if(newScreen.equals(Tela.LOGIN.getTela()))
-					System.out.println("Tela Login: " + newScreen + ", " + userData);
-				
+					System.out.println("Tela Login: " + newScreen + ", " + userData);				
 			}
-		});
-		
+		});		
 		
     	try {
     		ic = new InitialContext();
@@ -113,8 +147,8 @@ public class LoginController {
     		cancelarButton.requestFocus();
     	}
     }
-    
-    protected void alertMessage(String titulo, String header, String conteudo, AlertType alertType) {
+	
+	protected void alertMessage(String titulo, String header, String conteudo, AlertType alertType) {
 		Alert alert = new Alert(alertType);
 		alert.setTitle(titulo);
 		alert.setHeaderText(header);
@@ -136,11 +170,10 @@ public class LoginController {
     	if(usuario == null) {
     		alertMessage("Erro - Autenticação", "Usuário Inexistente.", null, AlertType.ERROR);
     	}else if(usuario.getPerfil().equalsIgnoreCase("Caixa")) {
-    		SuperdiaApp.gerenciadorDeJanelas.setUsuarioLogado(usuario);
-    		SuperdiaApp.gerenciadorDeJanelas.changeScreen(Tela.CAIXA.getTela());
-    		SuperdiaApp.gerenciadorDeJanelas.getCaixaController().getOperadorTextField().setText(usuario.getUsuario());
-    		SuperdiaApp.gerenciadorDeJanelas.getCaixaController().getTabelaEstoque().requestFocus();
-    		primaryStage = SuperdiaApp.gerenciadorDeJanelas.getPrimaryStage();    		
+    		gerenciadorDeJanelas.setUsuarioLogado(usuario);
+    		gerenciadorDeJanelas.changeScreen(Tela.CAIXA.getTela());
+    		gerenciadorDeJanelas.getCaixaController().getOperadorTextField().setText(usuario.getUsuario());
+    		gerenciadorDeJanelas.getCaixaController().getTabelaEstoque().requestFocus();
 			primaryStage.setTitle("Caixa");
 			primaryStage.centerOnScreen();				
     	}else {
@@ -149,69 +182,4 @@ public class LoginController {
     				+ "NÃO pode ter acesso ao sistema.", AlertType.ERROR);
     	} 
     }
-
-	public AnchorPane getJanelaLoginAnchorPane() {
-		return janelaLoginAnchorPane;
-	}
-
-	public void setJanelaLoginAnchorPane(AnchorPane janelaLoginAnchorPane) {
-		this.janelaLoginAnchorPane = janelaLoginAnchorPane;
-	}
-
-	public PasswordField getSenhaPasswordField() {
-		return senhaPasswordField;
-	}
-
-	public void setSenhaPasswordField(PasswordField senhaPasswordField) {
-		this.senhaPasswordField = senhaPasswordField;
-	}
-
-	public Button getEntrarButton() {
-		return entrarButton;
-	}
-
-	public void setEntrarButton(Button entrarButton) {
-		this.entrarButton = entrarButton;
-	}
-
-	public Button getCancelarButton() {
-		return cancelarButton;
-	}
-
-	public void setCancelarButton(Button cancelarButton) {
-		this.cancelarButton = cancelarButton;
-	}
-
-	public TextField getUsuarioTextField() {
-		return usuarioTextField;
-	}
-
-	public void setUsuarioTextField(TextField usuarioTextField) {
-		this.usuarioTextField = usuarioTextField;
-	}
-
-	public InitialContext getIc() {
-		return ic;
-	}
-
-	public void setIc(InitialContext ic) {
-		this.ic = ic;
-	}
-
-	public IAutentica getiAutentica() {
-		return iAutentica;
-	}
-
-	public void setiAutentica(IAutentica iAutentica) {
-		this.iAutentica = iAutentica;
-	}
-
-	public Stage getPrimaryStage() {
-		return primaryStage;
-	}
-
-	public void setPrimaryStage(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-	}
-	
 }

@@ -2,6 +2,7 @@ package br.superdia.controle;
 
 import br.com.interfacebean.ICarrinho;
 import br.superdia.app.SuperdiaApp;
+import br.superdia.app.utils.GerenciadorDeJanelas;
 import br.superdia.app.utils.OnChangeScreen;
 import br.superdia.enumeracoes.Tela;
 import javafx.fxml.FXML;
@@ -45,17 +46,76 @@ public class PagamentoController {
     @FXML
     private AnchorPane rodapeAnchorPane;
 
-    private Stage primaryStage;
     private ICarrinho iCarrinho = null;
+    private Stage primaryStage;
+    private GerenciadorDeJanelas gerenciadorDeJanelas;
+    private CaixaController caixaController;
 	
     public PagamentoController() {
-    	primaryStage = SuperdiaApp.gerenciadorDeJanelas.getPrimaryStage();
+    	gerenciadorDeJanelas = SuperdiaApp.getGerenciadorDeJanelas();
+    	primaryStage = gerenciadorDeJanelas.getPrimaryStage();    	
+    	caixaController = gerenciadorDeJanelas.getCaixaController();
     }
+    	
+	public TextField getValorCompraTextField() {
+		return valorCompraTextField;
+	}
+
+	public TextField getNumeroCartaoTextField() {
+		return numeroCartaoTextField;
+	}
+
+	public Button getConcluirButton() {
+		return concluirButton;
+	}
+
+	public Button getCancelarButton() {
+		return cancelarButton;
+	}
+
+	public TextField getTrocoTextField() {
+		return trocoTextField;
+	}
+
+	public TextField getValorRecebidoTextField() {
+		return valorRecebidoTextField;
+	}
+
+	public Pane getTrocoPane() {
+		return trocoPane;
+	}
+
+	public Pane getValorPane() {
+		return valorPane;
+	}
+
+	public AnchorPane getCabecacalhoAnchorPane() {
+		return cabecacalhoAnchorPane;
+	}
+
+	public AnchorPane getRodapeAnchorPane() {
+		return rodapeAnchorPane;
+	}
+
+	public ICarrinho getiCarrinho() {
+		return iCarrinho;
+	}
+
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
+	public GerenciadorDeJanelas getGerenciadorDeJanelas() {
+		return gerenciadorDeJanelas;
+	}
+
+	public CaixaController getCaixaController() {
+		return caixaController;
+	}
 
 	@FXML
     private void initialize() {
-		SuperdiaApp.gerenciadorDeJanelas.addOnChangeScreenListener(new OnChangeScreen() {
-			
+		gerenciadorDeJanelas.addOnChangeScreenListener(new OnChangeScreen() {
 			@Override
 			public void onScreenChanged(String newScreen, Object userData) {
 				if(newScreen.equals(Tela.PAGAMENTO.getTela())) {
@@ -98,6 +158,7 @@ public class PagamentoController {
     		valorRecebidoTextField.requestFocus();
     	}
     }
+    
     @FXML
     private void concluirOnKeyPressed(KeyEvent event) {
     	if(event.getCode() == KeyCode.ENTER) {
@@ -108,13 +169,11 @@ public class PagamentoController {
     }
     
     private void cancelarCompra() {
-    	SuperdiaApp.gerenciadorDeJanelas.changeScreen(Tela.CAIXA.getTela());
-    	primaryStage = SuperdiaApp.gerenciadorDeJanelas.getPrimaryStage();
-    	
+    	gerenciadorDeJanelas.changeScreen(Tela.CAIXA.getTela());
+    	caixaController.getTabelaVendas().requestFocus();
 		primaryStage.setTitle("Caixa");
 		primaryStage.centerOnScreen();
 		limpaCampos();
-		SuperdiaApp.gerenciadorDeJanelas.getCaixaController().getTabelaVendas().requestFocus();		
     }
 
     private void concluirCompra() {
@@ -123,20 +182,20 @@ public class PagamentoController {
     	}else {
     		limpaCampos();
     		//Alterando campos da janela caixa
-    		SuperdiaApp.gerenciadorDeJanelas.getCaixaController().getListTabelaVendas().clear();
-    		SuperdiaApp.gerenciadorDeJanelas.getCaixaController().getValorTotalCompraTextField().clear();
-    		SuperdiaApp.gerenciadorDeJanelas.getCaixaController().getTabelaVendas().setItems(SuperdiaApp.gerenciadorDeJanelas.getCaixaController().getListTabelaVendas());	    		
-    		SuperdiaApp.gerenciadorDeJanelas.getCaixaController().getListTabelaEstoque().clear();
-    		SuperdiaApp.gerenciadorDeJanelas.getCaixaController().getTabelaEstoque().setItems(SuperdiaApp.gerenciadorDeJanelas.getCaixaController().getListTabelaEstoque());	 
-    		SuperdiaApp.gerenciadorDeJanelas.getCaixaController().getListTabelaVendas().clear();
+    		caixaController.getListTabelaVendas().clear();
+    		caixaController.getValorTotalCompraTextField().clear();
+    		caixaController.getTabelaVendas().setItems(caixaController.getListTabelaVendas());	    		
+    		caixaController.getListTabelaEstoque().clear();
+    		caixaController.getTabelaEstoque().setItems(caixaController.getListTabelaEstoque());	 
+    		caixaController.getListTabelaVendas().clear();
     	    		
     		alertMessage("Finalizado", null, "Compra concluida com SUCESSO.", AlertType.INFORMATION);	    		
     		
-    		iCarrinho.finalizaCompra(SuperdiaApp.gerenciadorDeJanelas.getUsuarioLogado());
+    		iCarrinho.finalizaCompra(gerenciadorDeJanelas.getUsuarioLogado());
     		
-    		SuperdiaApp.gerenciadorDeJanelas.getCaixaController().atualizarOnMouseClicked();
-    		SuperdiaApp.gerenciadorDeJanelas.changeScreen(Tela.CAIXA.getTela());
-			primaryStage = SuperdiaApp.gerenciadorDeJanelas.getPrimaryStage();
+    		caixaController.atualizarOnMouseClicked();
+    		gerenciadorDeJanelas.changeScreen(Tela.CAIXA.getTela());
+			primaryStage = gerenciadorDeJanelas.getPrimaryStage();
 			primaryStage.setTitle("Caixa");
 			primaryStage.centerOnScreen();
     	}    	
@@ -147,17 +206,18 @@ public class PagamentoController {
 	}
 	
 	private void alertMessage(String titulo, String header, String conteudo, AlertType alertType) {
-		SuperdiaApp.gerenciadorDeJanelas.getLoginController().alertMessage(titulo, header, conteudo, alertType);
+		gerenciadorDeJanelas.getLoginController().alertMessage(titulo, header, conteudo, alertType);
 	}
 			
 	private void calculaTroco() {
 		Double valorRecebido, valorCompra;
 		try {
 			valorRecebido = Double.parseDouble(trocaVirgulaPorPonto(valorRecebidoTextField.getText()));
-			valorCompra = SuperdiaApp.gerenciadorDeJanelas.getCaixaController().atualizaValorTotalCompra();
+			valorCompra = caixaController.atualizaValorTotalCompra();
 			
 			if(valorRecebido < valorCompra) {
-				alertMessage("ERRO", "Valor Menor", "O valor recebido e menor que o valor da compra.", AlertType.ERROR);
+				alertMessage("ERRO", "Valor Menor", "O valor recebido e menor que o valor da compra.", 
+							AlertType.ERROR);
 				valorRecebidoTextField.requestFocus();
     		}else {
     			Double troco = valorRecebido - valorCompra;
@@ -168,7 +228,6 @@ public class PagamentoController {
 		} catch (NumberFormatException e) {
 			alertMessage("ERRO", "Valor Recebido.", e.getMessage(), AlertType.ERROR);
 			valorRecebidoTextField.requestFocus();
-			System.err.println("Classe PagamentoController método calculaTroco: " + e.getMessage());
 		}
     	
 	}		
@@ -179,81 +238,4 @@ public class PagamentoController {
     	valorCompraTextField.clear();
     	trocoTextField.clear();
 	}
-    
-   	public TextField getValorCompraTextField() {
-		return valorCompraTextField;
-	}
-
-	public void setValorCompraTextField(TextField valorCompraTextField) {
-		this.valorCompraTextField = valorCompraTextField;
-	}
-
-	public TextField getNumeroCartaoTextField() {
-		return numeroCartaoTextField;
-	}
-
-	public void setNumeroCartaoTextField(TextField numeroCartaoTextField) {
-		this.numeroCartaoTextField = numeroCartaoTextField;
-	}
-
-	public Button getConcluirButton() {
-		return concluirButton;
-	}
-
-	public void setConcluirButton(Button concluirButton) {
-		this.concluirButton = concluirButton;
-	}
-
-	public Button getCancelarButton() {
-		return cancelarButton;
-	}
-
-	public void setCancelarButton(Button cancelarButton) {
-		this.cancelarButton = cancelarButton;
-	}
-
-	public TextField getTrocoTextField() {
-		return trocoTextField;
-	}
-
-	public void setTrocoTextField(TextField trocoTextField) {
-		this.trocoTextField = trocoTextField;
-	}
-
-	public TextField getValorRecebidoTextField() {
-		return valorRecebidoTextField;
-	}
-
-	public void setValorRecebidoTextField(TextField valorRecebidoTextField) {
-		this.valorRecebidoTextField = valorRecebidoTextField;
-	}
-
-	public Stage getPrimaryStage() {
-		return primaryStage;
-	}
-
-	public void setPrimaryStage(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-	}
-
-	public ICarrinho getiCarrinho() {
-		return iCarrinho;
-	}
-
-	public Pane getTrocoPane() {
-		return trocoPane;
-	}
-
-	public Pane getValorPane() {
-		return valorPane;
-	}
-
-	public AnchorPane getCabecacalhoAnchorPane() {
-		return cabecacalhoAnchorPane;
-	}
-
-	public AnchorPane getRodapeAnchorPane() {
-		return rodapeAnchorPane;
-	}
 }
-
