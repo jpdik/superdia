@@ -19,7 +19,7 @@ public class GerenciadorDeJanelas {
 	private Scene loginScene, caixaScene, pagamentoScene;
 	private LoginController loginController;
 	private CaixaController caixaController;
-	private PagamentoController pagamentoController;	
+	private PagamentoController pagamentoController;
 	private Usuario usuarioLogado;
 	private ArrayList<OnChangeScreen> listeners;
 	
@@ -111,8 +111,7 @@ public class GerenciadorDeJanelas {
 			pagamentoController = (PagamentoController) pagamentoFXMLLoader.getController();
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
-		}
-		
+		}		
 	}	
 	
 	public void addOnChangeScreenListener(OnChangeScreen newListener) {

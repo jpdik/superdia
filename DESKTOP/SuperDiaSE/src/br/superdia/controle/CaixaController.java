@@ -216,7 +216,8 @@ public class CaixaController {
     		iProduto = (IProduto) ic.lookup("br.com.interfacebean.IProduto");
     		iCarrinho = (ICarrinho) ic.lookup("br.com.interfacebean.ICarrinho");
     	} catch (NamingException e) {
-    		System.err.println(e.getMessage());
+    		alertMessage("Ocorreu um Erro", "Erro no lookup in interface Context.", e.getMessage() + 
+    					".\nContate o adminstrador do sistema.", AlertType.ERROR);
     		System.exit(0);
     	}
     	
@@ -239,6 +240,7 @@ public class CaixaController {
 		
 		listTabelaVendas = FXCollections.observableArrayList();
 		tabelaVendas.setItems(listTabelaVendas);
+		
 		quantidadeTextField.setText("1");
 		quantidadeSlider(1);		
 	}    
@@ -347,7 +349,7 @@ public class CaixaController {
     
     private void atualizaTabelaEstoque() {
     	if(listTabelaVendas.isEmpty()) {
-    		listTabelaEstoque = FXCollections.observableArrayList(iProduto.listaTodos());		
+    		listTabelaEstoque = FXCollections.observableArrayList(iProduto.listaTodos());
     		tabelaEstoque.setItems(listTabelaEstoque);
     	}else {
     		alertMessage("Erro - Atualizar", "Atualizar Produtos Estoque.", "A lista de produtos "

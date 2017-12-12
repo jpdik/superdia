@@ -87,13 +87,14 @@ public class LoginController {
 				if(newScreen.equals(Tela.LOGIN.getTela()))
 					System.out.println("Tela Login: " + newScreen + ", " + userData);				
 			}
-		});		
+		});
 		
     	try {
     		ic = new InitialContext();
     		iAutentica = (IAutentica) ic.lookup("br.com.interfacebean.IAutentica");
     	} catch (NamingException e) {
-    		System.err.println(e.getMessage());
+    		alertMessage("Ocorreu um Erro", "Erro no lookup in interface Context.", e.getMessage() + 
+    					".\nContate o adminstrador do sistema.", AlertType.ERROR);    		
     		System.exit(0);
     	}
 	}
@@ -116,8 +117,10 @@ public class LoginController {
     		cancelarButton.requestFocus();
     	}else if(event.getCode() == KeyCode.S) {
     		senhaPasswordField.requestFocus();
+    		senhaPasswordField.clear();
     	}else if(event.getCode() == KeyCode.U) {
     		usuarioTextField.requestFocus();
+    		usuarioTextField.clear();
     	}
     }
     
@@ -175,7 +178,7 @@ public class LoginController {
     		gerenciadorDeJanelas.getCaixaController().getOperadorTextField().setText(usuario.getUsuario());
     		gerenciadorDeJanelas.getCaixaController().getTabelaEstoque().requestFocus();
 			primaryStage.setTitle("Caixa");
-			primaryStage.centerOnScreen();				
+			primaryStage.centerOnScreen();
     	}else {
     		alertMessage("Erro - Autenticação", "Perfil Inválido.",
     				"ERRO: O usuário de perfil (" + usuario.getPerfil() + ") "

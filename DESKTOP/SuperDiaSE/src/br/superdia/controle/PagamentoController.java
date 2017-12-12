@@ -112,6 +112,10 @@ public class PagamentoController {
 	public CaixaController getCaixaController() {
 		return caixaController;
 	}
+	
+	public void setiCarrinho(ICarrinho iCarrinho) {
+		this.iCarrinho = iCarrinho;
+	}
 
 	@FXML
     private void initialize() {
@@ -178,16 +182,13 @@ public class PagamentoController {
 
     private void concluirCompra() {
     	if(trocoTextField.getText().isEmpty()) {
-    		alertMessage("ERRO", "Troco", "Sistema não calculou o troco.", AlertType.ERROR);
+    		alertMessage("Atenção", "Troco", "Sistema não calculou o troco.", AlertType.WARNING);
     	}else {
     		limpaCampos();
     		//Alterando campos da janela caixa
-    		caixaController.getListTabelaVendas().clear();
+    		caixaController.getListTabelaVendas().clear();    		
+    		caixaController.getTabelaVendas().setItems(caixaController.getListTabelaVendas());
     		caixaController.getValorTotalCompraTextField().clear();
-    		caixaController.getTabelaVendas().setItems(caixaController.getListTabelaVendas());	    		
-    		caixaController.getListTabelaEstoque().clear();
-    		caixaController.getTabelaEstoque().setItems(caixaController.getListTabelaEstoque());	 
-    		caixaController.getListTabelaVendas().clear();
     	    		
     		alertMessage("Finalizado", null, "Compra concluida com SUCESSO.", AlertType.INFORMATION);	    		
     		
@@ -216,8 +217,8 @@ public class PagamentoController {
 			valorCompra = caixaController.atualizaValorTotalCompra();
 			
 			if(valorRecebido < valorCompra) {
-				alertMessage("ERRO", "Valor Menor", "O valor recebido e menor que o valor da compra.", 
-							AlertType.ERROR);
+				alertMessage("Atenção", "Valor Menor", "O valor recebido é menor que o valor da compra.", 
+							AlertType.WARNING);
 				valorRecebidoTextField.requestFocus();
     		}else {
     			Double troco = valorRecebido - valorCompra;
