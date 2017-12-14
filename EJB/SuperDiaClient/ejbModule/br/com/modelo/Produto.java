@@ -37,6 +37,17 @@ public class Produto implements Serializable {
 		return id;
 	}
 	
+	
+	
+	public Produto(String nome, String descricao, Double preco, Integer estoqueMinimo, Integer quantidadeEstoque) {
+		super();
+		this.nome = nome;
+		this.descricao = descricao;
+		this.preco = preco;
+		this.estoqueMinimo = estoqueMinimo;
+		this.quantidadeEstoque = quantidadeEstoque;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
