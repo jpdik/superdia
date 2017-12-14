@@ -14,61 +14,73 @@ public class Produto implements Serializable {
 
 	private static final long serialVersionUID = 1549257097189053846L;
 
-	@Id 
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotNull(message="Defina um nome para o produto!")
+
+	@NotNull(message = "Defina um nome para o produto!")
 	private String nome;
 	private String descricao;
-	
-	@Min(value=0, message="O preço do produto deve ser válido!")
-	@NotNull(message="Preço do produto não pode ser vazio!")
+
+	@Min(value = 0, message = "O preço do produto deve ser válido!")
+	@NotNull(message = "Preço do produto não pode ser vazio!")
 	private Double preco;
-	
-	@Min(value=0, message="Estoque mínimo não de ver negativo!")
+
+	@Min(value = 0, message = "Estoque mínimo não de ver negativo!")
 	private Integer estoqueMinimo;
-	
-	@Min(value=0, message="Quantidade do produto em estoque não de ver negativa!")
-	@NotNull(message="Necessário informar a quantidade em estoque!")
+
+	@Min(value = 0, message = "Quantidade do produto em estoque não de ver negativa!")
+	@NotNull(message = "Necessário informar a quantidade em estoque!")
 	private Integer quantidadeEstoque;
-	
+
 	private String imagem;
-	
+
 	private String vendidoPor;
-	
+
+	public Produto() {
+	}
+
+	public Produto(String nome, String descricao, Double preco, Integer estoqueMinimo, Integer quantidadeEstoque) {
+		super();
+		this.nome = nome;
+		this.descricao = descricao;
+		this.preco = preco;
+		this.estoqueMinimo = estoqueMinimo;
+		this.quantidadeEstoque = quantidadeEstoque;
+	}
+
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 	public String getDescricao() {
 		return descricao;
 	}
-	
+
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
+
 	public Double getPreco() {
 		return preco;
 	}
-	
+
 	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
-	
+
 	public Integer getEstoqueMinimo() {
 		return estoqueMinimo;
 	}
@@ -103,10 +115,8 @@ public class Produto implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format(
-				"Nome: %s, descrição: %s, preço: %l,estoque mínimo: %d,"
-				+ "quantidade em estoque: %d", nome, descricao, preco, 
-				estoqueMinimo, quantidadeEstoque);
+		return String.format("Nome: %s, descrição: %s, preço: %l,estoque mínimo: %d," + "quantidade em estoque: %d",
+				nome, descricao, preco, estoqueMinimo, quantidadeEstoque);
 	}
 
 	@Override

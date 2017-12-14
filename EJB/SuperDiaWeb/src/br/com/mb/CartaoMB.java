@@ -18,7 +18,11 @@ public class CartaoMB {
 	private ICartao iCartao;
 	
 	public boolean analisaCartao() {
-		System.out.println(iCartao.validateCardNumber(card.getBandeira(), card.getNumero()));
+		try {
+		//System.out.println(iCartao.validateCardNumber(card.getBandeira(), card.getNumero()));
+		}catch (Exception e) {
+			return true;
+		}
 		return true;
 	}
 	

@@ -10,9 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import br.com.interfacebean.ICarrinho;
-import br.com.interfacebean.ICartao;
 import br.com.interfacebean.IProduto;
-import br.com.modelo.Cartao;
 import br.com.modelo.ItemVenda;
 import br.com.modelo.Produto;
 import br.com.modelo.Usuario;
@@ -64,6 +62,9 @@ public class carrinhoMB {
 		// Caso tenha usuário ativo na sessão finaliza compra, 
 		// caso contrário redireciona para página de login. Após realizar o login o usuário
 		// pode concluir a compra.
+		
+		System.out.println(carregaCartaoAtivo());
+		
 		if (usuario != null && usuario.getId() != null && carregaCartaoAtivo().analisaCartao()) {
 			iCarrinho.finalizaCompra(usuario);
 			

@@ -12,11 +12,11 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="SuperDiaJAXRS.war" deploy-path="/" handle="module:/resource/SuperDiaJAXRS/SuperDiaJAXRS">
+        <dependent-module archiveName="SuperDiaWeb.war" deploy-path="/" handle="module:/resource/SuperDiaWeb/SuperDiaWeb">
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="SuperDiaWeb.war" deploy-path="/" handle="module:/resource/SuperDiaWeb/SuperDiaWeb">
+        <dependent-module archiveName="SuperDiaJAXRS.war" deploy-path="/" handle="module:/resource/SuperDiaJAXRS/SuperDiaJAXRS">
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>

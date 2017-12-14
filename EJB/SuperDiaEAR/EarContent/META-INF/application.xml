@@ -12,14 +12,14 @@
   </module>
   <module>
     <web>
-      <web-uri>SuperDiaJAXRS.war</web-uri>
-      <context-root>SuperDiaJAXRS</context-root>
+      <web-uri>SuperDiaWeb.war</web-uri>
+      <context-root>SuperDiaWeb</context-root>
     </web>
   </module>
   <module>
     <web>
-      <web-uri>SuperDiaWeb.war</web-uri>
-      <context-root>SuperDiaWeb</context-root>
+      <web-uri>SuperDiaJAXRS.war</web-uri>
+      <context-root>SuperDiaJAXRS</context-root>
     </web>
   </module>
 </application>

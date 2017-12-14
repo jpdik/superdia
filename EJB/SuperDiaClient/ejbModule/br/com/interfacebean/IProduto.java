@@ -31,4 +31,10 @@ public interface IProduto {
 	 * @return um <b>List</b> com todos produtos do estoque.
 	 */
 	List<Produto> listaTodos();
+	/**
+	 * Lista todos produtos externos.
+	 * @param filtro Lista somente os produtos que contenham no filtro o mesmo nome e, se for vazio, lista todos.
+	 * @return um <b>List</b> com todos produtos do estoque.
+	 */
+	List<Produto> listaTodosExternos(String filtro);
 }
