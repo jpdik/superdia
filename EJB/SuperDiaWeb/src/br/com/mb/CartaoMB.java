@@ -16,16 +16,17 @@ public class CartaoMB {
 
 	@EJB
 	private ICartao iCartao;
-	
+
 	public boolean analisaCartao() {
 		try {
-		//System.out.println(iCartao.validateCardNumber(card.getBandeira(), card.getNumero()));
-		}catch (Exception e) {
+			// System.out.println(iCartao.validateCardNumber(card.getBandeira(),
+			// card.getNumero()));
+		} catch (Exception e) {
 			return true;
 		}
 		return true;
 	}
-	
+
 	public Cartao getCard() {
 		return card;
 	}
@@ -33,8 +34,12 @@ public class CartaoMB {
 	public void setCard(Cartao card) {
 		this.card = card;
 	}
-	
+
 	public List<String> getCartoes() {
-		return iCartao.getCartoes();
+		try {
+			return iCartao.getCartoes();
+		} catch (javax.ejb.TransactionRolledbackLocalException e) {
+			return null;
+		}
 	}
 }
