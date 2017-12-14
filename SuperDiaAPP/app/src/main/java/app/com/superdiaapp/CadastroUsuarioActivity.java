@@ -9,10 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import app.com.superdiaapp.modelo.Usuario;
+
 public class CadastroUsuarioActivity extends AppCompatActivity {
 
     private EditText login, senha;
     private Button cadastrar;
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,8 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         setTitle("Cadastrar Usuário");
 
         obterInformacoes();
+
+        usuario = new Usuario();
 
         cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
