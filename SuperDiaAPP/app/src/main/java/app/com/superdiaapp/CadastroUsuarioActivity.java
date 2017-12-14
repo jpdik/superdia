@@ -4,8 +4,15 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class CadastroUsuarioActivity extends AppCompatActivity {
+
+    private EditText login, senha;
+    private Button cadastrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,6 +21,24 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Cadastrar Usuário");
+
+        obterInformacoes();
+
+        cadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getBaseContext(), "Cadastrar", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //TODO: Verificar se usuário já existe, solicitar cadastro, e fazer verificação de sucesso pelas mensagens retornadas
+
+    }
+
+    private void obterInformacoes() {
+        login = (EditText) findViewById(R.id.editTextNomeUsuario);
+        senha = (EditText) findViewById(R.id.editTextSenha);
+        cadastrar = (Button) findViewById(R.id.buttonCadastrar);
     }
 
     @Override

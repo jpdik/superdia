@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button buttonComprar, buttonProduto, buttonCarrinho, buttonSobre;
+    private Button buttonComprar, buttonProduto, buttonCarrinho, buttonSobre, buttonCadastrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        buttonCadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getBaseContext(), CadastroUsuarioActivity.class));
+            }
+        });
+
     }
 
     private void obterBotoes() {
@@ -52,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         buttonProduto = (Button) findViewById(R.id.button);
         buttonCarrinho = (Button)  findViewById(R.id.button4);
         buttonSobre =  (Button) findViewById(R.id.button2);
+        buttonCadastrar = (Button) findViewById(R.id.button5);
     }
 
 }
