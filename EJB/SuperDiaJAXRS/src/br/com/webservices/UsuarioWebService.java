@@ -73,4 +73,19 @@ public class UsuarioWebService {
     	else
     		return "Usuário que deseja alterar não existe, ou informações não coincidem.";
     }
+    
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/remover")
+    public String Remover(@FormParam("usuario")String user, @FormParam("senha")String senha){
+    	Usuario usuario = new Usuario(user,senha);
+    	usuario = iautentica.autentica(usuario);
+    	if(usuario != null)
+    		if(icliente.autoRemove(usuario))
+    			return "Informações alteradas com sucesso!";
+    		else
+    			return "Usuário já existente. (Inalterado)";
+    	else
+    		return "Usuário que deseja alterar não existe, ou informações não coincidem.";
+    }
 }
