@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getBaseContext(), CarrinhoComprasActivity.class));
-                finish();
             }
         });
 
@@ -29,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //startActivity(new Intent(getBaseContext(), .class));
-                //finish();
             }
         });
 
@@ -37,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getBaseContext(), SobreActivity.class));
-                finish();
             }
         });
 
@@ -45,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getBaseContext(), ProdutoActivity.class));
-                finish();
             }
         });
 
