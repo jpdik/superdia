@@ -5,13 +5,13 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import br.com.interfacebean.IProduto;
 import br.com.modelo.Produto;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class ProdutoMB {
 	Produto produto = new Produto();
 	

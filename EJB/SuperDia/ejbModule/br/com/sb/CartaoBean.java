@@ -16,10 +16,14 @@ import net.webservicex.CCCheckerSoap;
 public class CartaoBean implements ICartao {
 	@Override
 	public String validateCardNumber(String cardType, String cardNumber) {
+		try {
 		CCChecker ccChecker = new CCChecker();
 		CCCheckerSoap ccCheckerSoap = ccChecker.getCCCheckerSoap();
 		
 		return ccCheckerSoap.validateCardNumber(cardType, cardNumber);
+		}catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
