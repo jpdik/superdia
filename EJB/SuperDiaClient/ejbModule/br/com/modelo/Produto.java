@@ -37,7 +37,7 @@ public class Produto implements Serializable {
 		return id;
 	}
 	
-	
+	public Produto() {}
 	
 	public Produto(String nome, String descricao, Double preco, Integer estoqueMinimo, Integer quantidadeEstoque) {
 		super();
@@ -47,7 +47,7 @@ public class Produto implements Serializable {
 		this.estoqueMinimo = estoqueMinimo;
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
-
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
