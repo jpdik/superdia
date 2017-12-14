@@ -10,13 +10,15 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import br.com.interfacebean.IProduto;
 import br.com.modelo.Produto;
+import br.com.modelo.Resposta;
 
 @Stateless
 @LocalBean
-@Path("/Produto")
+@Path("/produto")
 public class ProdutoWebService {
 	@EJB
 	private IProduto iProduto;
@@ -24,36 +26,36 @@ public class ProdutoWebService {
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/adiciona")
-	public String Adicionar(@FormParam("nome") String nome, @FormParam("descricao") String descricao, @FormParam("preco") Double preco,
+	public Response Adicionar(@FormParam("nome") String nome, @FormParam("descricao") String descricao, @FormParam("preco") Double preco,
 			@FormParam("estoqueMinimo") Integer estoqueMinimo, @FormParam("qtde") Integer qtde) {
 		Produto produto = new Produto(nome, descricao, preco, estoqueMinimo, qtde);
 		if(iProduto.adiciona(produto))
-			return MessagensJSON.PRODUTO_CADASTRADO_SUCESSO.getMensagem();
+			return Resposta.status(200,MessagensJSON.PRODUTO_CADASTRADO_SUCESSO.getMensagem());
 		else
-			return MessagensJSON.PRODUTO_CADASTRADO_FALHA.getMensagem();
+			return Resposta.status(200,MessagensJSON.PRODUTO_CADASTRADO_FALHA.getMensagem());
 	}
 	
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/altera")
-	public String Altera(@FormParam("nome") String nome, @FormParam("descricao") String descricao, @FormParam("preco") Double preco,
+	public Response Altera(@FormParam("nome") String nome, @FormParam("descricao") String descricao, @FormParam("preco") Double preco,
 			@FormParam("estoqueMinimo") Integer estoqueMinimo, @FormParam("qtde") Integer qtde) {
 		Produto produto = new Produto(nome, descricao, preco, estoqueMinimo, qtde);
 		if(iProduto.altera(produto))
-			return MessagensJSON.ALTERAR_PRODUTO_SUCESSO.getMensagem();
+			return Resposta.status(200,MessagensJSON.ALTERAR_PRODUTO_SUCESSO.getMensagem());
 		else
-			return MessagensJSON.ALTERAR_PRODUTO_FALHA.getMensagem();
+			return Resposta.status(200,MessagensJSON.ALTERAR_PRODUTO_FALHA.getMensagem());
 	}
 	
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/remove")
-	public String remove(@FormParam("nome") String nome, @FormParam("descricao") String descricao, @FormParam("preco") Double preco,
+	public Response remove(@FormParam("nome") String nome, @FormParam("descricao") String descricao, @FormParam("preco") Double preco,
 			@FormParam("estoqueMinimo") Integer estoqueMinimo, @FormParam("qtde") Integer qtde) {
 		Produto produto = new Produto(nome, descricao, preco, estoqueMinimo, qtde);
 		if(iProduto.remove(produto))
-			return MessagensJSON.PRODUTO_REMOVIDO_SUCESSO.getMensagem();
+			return Resposta.status(200,MessagensJSON.PRODUTO_REMOVIDO_SUCESSO.getMensagem());
 		else
-			return MessagensJSON.PRODUTO_NAO_EXISTE.getMensagem();
+			return Resposta.status(200,MessagensJSON.PRODUTO_NAO_EXISTE.getMensagem());
 	}
 }
