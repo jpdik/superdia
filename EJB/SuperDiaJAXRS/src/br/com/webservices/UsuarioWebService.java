@@ -8,9 +8,11 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import br.com.interfacebean.IAutentica;
 import br.com.interfacebean.ICliente;
+import br.com.modelo.Resposta;
 import br.com.modelo.Usuario;
  
 /**
@@ -35,54 +37,54 @@ public class UsuarioWebService {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/logar")
-    public String Logar(@FormParam("usuario") String user, @FormParam("senha") String pass) {
+    public Response Logar(@FormParam("usuario") String user, @FormParam("senha") String pass) {
     	Usuario usuario = new Usuario(user, pass);
     	usuario = iautentica.autentica(usuario);
     	if(usuario != null)
-    		return String.format(MessagensJSON.RETORNA_USUARIO.getMensagem(), usuario.toString());
+    		return Resposta.status(200, usuario.toString());
     	else
-    		return MessagensJSON.ERRO_USUARIO_INVALIDO.getMensagem();
+    		return Resposta.status(200, MessagensJSON.ERRO_USUARIO_INVALIDO.getMensagem());
     }
     
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/cadastrar")
-    public String Cadastrar(@FormParam("usuario") String user, @FormParam("senha") String pass) {
+    public Response Cadastrar(@FormParam("usuario") String user, @FormParam("senha") String pass) {
     	Usuario usuario = new Usuario(user, pass);
     	if(icliente.autoAdiciona(usuario))
-    		return MessagensJSON.USUARIO_CADASTRADO_SUCESSO.getMensagem();
+    		return Resposta.status(200,MessagensJSON.USUARIO_CADASTRADO_SUCESSO.getMensagem());
     	else
-    		return MessagensJSON.USUARIO_CADASTRADO_FALHA.getMensagem();
+    		return Resposta.status(200,MessagensJSON.USUARIO_CADASTRADO_FALHA.getMensagem());
     }
     
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/alterar")
-    public String Alterar(@FormParam("usuarioAntigo") String oldUser, @FormParam("senhaAntiga") String oldPass,
+    public Response Alterar(@FormParam("usuarioAntigo") String oldUser, @FormParam("senhaAntiga") String oldPass,
     		@FormParam("novoUsuario") String newUser, @FormParam("novaSenha") String newPass) {
     	Usuario usuario = new Usuario(oldUser, oldPass);
     	usuario = iautentica.autentica(usuario);
     	if(usuario != null)
     		if(icliente.autoAltera(new Usuario(newUser, newPass)))
-    			return MessagensJSON.INFORMACAO_ALTERADA_SUCESSO.getMensagem();
+    			return Resposta.status(200,MessagensJSON.INFORMACAO_ALTERADA_SUCESSO.getMensagem());
     		else
-    			return MessagensJSON.USUARIO_INALTERADO.getMensagem();
+    			return Resposta.status(200,MessagensJSON.USUARIO_INALTERADO.getMensagem());
     	else
-    		return MessagensJSON.ALTERAR_USUARIO_FALHA.getMensagem();
+    		return Resposta.status(200,MessagensJSON.ALTERAR_USUARIO_FALHA.getMensagem());
     }
     
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/remover")
-    public String Remover(@FormParam("usuario")String user, @FormParam("senha")String senha){
+    public Response Remover(@FormParam("usuario")String user, @FormParam("senha")String senha){
     	Usuario usuario = new Usuario(user,senha);
     	usuario = iautentica.autentica(usuario);
     	if(usuario != null)
     		if(icliente.autoRemove(usuario))
-    			return MessagensJSON.USUARIO_REMOVIDO_SUCESSO.getMensagem();
+    			return Resposta.status(200,MessagensJSON.USUARIO_REMOVIDO_SUCESSO.getMensagem());
     		else
-    			return MessagensJSON.USUARIO_NAO_EXISTE.getMensagem();
+    			return Resposta.status(200,MessagensJSON.USUARIO_NAO_EXISTE.getMensagem());
     	else
-    		return MessagensJSON.ALTERAR_USUARIO_FALHA.getMensagem();
+    		return Resposta.status(200,MessagensJSON.ALTERAR_USUARIO_FALHA.getMensagem());
     }
 }
