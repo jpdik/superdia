@@ -13,12 +13,16 @@ public enum MessagensJSON {
 	ALTERAR_USUARIO_FALHA("{'cod' : 200, 'msg':'Usuário que deseja alterar não existe, ou informações não coincidem.'}"),
 	INFORMACAO_ALTERADA_SUCESSO("{'cod' : 200, 'msg':'Informações alteradas com sucesso!'}"), 
 	USUARIO_REMOVIDO_SUCESSO("{'cod' : 200, 'msg':'Usuário removido com sucesso!'}"), 
-	USUARIO_NAO_EXISTE("{'cod' : 200, 'msg':'Usuário removido com sucesso!'}"),
+	USUARIO_NAO_EXISTE("{'cod' : 200, 'msg':'Esse usuário não existe!'}"),
 	RETORNA_USUARIO("{'cod': 200, 'msg': 'Login realizado com sucesso!', 'usuario':{%s}}"),
 	
 	//JSON produto
 	PRODUTO_CADASTRADO_SUCESSO("{'cod': 200, 'msg': 'Produto cadastrado com sucesso!'}"),
-	PRODUTO_CADASTRADO_FALHA("{'cod': 200, 'msg': 'Falha ao cadastrar o procuto!'}");
+	PRODUTO_CADASTRADO_FALHA("{'cod': 200, 'msg': 'Falha ao cadastrar o procuto!'}"),
+	ALTERAR_PRODUTO_SUCESSO("{'cod' : 200, 'msg':'Informações alteradas com sucesso!'}"),
+	ALTERAR_PRODUTO_FALHA("{'cod' : 200, 'msg':'O produto que deseja alterar não existe, ou informações não coincidem.'}"),
+	PRODUTO_REMOVIDO_SUCESSO("{'cod' : 200, 'msg':'Produto removido com sucesso!'}"),
+	PRODUTO_NAO_EXISTE("{'cod' : 200, 'msg':'Esse produto não está cadastrado!'}");
 	
 	
 	
