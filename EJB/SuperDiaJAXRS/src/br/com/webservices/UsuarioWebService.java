@@ -3,7 +3,6 @@ package br.com.webservices;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.swing.plaf.metal.MetalPopupMenuSeparatorUI;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -40,7 +39,7 @@ public class UsuarioWebService {
     	Usuario usuario = new Usuario(user, pass);
     	usuario = iautentica.autentica(usuario);
     	if(usuario != null)
-    		return usuario.toString();
+    		return String.format(MessagensJSON.RETORNA_USUARIO.getMensagem(), usuario.toString());
     	else
     		return MessagensJSON.ERRO_USUARIO_INVALIDO.getMensagem();
     }
