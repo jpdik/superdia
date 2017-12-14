@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Vendas realizadas</title>
+</h:head>
+
+<ui:composition template="/WEB-INF/_template.xhtml">
+	<ui:define name="corpo">
+		<div id="conteudo">
+			<h:form id="lista">
+				<h:outputText style="font-size: 25px"
+					value="Relatório de vendas">
+				</h:outputText>
+				<p:dataTable value="#{vendaMB.vendas}"  var="v" styleClass="dados" rowClasses="impar, par" paginator="true"
+					rows="10">
+					
+					<p:column>
+						<f:facet name="header">Id</f:facet>
+						#{v.id}
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Cliente</f:facet>
+						#{v.usuario.usuario}
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Perfil</f:facet>
+						#{v.usuario.perfil}
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Valor Total</f:facet>
+						<h:outputText value="#{vendaMB.valorTotal(v.itensVenda)}" >
+							<f:convertNumber pattern="R$ #0.00"/>
+						</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Data e Hora</f:facet>
+						<h:outputText value="#{v.data.time}">
+							<f:convertDateTime timeZone="America/Sao_Paulo" pattern="dd/MM/yyyy - HH:mm:ss" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Produtos</f:facet>
+						<p:commandButton id="produtosBtn" value="Produtos" styleClass="btn" icon="ui-icon-person"/>
+						<p:overlayPanel for="produtosBtn" hideEffect="fade" dynamic="true" style="width:600px">
+					        <p:dataTable var="item" value="#{v.itensVenda}" styleClass="dados" rowClasses="impar, par" paginator="true"
+					rows="10" >
+					            <p:column headerText="Id">
+					                <h:outputText value="#{item.produto.id}" />
+					            </p:column>
+					            
+					            <p:column headerText="Nome">
+					                <h:outputText value="#{item.produto.nome}" />
+					            </p:column>
+					            
+					            <p:column headerText="Descrição">
+					                <h:outputText value="#{item.produto.descricao}" />
+					            </p:column>
+					            
+					            <p:column>
+									<f:facet name="header">Preço Unitário</f:facet>
+									
+									<h:outputText value="#{item.produto.preco}" >
+										<f:convertNumber pattern="R$ #0.00"/>
+									</h:outputText>
+									
+								</p:column>
+					            
+					            <p:column headerText="Quantidade">
+					                <h:outputText value="#{item.quantidade}" />
+					            </p:column>					            
+					 
+					        </p:dataTable>
+    					</p:overlayPanel>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>	
+</html>

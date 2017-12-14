@@ -33,19 +33,12 @@ public class Produto implements Serializable {
 	@NotNull(message="Necessário informar a quantidade em estoque!")
 	private Integer quantidadeEstoque;
 	
+	private String imagem;
+	
+	private String vendidoPor;
+	
 	public Long getId() {
 		return id;
-	}
-	
-	public Produto() {}
-	
-	public Produto(String nome, String descricao, Double preco, Integer estoqueMinimo, Integer quantidadeEstoque) {
-		super();
-		this.nome = nome;
-		this.descricao = descricao;
-		this.preco = preco;
-		this.estoqueMinimo = estoqueMinimo;
-		this.quantidadeEstoque = quantidadeEstoque;
 	}
 	
 	public void setId(Long id) {
@@ -90,6 +83,22 @@ public class Produto implements Serializable {
 
 	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
 		this.quantidadeEstoque = quantidadeEstoque;
+	}
+
+	public String getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
+	}
+
+	public String getVendidoPor() {
+		return vendidoPor;
+	}
+
+	public void setVendidoPor(String vendidoPor) {
+		this.vendidoPor = vendidoPor;
 	}
 
 	@Override

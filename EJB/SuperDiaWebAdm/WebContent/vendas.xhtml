@@ -84,14 +84,6 @@ xmlns:h="http://java.sun.com/jsf/html"
     					</p:overlayPanel>
 					</p:column>
 					
-					<p:column>
-						<f:facet name="header">Ações</f:facet>
-						<h:commandLink value="Remover" action="#{vendaMB.remove(v)}" styleClass="btn btn-danger"
-							onclick="return confirm('Deseja realmente excluir esta venda?');">
-							<f:ajax render="@form :lista"></f:ajax>
-						</h:commandLink>
-					</p:column>
-					
 				</p:dataTable>
 			</h:form>
 		</div>

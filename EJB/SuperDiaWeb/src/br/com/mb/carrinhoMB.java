@@ -3,13 +3,16 @@ package br.com.mb;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import br.com.interfacebean.ICarrinho;
+import br.com.interfacebean.ICartao;
 import br.com.interfacebean.IProduto;
+import br.com.modelo.Cartao;
 import br.com.modelo.ItemVenda;
 import br.com.modelo.Produto;
 import br.com.modelo.Usuario;
@@ -17,28 +20,27 @@ import br.com.modelo.Usuario;
 @ManagedBean
 @SessionScoped
 public class carrinhoMB {
-	private ItemVenda itemVenda = new ItemVenda();
-	private long idProduto;
-	
 	@EJB
 	private IProduto iProduto;
 	
 	@EJB
 	private ICarrinho iCarrinho;
 	
-	public void adiciona() {
+	public void adicionar(Produto produto) {
+		ItemVenda itemVenda = new ItemVenda();
 		
-		// Busca produto
-		for(Produto produto: getProdutos())
-			if (produto.getId() == idProduto) {
-				itemVenda.setProduto(produto);
-				break;
-			}
-				
+		itemVenda.setProduto(produto);
+		itemVenda.setQuantidade(1);
+		
 		iCarrinho.adiciona(itemVenda);
 		
-		// Limpa o item após gravar
-		itemVenda = new ItemVenda();
+		FacesContext context = FacesContext.getCurrentInstance();
+        
+        context.addMessage(null, new FacesMessage("Carrinho",  produto.getNome()+" foi adicionado ao carrinho!"));
+	}
+	
+	public List<ItemVenda> produtosCarrinho(){
+		return iCarrinho.listaTodos();
 	}
 	
 	/*
@@ -50,17 +52,24 @@ public class carrinhoMB {
 		return ((LoginMB) sessao.getAttribute("loginMB")).usuario;
     }
 	
+	public CartaoMB carregaCartaoAtivo() {		
+		FacesContext ctx = FacesContext.getCurrentInstance();
+		HttpSession sessao = (HttpSession) ctx.getExternalContext().getSession(false);
+		return (CartaoMB) sessao.getAttribute("cartaoMB");
+    }
+	
 	public String finalizaCompra() {
 		Usuario usuario = carregaUsuarioAtivo();
-		
+
 		// Caso tenha usuário ativo na sessão finaliza compra, 
 		// caso contrário redireciona para página de login. Após realizar o login o usuário
 		// pode concluir a compra.
-		if (usuario.getId() != null) {
+		if (usuario != null && usuario.getId() != null && carregaCartaoAtivo().analisaCartao()) {
 			iCarrinho.finalizaCompra(usuario);
-			return "";
+			
+			return "sucesso?faces-redirect=true";
 		}else
-			return "login";
+			return "login?faces-redirect=true";
 	}
 	
 	public void remove(ItemVenda itemVenda) {
@@ -69,25 +78,5 @@ public class carrinhoMB {
 	
 	public List<ItemVenda> getItemVendas() {
 		return iCarrinho.listaTodos();
-	}
-	
-	public List<Produto> getProdutos(){
-		return iProduto.listaTodos();
-	}
-
-	public ItemVenda getItemVenda() {
-		return itemVenda;
-	}
-
-	public void setItemVenda(ItemVenda itemVenda) {
-		this.itemVenda = itemVenda;
-	}
-
-	public Long getIdProduto() {
-		return idProduto;
-	}
-
-	public void setIdProduto(Long idProduto) {
-		this.idProduto = idProduto;
 	}
 }

@@ -1,6 +1,5 @@
 package br.com.mb;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -49,10 +48,7 @@ public class UsuarioMB {
 	}
 	
 	public List<String> getPerfis() {
-		List<String> perfis = new ArrayList<>();
-		for(Usuario.perfis perfil : Usuario.perfis.values())
-			perfis.add(perfil.name());
-		return perfis;
+		return iUsuario.getPerfis();
 	}
 	
 	public void remove(Usuario usuario){

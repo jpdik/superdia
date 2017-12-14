@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/_template.xhtml">
+	<ui:define name="corpo">
+		<h:form>
+			<p:growl id="msgs" showDetail="true" />
+
+			<ui:repeat value="#{carrinhoMB.itemVendas}" var="p">
+				<p:panel id="usuario" header="Produto" class="panel">
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:graphicImage library="imagens" name="model.png"
+							rendered="#{empty p.produto.imagem}" />
+						<p:graphicImage url="#{p.produto.imagem}"
+							rendered="#{not empty p.produto.imagem}" />
+						<p:graphicImage width="150px" height="150px" library="imagens"
+							name="usuario-logo.png" />
+						<p:panelGrid columns="2">
+							<h:outputText value="Nome do produto: #{p.produto.nome}" />
+							<h:outputText value="Quantidade: #{p.quantidade}" />
+						</p:panelGrid>
+					</h:panelGrid>
+				</p:panel>
+			</ui:repeat>
+			<p:commandButton value="Finalizar Compra" action="finalizar?faces-redirect=true"/>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

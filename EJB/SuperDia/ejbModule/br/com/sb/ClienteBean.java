@@ -18,7 +18,7 @@ public class ClienteBean implements ICliente {
 	@Override
 	public boolean autoAdiciona(Usuario usuario) {
 		if(!entityExists(usuario)) {
-			usuario.setPerfil(Usuario.perfis.Cliente.name());
+			usuario.setPerfil(Usuario.perfis.Cliente.toString());
 			em.persist(usuario);
 			return true;
 		}
@@ -55,4 +55,5 @@ public class ClienteBean implements ICliente {
 			return false;
 		}
 	}
+
 }

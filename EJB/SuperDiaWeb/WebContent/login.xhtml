@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-xmlns:h="http://java.sun.com/jsf/html"
-xmlns:f="http://java.sun.com/jsp/jstl/core">
-
-<h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Login</title>
-</h:head>
-<h:body>
-	<h1>Login</h1>
-	<hr />
-	<h:form>
-		<h:outputLabel value="Usuario" id="usuario"></h:outputLabel>
-		<h:inputText value="#{loginMB.usuario.usuario}"></h:inputText><br />
-		<h:outputLabel value="Senha" id="senha"></h:outputLabel>
-		<h:inputText value="#{loginMB.usuario.senha}"></h:inputText><br />
-		<h:commandButton value="Login" action="#{loginMB.autentica}"></h:commandButton>
-	</h:form>
-	<hr />
-</h:body>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/_template.xhtml">
+	<ui:define name="corpo">
+		<div id="conteudo">
+			<div id="autentica">
+				<fieldset id="login">
+					<legend align="left">Autenticação</legend>
+					<h:form id="formlogin">
+						<h:panelGrid columns="2">
+						<h:outputLabel value="Login:" />
+						<h:inputText value="#{loginMB.usuario.usuario}" />
+						<h:outputLabel value="Senha:" />
+						<h:inputSecret value="#{loginMB.usuario.senha}"/>
+						<h:commandButton value="Efetuar Login" action="#{loginMB.autentica}" />
+						</h:panelGrid>
+					</h:form>	
+				</fieldset>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>	
 </html>

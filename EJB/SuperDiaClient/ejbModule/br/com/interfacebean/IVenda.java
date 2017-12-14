@@ -2,6 +2,7 @@ package br.com.interfacebean;
 
 import java.util.List;
 
+import br.com.modelo.Usuario;
 import br.com.modelo.Venda;
 
 public interface IVenda {
@@ -24,4 +25,5 @@ public interface IVenda {
 	 * @return um <b>List</b> com todas vendas efetuadas.
 	 */
 	List<Venda> listaTodos();
+	List<Venda> listaDoUsuario(Usuario usuario);
 }

@@ -13,27 +13,27 @@ import br.com.modelo.Produto;
 @SessionScoped
 public class ProdutoMB {
 	Produto produto = new Produto();
-	
+
 	@EJB
 	private IProduto iProduto;
-	
+
 	public void gravar() {
 		if (produto.getId() == null)
 			iProduto.adiciona(produto);
 		else
 			iProduto.altera(produto);
-		
+
 		produto = new Produto();
 	}
-	
+
 	public void cancela() {
 		produto = new Produto();
 	}
-	
+
 	public void remove(Produto produto) {
 		iProduto.remove(produto);
 	}
-	
+
 	public List<Produto> getProdutos() {
 		return iProduto.listaTodos();
 	}

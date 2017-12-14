@@ -15,13 +15,11 @@ public class LoginMB {
 	
 	@EJB
 	private IUsuario iUsuario;
-	
-	@EJB
 	private IAutentica iAutentica;
 	
 	public String adiciona() {
 		iUsuario.adiciona(usuario);
-		return "login?redirect-faces=true";
+		return "login?faces-redirect=true";
 	}
 
 	public Usuario getUsuario() {
@@ -35,18 +33,18 @@ public class LoginMB {
 	public String autentica() {
 		Usuario usuario = iAutentica.autentica(this.usuario);
 		
-		if(usuario != null && usuario.getPerfil().equals(Usuario.perfis.Administrador.toString())) {
+		if(usuario != null) {
 			this.usuario = usuario;
-			return "menu.xhtml?redirect-faces=true";
+			return "menu?faces-redirect=true";
 		}
 		else {
 			this.usuario = new Usuario();
-			return "login";
+			return "login?faces-redirect=true";
 		}
 	}
 	
 	public String logout() {
 		usuario = new Usuario();
-		return "login.xhtml?redirect-faces=true";
+		return "login.xhtml?faces-redirect=true";
 	}
 }

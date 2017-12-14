@@ -5,6 +5,9 @@
 		<class>br.com.modelo.Usuario</class>
 		<class>br.com.modelo.Produto</class>
 		<class>br.com.modelo.Venda</class>
+		<class>br.com.modelo.ItemVenda</class>
+		<class>br.com.modelo.Cartao</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<shared-cache-mode>NONE</shared-cache-mode>
 		<properties>
 			<property name="javax.persistence.schema-generation.database.action" value="create"/>

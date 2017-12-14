@@ -1,5 +1,6 @@
 package br.com.sb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Remote;
@@ -63,8 +64,17 @@ public class UsuarioBean implements IUsuario {
 			q.getSingleResult();
 			return true;
 		}catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
+	}
+
+	@Override
+	public List<String> getPerfis() {
+		List<String> perfis = new ArrayList<>();
+		for(Usuario.perfis perfil : Usuario.perfis.values())
+			perfis.add(perfil.name());
+		return perfis;
 	}
 
 }

@@ -38,4 +38,6 @@ public interface IUsuario {
 	 * @return uma List com todos os usuário cadastrados no banco.
 	*/
 	List<Usuario> listaTodos();
+	
+	List<String> getPerfis();
 }

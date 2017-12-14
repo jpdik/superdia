@@ -1,0 +1,340 @@
+/* base */
+* { margin:0px; padding:0px; }
+body{ 
+	font-size:12px; 
+	color:#000; 
+	font-family:helvetica, arial, sans-serif;
+	padding-bottom: 30px;
+	text-align:center;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+li{
+	margin-left: 10px;
+	margin-bottom: 5px;
+}
+
+.sliceBar{
+	width: 200px;
+}
+.matriz{
+	border-collapse: collapse;
+  border: 2px solid  #000000;
+}
+
+.matriz td{
+	border: 1px solid #000000;
+  text-align: center;
+  padding: 1px 3px 1px 3px;
+  width:200px;
+  height: 40px;
+}
+
+td.M�dia, td.M�dio {
+    background: rgba(158, 158, 158, 0.48);
+    text-align: center;
+    width: 60px;
+}
+
+td.Muito.Alta, td.Muito.Alto{
+    background: rgba(255, 20, 2, 0.83);
+    text-align: center;
+    width: 60px;
+}
+
+td.Alta, td.Alto {
+    background: rgba(255, 53, 38, 0.75);
+    text-align: center;
+    width: 60px;
+}
+
+td.Baixa, td.Baixo {
+    background: rgba(76, 175, 80, 0.62);
+    text-align: center;
+    width: 60px;
+}
+
+td.Muito.Baixa, td.Muito.Baixo {
+    background: rgba(98, 196, 98, 0.37);
+    text-align: center;
+    width: 60px;
+}
+
+
+
+.prob{
+	width: 50px !Important;	
+}
+
+.vert{
+	transform: rotate(90deg);
+	transform-origin: left top 10;
+
+}
+.matriz th{
+	border: 1px solid #000000;
+	background-color: rgba(153, 153, 153, 0.05);
+	padding: 1px 3px 1px 3px;	
+	text-align: center;
+	width:200px;
+	height: 40px;
+}
+
+/** cabecalho **/
+#cabecalho, header{
+	background-color: rgba(18, 107, 255, 0.92);
+	position: relative;
+	padding-top: 20px;
+	height: 200px;
+}
+
+#fieldlogo{
+	display: table;
+ 	margin: 0 auto;
+}
+
+#logo{
+	display: table;
+ 	margin: 0 auto;
+    border: 4px solid #ffffff;
+    border-radius: 20px;
+   	padding: 20px 20px 20px 90px;
+    color: white;
+    background-image: url("/SuperDiaWeb/javax.faces.resource/imagens/logo.svg.xhtml");
+    background-repeat: no-repeat;
+    background-position: 14px 2px;
+    background-size: 70px 60px;
+}
+
+#search{
+	display: table;
+ 	margin: 0 auto;
+    padding-top: 30px;
+}
+
+#busca{
+	position: relative;
+	float: left;
+}
+
+#buscabtn{
+	float: left;
+}
+
+.btn{
+	margin-right: 15px;
+}
+
+#campos input {
+	display: block;	
+	margin-bottom: 3px !important;
+}
+
+#search input {
+	margin: 0;
+    padding: 6px;
+}
+
+#search input[type=text] {
+    padding-right: 50px;
+}
+
+.jquery-ui-themeswitcher-trigger {
+	position: absolute;
+	float: right;
+	top: 5px;
+	right: 50%;
+	margin-right: -450px;
+}
+
+#menubar{
+	float: left;
+}
+
+#escolherProduto fieldset{
+	display: table;
+ 	margin: 20px 50px auto;
+}
+
+#escolherProduto table{
+	margin: 20px 25px 25px;
+	float: left;
+}
+
+.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled{
+	opacity: 1;
+	background-color: #fffcfc;
+	-webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.2);
+     -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+#conteudo{
+	display: table;
+ 	margin: 10px auto;
+ 	height: 100%;
+}
+
+#main {
+	float: left;
+	padding:10px 40px;
+	width: 80%;
+}
+
+/** rodape **/
+#rodape, footer { 
+	background-color: rgba(18, 107, 255, 0.92);
+	margin-top: 10px;
+	padding: 10px 0px;
+	text-align: center;
+	font-size:12px; 
+	color:#FFF;
+    z-index: 10;
+}
+/* TITULO */
+h2{
+	display:block;
+	position:relative;
+	overflow:hidden;
+	color:#2B2926;
+	text-align:left;
+	height:auto;
+	margin-bottom:10px;
+	border-bottom: 1px solid;
+	clear: both;
+	font-size: x-large;
+	width: 100%;
+}
+
+input:not(.ui-widget), textarea:not(.ui-widget), select {
+	-moz-border-radius:5px 5px 5px 5px;
+	-webkit-border-radius:5px 5px 5px 5px;
+	border-radius:5px 5px 5px 5px;
+	
+	background:url("../resources/imagens/txt.gif") repeat-x scroll 0 0 transparent;
+	border:1px solid #999999;
+	padding:5px 7px;
+}
+
+input:after {
+	clear: both;
+}
+
+#formlogin{
+	margin: 30px;
+}
+
+input[type=submit] {
+	background:url("../resources/imagens/fundo_botao.gif") repeat-x scroll 0 0 #2A2A2A;
+	border:1px solid #272727;
+	color:#FFFFFF;
+	cursor:pointer;
+	padding:3px;
+	position: relative;
+	text-shadow:1px 1px 0 #000000;
+	
+	-moz-border-radius:5px 5px 5px 5px;
+	-webkit-border-radius:5px 5px 5px 5px;
+	border-radius:5px 5px 5px 5px;
+	
+	margin: 3px;
+}
+}
+
+#login input[type="text"],  input[type="password"]{
+    margin: 8px;
+}
+
+#login input[type="submit"] {
+    margin-left: calc(50% + 50px);
+    margin-top: 15px;
+    padding: 5%;
+}
+
+legend {
+	display: table;
+ 	margin: 0 auto;
+	font-weight: bold;
+	font-size: 20px;
+	padding: 0px 10px;
+}
+
+form .campos {
+	display:block;
+	position:relative;
+	overflow:hidden;	
+}
+/* tabela zebrada */
+
+table.dados{
+	height:auto;
+	margin-bottom: 10px;
+	width:100%;
+}
+
+
+
+table.dados tr th{
+	background-color: #434a50;
+    color: white;    
+	padding:10px;
+}
+
+table.dados tr td{
+	padding:5px 10px;
+}
+
+.campos tbody tr td {
+	padding-top: 10px;
+	text-align: left;
+}
+
+.dados {
+	width: 100%;	
+}
+
+.par  {
+	background-color: #F0F9FF;
+}
+
+.impar {
+	background:none repeat scroll 0 0 #DDDDDD;
+}
+
+/* validacao */
+.erros {
+	margin: 0 0 10px 0;
+	padding: 0 8px;
+	clear: both;
+	}
+.erros li {
+	display: inline;
+	list-style-position: inside;
+	list-style-type: none;
+	color: #C22;
+	background: #FFDFDF;
+	border: 2px solid #DF7D7D;
+	float: left;
+	padding: 6px;
+	margin: 3px;
+}
+
+#finalizarPedido {
+	width: 0 auto;
+	padding: 10px 200px 100px;
+}
+label:not(.ui-selectonemenu-label){
+	display: block;
+	float: left;
+	margin-right: 20px;
+	text-align: right;
+	width: 110px;
+}
+
+/*Menu Principal*/
+
+a:link { 
+	text-decoration:none; 
+} 

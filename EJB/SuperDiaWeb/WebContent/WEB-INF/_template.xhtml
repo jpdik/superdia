@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>SuperDia</title>
+	<h:outputStylesheet library="css" name="style.css" />
+	<h:outputScript name="jsf.js" library="javax.faces" target="head"></h:outputScript>
+</h:head>
+<h:body>
+	<div id="cabecalho">
+		<h1>
+			<h:form id="fieldlogo">
+				<h:commandLink id="logoname" value=""
+					action="#{produtoMB.limpaBusca}">
+				<div id="logo">Supermercado</div>
+				</h:commandLink>
+			</h:form>
+		</h1>
+		<h:form id="search">
+			<div id="busca">
+				<p:inputText id="procurar" value="#{produtoMB.filtro}" />
+			</div>
+			<div id="buscabtn">
+				<h:commandButton value="Pesquisar" action="#{produtoMB.busca}" />
+			</div>
+		</h:form>
+	</div>
+	<h:form>
+		<p:growl id="messages" />
+
+		<p:menubar>
+			<p:menuitem value="Página inicial" action="#{produtoMB.limpaBusca}" icon="ui-icon-home" />
+		
+			<p:menuitem value="Ver meu Carrinho" action="carrinho?faces-redirect=true" icon="ui-icon-cart" />
+			
+			<p:menuitem value="Finalizar Compra" action="finalizar?faces-redirect=true" icon="ui-icon-transferthick-e-w" />
+			
+			<p:menuitem value="Histórico de Compras" action="historico?faces-redirect=true" icon="ui-icon-script" />
+
+			<f:facet name="options">
+				<h:form rendered="#{empty loginMB.usuario.usuario}">
+					<p:commandButton type="submit" value="Logar" icon="ui-icon-extlink" action="login?faces-redirect=true" ajax="false" />
+					<p:commandButton type="submit" value="Registrar" icon="ui-icon-pencil" action="registrar?faces-redirect=true" ajax="false" />
+				</h:form>
+				<h:form rendered="#{not empty loginMB.usuario.usuario}">
+					<p:commandButton value="Logado como: #{loginMB.usuario.usuario}" disabled="true" />
+					<p:commandButton type="submit" value="Deslogar" icon="ui-icon-power" action="#{loginMB.logout}" ajax="false"/> 
+				</h:form>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+	<div id="conteudo">
+		<ui:insert name="corpo" />
+	</div>
+	<footer id="rodape">Copyright 2017. Todos os Direitos reservados.</footer>
+</h:body>
+</html>

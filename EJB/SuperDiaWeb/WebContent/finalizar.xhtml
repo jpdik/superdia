@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/_template.xhtml">
+	<ui:define name="corpo">
+		<h:form id="cadastro">
+				<p:messages id="messages" autoUpdate="true" closable="true" />
+				<fieldset id="finalizarPedido">
+					<legend>
+						<h:outputText style="font-size: 25px"
+							value="Finalizar Pedido">
+						</h:outputText>
+					</legend>
+					
+					<div id="campos">
+						<p:outputLabel value="Número Cartão:" for="nome"></p:outputLabel>
+						<p:inputText value="#{cartaoMB.card.numero}" id="nome" required="true"
+						requiredMessage="Informe o número do cartão!"/>
+						
+						<h:outputLabel value="Bandeira:" />
+						<h:selectOneMenu value="#{cartaoMB.card.bandeira}">
+							<f:selectItems value="#{cartaoMB.cartoes}" var="c"
+								itemValue="#{c}" itemLabel="#{c}" />
+						</h:selectOneMenu>
+					
+					</div>
+					
+					<div id="botoes">	
+						<h:commandButton value="Finalizar Compra" action="#{carrinhoMB.finalizaCompra}">
+							<f:ajax execute="@form" render=":cadastro"></f:ajax>	
+						</h:commandButton>
+						
+					</div>
+				</fieldset>
+			</h:form>
+	</ui:define>
+</ui:composition>
+</html>
