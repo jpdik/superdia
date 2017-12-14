@@ -5,10 +5,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.swing.plaf.metal.MetalPopupMenuSeparatorUI;
 import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -67,11 +65,11 @@ public class UsuarioWebService {
     	usuario = iautentica.autentica(usuario);
     	if(usuario != null)
     		if(icliente.autoAltera(new Usuario(newUser, newPass)))
-    			return "Informações alteradas com sucesso!";
+    			return MessagensJSON.INFORMACAO_ALTERADA_SUCESSO.getMensagem();
     		else
-    			return "Usuário já existente. (Inalterado)";
+    			return MessagensJSON.USUARIO_INALTERADO.getMensagem();
     	else
-    		return "Usuário que deseja alterar não existe, ou informações não coincidem.";
+    		return MessagensJSON.ALTERAR_USUARIO_FALHA.getMensagem();
     }
     
     @POST
@@ -82,10 +80,10 @@ public class UsuarioWebService {
     	usuario = iautentica.autentica(usuario);
     	if(usuario != null)
     		if(icliente.autoRemove(usuario))
-    			return "Informações alteradas com sucesso!";
+    			return MessagensJSON.USUARIO_REMOVIDO_SUCESSO.getMensagem();
     		else
-    			return "Usuário já existente. (Inalterado)";
+    			return MessagensJSON.USUARIO_NAO_EXISTE.getMensagem();
     	else
-    		return "Usuário que deseja alterar não existe, ou informações não coincidem.";
+    		return MessagensJSON.ALTERAR_USUARIO_FALHA.getMensagem();
     }
 }
