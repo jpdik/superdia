@@ -14,4 +14,10 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="text_sobre">Trabalho desenvolvido para disciplina de Serviços de Suporte a Aplicações Distribuídas
+        como requisito parcial para obtenção do titulo de Tecnólogo em Sistemas para Internet \n\nBarbacena - 2017</string>
+
+    <string name="nomes_participantes"> Déborah Fonseca \n Érika Assis \n Inácio Costa \n João Paulo
+        \n José Ricardo \n Luan \n Luciano Carlos \n Marlúcio</string>
 </resources>
