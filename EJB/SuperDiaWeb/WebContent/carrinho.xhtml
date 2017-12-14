@@ -7,26 +7,74 @@
 	xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/WEB-INF/_template.xhtml">
 	<ui:define name="corpo">
-		<h:form>
+		<h:form id="lista">
 			<p:growl id="msgs" showDetail="true" />
-
-			<ui:repeat value="#{carrinhoMB.itemVendas}" var="p">
-				<p:panel id="usuario" header="Produto" class="panel">
-					<h:panelGrid columns="2" cellpadding="10">
-						<p:graphicImage library="imagens" name="model.png"
-							rendered="#{empty p.produto.imagem}" />
-						<p:graphicImage url="#{p.produto.imagem}"
-							rendered="#{not empty p.produto.imagem}" />
-						<p:graphicImage width="150px" height="150px" library="imagens"
-							name="usuario-logo.png" />
-						<p:panelGrid columns="2">
-							<h:outputText value="Nome do produto: #{p.produto.nome}" />
-							<h:outputText value="Quantidade: #{p.quantidade}" />
-						</p:panelGrid>
-					</h:panelGrid>
-				</p:panel>
-			</ui:repeat>
-			<p:commandButton value="Finalizar Compra" action="finalizar?faces-redirect=true"/>
+			<fieldset id="carrinho">
+				<legend align="left">
+					<h:outputText style="font-size: 25px" value="Meu Carrinho">
+					</h:outputText>
+				</legend>
+				<p:dataTable value="#{carrinhoMB.itemVendas}"  var="v" styleClass="dados" rowClasses="impar, par" paginator="true"
+					rows="10">
+					
+					<p:column>
+						<f:facet name="header">Imagem</f:facet>
+						<p:graphicImage library="imagens" name="model.png" width="50px" height="50px"
+							rendered="#{empty v.produto.imagem}" />
+						<p:graphicImage url="#{v.produto.imagem}" width="50px" height="50px"
+							rendered="#{not empty v.produto.imagem}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Nome do Produto</f:facet>
+						#{v.produto.nome}
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Vendido Por</f:facet>
+						#{v.produto.vendidoPor}
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Quantidade</f:facet>
+						<h:form id="qnt">
+							<p:commandButton action="#{carrinhoMB.diminuiQuantidade(v)}" icon="ui-icon-carat-1-w" title="Diminuir">
+								<f:ajax render="@form :qnt"></f:ajax>
+							</p:commandButton>
+							#{v.quantidade}
+							<p:commandButton action="#{carrinhoMB.aumentaQuantidade(v)}" icon="ui-icon-carat-1-e" title="Diminuir">
+								<f:ajax render="@form :qnt"></f:ajax>
+							</p:commandButton>
+						</h:form>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Valor Total Quantidade</f:facet>
+						<h:outputText value="#{carrinhoMB.valorTotal(v)}" >
+							<f:convertNumber pattern="R$ #0.00"/>
+						</h:outputText>
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Ações 
+						<p:commandButton value="Limpar Carrinho" action="#{carrinhoMB.limpa}" update=":lista" ajax="true" rendered="#{not empty carrinhoMB.itemVendas}" />
+						</f:facet>
+						<p:commandButton value="Remover" action="#{carrinhoMB.remove(v)}" update=":lista" ajax="true" />
+					</p:column>
+					
+				</p:dataTable>
+				
+				<div id="opcoes">
+				<p:panelGrid columns="2" id="opcoes">
+					<h:outputText value="Valor Total:" />
+					<h:outputText value="#{vendaMB.valorTotal(carrinhoMB.itemVendas)}">
+						<f:convertNumber pattern="R$ #0.00"/>
+					</h:outputText>
+					<h:outputText value="Ações:" />
+					<p:commandButton value="Finalizar Compra" action="finalizar?faces-redirect=true"/>
+				</p:panelGrid>
+			</div>
+			</fieldset>
 		</h:form>
 	</ui:define>
 </ui:composition>

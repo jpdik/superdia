@@ -153,6 +153,18 @@ td.Muito.Baixa, td.Muito.Baixo {
 	float: left;
 }
 
+#carrinho{
+	display: table;
+ 	margin: 20px 50px auto;
+ 	padding: 30px 50px;
+}
+
+#opcoes{
+	font-size: 15px;
+	margin-top: 25px;
+	float: right;
+}
+
 #escolherProduto fieldset{
 	display: table;
  	margin: 20px 50px auto;

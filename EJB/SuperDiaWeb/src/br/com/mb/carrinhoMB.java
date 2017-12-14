@@ -65,16 +65,41 @@ public class carrinhoMB {
 		
 		System.out.println(carregaCartaoAtivo());
 		
-		if (usuario != null && usuario.getId() != null && carregaCartaoAtivo().analisaCartao()) {
-			iCarrinho.finalizaCompra(usuario);
-			
-			return "sucesso?faces-redirect=true";
+		if (usuario != null && usuario.getId() != null) {
+			if(carregaCartaoAtivo().analisaCartao()) {
+				iCarrinho.finalizaCompra(usuario);
+				
+				return "sucesso?faces-redirect=true";
+			}
+			else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Finalizar Compra", "O número do cartão é inválido"));
+		        return "#";
+			}
 		}else
 			return "login?faces-redirect=true";
 	}
 	
 	public void remove(ItemVenda itemVenda) {
 		iCarrinho.remove(itemVenda);
+	}
+	
+	public void limpa() {
+		iCarrinho.limpa();
+	}
+	
+	public void aumentaQuantidade(ItemVenda itemVenda) {
+		System.out.println(itemVenda.getQuantidade());
+		itemVenda.setQuantidade(itemVenda.getQuantidade() + 1);
+		System.out.println(itemVenda.getQuantidade());
+	}
+	
+	public void diminuiQuantidade(ItemVenda itemVenda) {
+		if(itemVenda.getQuantidade() > 0)
+			itemVenda.setQuantidade(itemVenda.getQuantidade() - 1);
+	}
+	
+	public double valorTotal(ItemVenda itemVenda) {
+		return itemVenda.getProduto().getPreco() * itemVenda.getQuantidade();
 	}
 	
 	public List<ItemVenda> getItemVendas() {

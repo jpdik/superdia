@@ -8,7 +8,7 @@
 <ui:composition template="/WEB-INF/_template.xhtml">
 	<ui:define name="corpo">
 		<h:form id="cadastro">
-				<p:messages id="messages" autoUpdate="true" closable="true" />
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 				<fieldset id="finalizarPedido">
 					<legend>
 						<h:outputText style="font-size: 25px"
@@ -30,9 +30,7 @@
 					</div>
 					
 					<div id="botoes">	
-						<h:commandButton value="Finalizar Compra" action="#{carrinhoMB.finalizaCompra}">
-							<f:ajax execute="@form" render=":cadastro"></f:ajax>	
-						</h:commandButton>
+						<h:commandButton value="Finalizar Compra" action="#{carrinhoMB.finalizaCompra}" update="cadastro" ajax="true"/>
 						
 					</div>
 				</fieldset>

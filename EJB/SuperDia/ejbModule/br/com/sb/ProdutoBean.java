@@ -1,10 +1,15 @@
 package br.com.sb;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,10 +18,6 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
-
-import org.glassfish.jersey.client.ClientProperties;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import br.com.interfacebean.IProduto;
 import br.com.modelo.Produto;
@@ -76,21 +77,23 @@ public class ProdutoBean implements IProduto {
 		try {
 			String url = "https://shopicruit.myshopify.com/admin/products.json?page=1&access_token=c32313df0d0ef512ca64d5b336a0d7c6";
 			String response = getHTML(url);
-			JSONObject object = new JSONObject(response);
-			JSONArray ob = object.getJSONArray("products");
+			
+			JsonReader jsonReader = Json.createReader(new StringReader(response));
+			JsonObject object = jsonReader.readObject();
+			JsonArray ob = object.getJsonArray("products");
 
-			for (int i = 0; i < ob.length(); i++) {
+			for (int i = 0; i < ob.size(); i++) {
 				Produto p = new Produto();
 
-				p.setVendidoPor(ob.getJSONObject(i).get("vendor").toString());
-				p.setNome(ob.getJSONObject(i).get("title").toString());
-				p.setDescricao(ob.getJSONObject(i).get("tags").toString());
-				p.setImagem(ob.getJSONObject(i).getJSONObject("image").get("src").toString());
+				p.setVendidoPor(ob.getJsonObject(i).get("vendor").toString().replace("\"", ""));
+				p.setNome(ob.getJsonObject(i).get("title").toString().replace("\"", ""));
+				p.setDescricao(ob.getJsonObject(i).get("tags").toString().replace("\"", ""));
+				p.setImagem(ob.getJsonObject(i).getJsonObject("image").get("src").toString().replace("\"", ""));
 
-				JSONObject td = ob.getJSONObject(i).getJSONArray("variants").getJSONObject(0);
-				p.setQuantidadeEstoque(Integer.valueOf(td.get("inventory_quantity").toString()));
-				p.setEstoqueMinimo(Integer.valueOf(td.get("old_inventory_quantity").toString()));
-				p.setPreco(Double.valueOf(td.get("price").toString()));
+				JsonObject td = ob.getJsonObject(i).getJsonArray("variants").getJsonObject(0);
+				p.setQuantidadeEstoque(Integer.valueOf(td.get("inventory_quantity").toString().replace("\"", "")));
+				p.setEstoqueMinimo(Integer.valueOf(td.get("old_inventory_quantity").toString().replace("\"", "")));
+				p.setPreco(Double.valueOf(td.get("price").toString().replace("\"", "")));
 
 				if (filtro.isEmpty())
 					produtos.add(p);
@@ -108,9 +111,6 @@ public class ProdutoBean implements IProduto {
 
 	private static String getHTML(String urlToRead) throws Exception {
 		Client client = ClientBuilder.newClient();
-
-		client.property(ClientProperties.CONNECT_TIMEOUT, 1000);
-		client.property(ClientProperties.READ_TIMEOUT, 1000);
 
 		WebTarget target = client.target(urlToRead);
 

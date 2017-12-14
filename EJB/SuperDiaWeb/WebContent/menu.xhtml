@@ -29,13 +29,16 @@
 
 						<h:outputText value="Preço:" />
 						<h:outputText value="#{p.preco}">
-							<f:convertNumber pattern="#0.00" />
+							<f:convertNumber pattern="R$ #0.00"/>
 						</h:outputText>
 
 						<h:outputText value="Opções:" />
 						<h:panelGrid columns="2" id="opcoes">
-							<p:commandButton value="Comprar" actionListener="#{carrinhoMB.adicionar(p)}" action="carrinho?faces-redirect=true" />
-							<p:commandButton value="Carrinho" actionListener="#{carrinhoMB.adicionar(p)}" update="growl" />
+							<p:commandButton value="Comprar"
+								actionListener="#{carrinhoMB.adicionar(p)}"
+								action="carrinho?faces-redirect=true" />
+							<p:commandButton value="Carrinho"
+								actionListener="#{carrinhoMB.adicionar(p)}" update="growl" />
 						</h:panelGrid>
 					</p:panelGrid>
 				</ui:repeat>
@@ -63,17 +66,17 @@
 
 						<h:outputText value="Preço:" />
 						<h:outputText value="#{p.preco}">
-							<f:convertNumber pattern="#0.00" />
+							<f:convertNumber pattern="R$ #0.00"/>
 						</h:outputText>
 
 						<h:outputText value="Opções:" />
-						<h:form id="opcoes">
-							<h:commandButton value="Comprar" action="#" />
-							<h:commandButton value="Carrinho"
-								action="#{produtoMB.adicionar(p)}">
-								<f:ajax execute="@form" />
-							</h:commandButton>
-						</h:form>
+						<h:panelGrid columns="2" id="opcoes">
+							<p:commandButton value="Comprar"
+								actionListener="#{carrinhoMB.adicionar(p)}"
+								action="carrinho?faces-redirect=true" />
+							<p:commandButton value="Carrinho"
+								actionListener="#{carrinhoMB.adicionar(p)}" update="growl" />
+						</h:panelGrid>
 					</p:panelGrid>
 				</ui:repeat>
 			</fieldset>
