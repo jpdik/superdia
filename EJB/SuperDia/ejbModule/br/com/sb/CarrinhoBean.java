@@ -63,7 +63,6 @@ public class CarrinhoBean implements ICarrinho{
 	public boolean altera(ItemVenda itemVenda) {
 		
 		if (itensVenda.contains(itemVenda) && verificaEstoque(itemVenda)) {
-			System.err.println("\n\n\n\n\nqui####3\n\n\n\n\n");
 			return itensVenda.remove(itemVenda) && itensVenda.add(itemVenda);
 		}
 		
@@ -107,9 +106,16 @@ public class CarrinhoBean implements ICarrinho{
 	 */
 	private void atualizaEstoque() {
 		for(ItemVenda itemVenda: itensVenda) {
-			Produto produto = itemVenda.getProduto();
-			produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() - itemVenda.getQuantidade());
+			int quantidade = itemVenda.getQuantidade();
 			
+			// Busca o produto no estoque
+			Produto produto = iProduto.buscaPorID(itemVenda.getProduto().getId());
+			
+			// Caso o produto não esteja no estoque significa que é um produto de terceiros
+			if(produto == null) continue;
+			
+			// Atualiza estoque
+			produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() - quantidade);
 			iProduto.altera(produto);
 		}
 	}

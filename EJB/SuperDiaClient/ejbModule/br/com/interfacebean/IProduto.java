@@ -37,4 +37,11 @@ public interface IProduto {
 	 * @return um <b>List</b> com todos produtos do estoque.
 	 */
 	List<Produto> listaTodosExternos(String filtro);
+	
+	/**
+	 * Busca um produto pelo id
+	 * @param id a id do produto a ser pesquisado
+	 * @return o produto caso o mesmo exista ou null caso contrário.
+	 */
+	Produto buscaPorID(Long id);
 }

@@ -84,7 +84,8 @@ public class ProdutoBean implements IProduto {
 
 			for (int i = 0; i < ob.size(); i++) {
 				Produto p = new Produto();
-
+				
+				p.setId(Long.valueOf(ob.getJsonObject(i).get("id").toString().replace("\"", "")));
 				p.setVendidoPor(ob.getJsonObject(i).get("vendor").toString().replace("\"", ""));
 				p.setNome(ob.getJsonObject(i).get("title").toString().replace("\"", ""));
 				p.setDescricao(ob.getJsonObject(i).get("tags").toString().replace("\"", ""));
@@ -119,5 +120,10 @@ public class ProdutoBean implements IProduto {
 		response.bufferEntity();
 
 		return response.readEntity(String.class);
+	}
+
+	@Override
+	public Produto buscaPorID(Long id) {
+		return em.find(Produto.class, id);
 	}
 }
