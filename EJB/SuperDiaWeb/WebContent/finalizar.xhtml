@@ -8,32 +8,38 @@
 <ui:composition template="/WEB-INF/_template.xhtml">
 	<ui:define name="corpo">
 		<h:form id="cadastro">
-				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-				<fieldset id="finalizarPedido">
-					<legend>
-						<h:outputText style="font-size: 25px"
-							value="Finalizar Pedido">
-						</h:outputText>
-					</legend>
-					
-					<div id="campos">
-						<p:outputLabel value="Número Cartão:" for="numero"></p:outputLabel>
-						<p:inputText value="#{cartaoMB.card.numero}" id="numero" required="true"
-						requiredMessage="Informe o número do cartão!">
-							<f:ajax listener="#{cartaoMB.numeroMudou}" render="bandeira" />
-						</p:inputText>
-						
-						<p:outputLabel value="Bandeira:" for="bandeira"></p:outputLabel>
-						<p:inputText value="#{cartaoMB.card.bandeira}" id="bandeira" disabled="true"/>
-					
-					</div>
-					
-					<div id="botoes">	
-						<p:commandButton value="Finalizar Compra" action="#{carrinhoMB.finalizaCompra}" update="cadastro" ajax="true"/>
-						
-					</div>
-				</fieldset>
-			</h:form>
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+			<fieldset id="finalizarPedido">
+				<legend>
+					<h:outputText style="font-size: 25px" value="Finalizar Pedido">
+					</h:outputText>
+				</legend>
+				<div id="campos">
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Número Cartão:" for="numero"></p:outputLabel>
+					<p:inputMask value="#{cartaoMB.card.numero}" id="numero"
+						required="true" requiredMessage="Informe o número do cartão!" mask="9999 9999 9999 99?99">
+						<f:ajax listener="#{cartaoMB.numeroMudou}" render="bandeira" />
+					</p:inputMask>
+
+					<p:outputLabel value="Bandeira:" for="bandeira"></p:outputLabel>
+					<p:inputText value="#{cartaoMB.card.bandeira}" id="bandeira"
+						disabled="true" />
+				</p:panelGrid>
+				</div>
+				<div id="finalizar">
+					<p:panelGrid columns="2">
+						<p:commandButton value="Voltar ao Carrinho"
+							action="carrinho?faces-redirect=true" update="cadastro"
+							ajax="true" />
+						<p:commandButton value="Finalizar Compra"
+							action="#{carrinhoMB.finalizaCompra}" update="cadastro"
+							ajax="true" />
+					</p:panelGrid>
+				</div>
+			</fieldset>
+		</h:form>
 	</ui:define>
 </ui:composition>
 </html>

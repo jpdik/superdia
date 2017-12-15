@@ -159,6 +159,11 @@ td.Muito.Baixa, td.Muito.Baixo {
  	padding: 30px 50px;
 }
 
+#campos{
+	font-size: 15px;
+	margin-top: 25px;
+}
+
 #opcoes{
 	font-size: 15px;
 	margin-top: 25px;
@@ -167,11 +172,16 @@ td.Muito.Baixa, td.Muito.Baixo {
 
 #escolherProduto fieldset{
 	display: table;
- 	margin: 20px 50px auto;
+ 	margin: 30px 50px auto;
 }
 
 #escolherProduto table{
-	margin: 20px 25px 25px;
+	margin: 30px 18px;
+	float: left;
+}
+
+#escolherProduto table table{
+	margin: 0px 13px auto;
 	float: left;
 }
 
@@ -333,16 +343,15 @@ table.dados tr td{
 	margin: 3px;
 }
 
+#finalizar{
+	font-size: 15px;
+	margin-top: 100px;
+}
+
 #finalizarPedido {
 	width: 0 auto;
-	padding: 10px 200px 100px;
-}
-label:not(.ui-selectonemenu-label){
-	display: block;
-	float: left;
-	margin-right: 20px;
-	text-align: right;
-	width: 110px;
+	margin-top: 20px;
+	padding: 10px 200px 40px;
 }
 
 /*Menu Principal*/
