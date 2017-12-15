@@ -78,9 +78,14 @@ public class carrinhoMB {
 		
 		if (usuario != null && usuario.getId() != null) {
 			if(carregaCartaoAtivo().analisaCartao()) {
-				iCarrinho.finalizaCompra(usuario);
-				
-				return "sucesso?faces-redirect=true";
+				if(iCarrinho.finalizaCompra(usuario)) {
+					return "sucesso?faces-redirect=true";
+				}
+				else {
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Finalizar Compra", "Um dos produtos que você selecionou não está mais disponível em estoque."));
+			        return "#";
+				}
 			}
 			else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Finalizar Compra", "O número do cartão é inválido"));
