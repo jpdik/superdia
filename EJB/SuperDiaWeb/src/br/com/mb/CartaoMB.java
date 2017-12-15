@@ -16,7 +16,7 @@ public class CartaoMB {
 	private ICartao iCartao;
 
 	public boolean analisaCartao() {
-		return iCartao.validateCardNumber(card.getNumero());
+		return iCartao.validaNumeroCartao(card.getNumero());
 	}
 
 	public Cartao getCard() {

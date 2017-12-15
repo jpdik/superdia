@@ -12,7 +12,7 @@ import br.com.interfacebean.ICartao;
 @Remote(ICartao.class)
 public class CartaoBean implements ICartao {
 	@Override
-	public boolean validateCardNumber(String cardNumber) {
+	public boolean validaNumeroCartao(String cardNumber) {
 		try {
 			//https://ws.cdyne.com/creditcardverify/luhnchecker.asmx?WSDL
 			LuhnChecker luhnChecker = new LuhnChecker();

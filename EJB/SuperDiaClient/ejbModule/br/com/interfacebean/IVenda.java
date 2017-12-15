@@ -25,5 +25,10 @@ public interface IVenda {
 	 * @return um <b>List</b> com todas vendas efetuadas.
 	 */
 	List<Venda> listaTodos();
+	
+	/**
+	 * Lista somente as vendas feitas do usuário.
+	 * @return um <b>List</b> com todas vendas efetuadas pelo usuário.
+	 */
 	List<Venda> listaDoUsuario(Usuario usuario);
 }

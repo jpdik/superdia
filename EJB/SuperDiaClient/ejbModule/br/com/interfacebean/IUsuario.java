@@ -39,5 +39,10 @@ public interface IUsuario {
 	*/
 	List<Usuario> listaTodos();
 	
+	/**
+	 * lista todos os tipos de perfis para usuário do sistema.
+	 * 
+	 * @return uma List com todos tipos de perfis disponíveis do usuário.
+	*/
 	List<String> getPerfis();
 }

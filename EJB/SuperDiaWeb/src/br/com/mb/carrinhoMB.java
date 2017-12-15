@@ -53,7 +53,7 @@ public class carrinhoMB {
 	}
 	
 	/*
-	 * Permite recuperar o usuÃ¡rio ativo da sessÃ£o. Esse usuÃ¡rio e armazenado ao realizar login
+	 * Permite recuperar o usuário ativo da sessão. Esse usuário e armazenado ao realizar login
 	 */
 	public Usuario carregaUsuarioAtivo() {		
 		FacesContext ctx = FacesContext.getCurrentInstance();
@@ -70,8 +70,8 @@ public class carrinhoMB {
 	public String finalizaCompra() {
 		Usuario usuario = carregaUsuarioAtivo();
 
-		// Caso tenha usuÃ¡rio ativo na sessÃ£o finaliza compra, 
-		// caso contrÃ¡rio redireciona para pÃ¡gina de login. ApÃ³s realizar o login o usuÃ¡rio
+		// Caso tenha usuário ativo na sessão finaliza compra, 
+		// caso contráio redireciona para página de login. Após realizar o login o usuário
 		// pode concluir a compra.
 		
 		System.out.println(carregaCartaoAtivo());
@@ -83,7 +83,7 @@ public class carrinhoMB {
 				return "sucesso?faces-redirect=true";
 			}
 			else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Finalizar Compra", "O nï¿½mero do cartï¿½o ï¿½ invï¿½lido"));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Finalizar Compra", "O número do cartão é inválido"));
 		        return "#";
 			}
 		}else
