@@ -37,7 +37,7 @@
 			
 			<p:menuitem value="Finalizar Compra" action="finalizar?faces-redirect=true" icon="ui-icon-transferthick-e-w" />
 			
-			<p:menuitem value="Histórico de Compras" action="historico?faces-redirect=true" icon="ui-icon-script" />
+			<p:menuitem value="Histórico de Compras" action="historico?faces-redirect=true" icon="ui-icon-script" rendered="#{not empty loginMB.usuario.id}" />
 
 			<f:facet name="options">
 				<h:form rendered="#{empty loginMB.usuario.usuario}">

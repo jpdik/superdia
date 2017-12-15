@@ -17,20 +17,19 @@
 					</legend>
 					
 					<div id="campos">
-						<p:outputLabel value="Número Cartão:" for="nome"></p:outputLabel>
-						<p:inputText value="#{cartaoMB.card.numero}" id="nome" required="true"
-						requiredMessage="Informe o número do cartão!"/>
+						<p:outputLabel value="Número Cartão:" for="numero"></p:outputLabel>
+						<p:inputText value="#{cartaoMB.card.numero}" id="numero" required="true"
+						requiredMessage="Informe o número do cartão!">
+							<f:ajax listener="#{cartaoMB.numeroMudou}" render="bandeira" />
+						</p:inputText>
 						
-						<h:outputLabel value="Bandeira:" />
-						<h:selectOneMenu value="#{cartaoMB.card.bandeira}">
-							<f:selectItems value="#{cartaoMB.cartoes}" var="c"
-								itemValue="#{c}" itemLabel="#{c}" />
-						</h:selectOneMenu>
+						<p:outputLabel value="Bandeira:" for="bandeira"></p:outputLabel>
+						<p:inputText value="#{cartaoMB.card.bandeira}" id="bandeira" disabled="true"/>
 					
 					</div>
 					
 					<div id="botoes">	
-						<h:commandButton value="Finalizar Compra" action="#{carrinhoMB.finalizaCompra}" update="cadastro" ajax="true"/>
+						<p:commandButton value="Finalizar Compra" action="#{carrinhoMB.finalizaCompra}" update="cadastro" ajax="true"/>
 						
 					</div>
 				</fieldset>

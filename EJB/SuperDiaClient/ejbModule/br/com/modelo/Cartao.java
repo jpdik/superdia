@@ -9,10 +9,6 @@ public class Cartao implements Serializable{
 	private String numero;
 	private String bandeira;
 	
-	public enum bandeiras {
-		Visa, Mastercard, Diners, Amex;
-	}
-
 	public String getNumero() {
 		return numero;
 	}
@@ -26,6 +22,6 @@ public class Cartao implements Serializable{
 	}
 
 	public void setBandeira(String bandeira) {
-		this.bandeira = bandeira.toUpperCase();
+		this.bandeira = bandeira;
 	} 
 }

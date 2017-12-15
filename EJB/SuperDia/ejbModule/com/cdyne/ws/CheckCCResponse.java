@@ -1,5 +1,5 @@
 
-package net.webservicex;
+package com.cdyne.ws;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="ValidateCardNumberResult" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="CheckCCResult" type="{http://ws.cdyne.com/}ReturnIndicator" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,36 +29,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "validateCardNumberResult"
+    "checkCCResult"
 })
-@XmlRootElement(name = "ValidateCardNumberResponse")
-public class ValidateCardNumberResponse {
+@XmlRootElement(name = "CheckCCResponse")
+public class CheckCCResponse {
 
-    @XmlElement(name = "ValidateCardNumberResult")
-    protected String validateCardNumberResult;
+    @XmlElement(name = "CheckCCResult")
+    protected ReturnIndicator checkCCResult;
 
     /**
-     * Obtém o valor da propriedade validateCardNumberResult.
+     * Obtém o valor da propriedade checkCCResult.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link ReturnIndicator }
      *     
      */
-    public String getValidateCardNumberResult() {
-        return validateCardNumberResult;
+    public ReturnIndicator getCheckCCResult() {
+        return checkCCResult;
     }
 
     /**
-     * Define o valor da propriedade validateCardNumberResult.
+     * Define o valor da propriedade checkCCResult.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link ReturnIndicator }
      *     
      */
-    public void setValidateCardNumberResult(String value) {
-        this.validateCardNumberResult = value;
+    public void setCheckCCResult(ReturnIndicator value) {
+        this.checkCCResult = value;
     }
 
 }

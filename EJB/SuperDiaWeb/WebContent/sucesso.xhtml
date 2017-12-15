@@ -9,7 +9,10 @@
 	<ui:define name="corpo">
 		<h:form>
 		<h2>Compra realizada com sucesso</h2>
+		<h:panelGrid columns="2" id="opcoes">
+		<p:commandButton value="Ver Histórico de compras" action="historico?faces-redirect=true"/>
 		<p:commandButton value="Voltar a página incial" action="#{produtoMB.limpaBusca}"/>
+		</h:panelGrid>
 		</h:form>
 	</ui:define>
 </ui:composition>

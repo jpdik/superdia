@@ -1,7 +1,5 @@
 package br.com.mb;
 
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -18,10 +16,7 @@ public class CartaoMB {
 	private ICartao iCartao;
 
 	public boolean analisaCartao() {
-		if(iCartao.validateCardNumber(card.getBandeira(), card.getNumero()).contains("not valid"))
-			return false;
-		
-		return true;
+		return iCartao.validateCardNumber(card.getNumero());
 	}
 
 	public Cartao getCard() {
@@ -31,12 +26,10 @@ public class CartaoMB {
 	public void setCard(Cartao card) {
 		this.card = card;
 	}
-
-	public List<String> getCartoes() {
-		try {
-			return iCartao.getCartoes();
-		} catch (javax.ejb.TransactionRolledbackLocalException e) {
-			return null;
-		}
+	
+	public void numeroMudou() {
+		card.setBandeira(iCartao.getBandeira(card.getNumero()));
+		System.out.println(card.getBandeira());
 	}
+
 }
