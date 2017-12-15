@@ -86,7 +86,8 @@ public class CarrinhoBean implements ICarrinho{
 
 	@Override
 	public boolean finalizaCompra(Usuario usuario) {
-		atualizaEstoque();
+		if (!atualizaEstoque())
+			return false;
 		
 		// Registra um nova venda
 		Venda venda = new Venda();
@@ -104,7 +105,7 @@ public class CarrinhoBean implements ICarrinho{
 	/*
 	 * Ao finalizar a compra debita a quantidade em estoque de cada produto
 	 */
-	private void atualizaEstoque() {
+	private boolean atualizaEstoque() {
 		for(ItemVenda itemVenda: itensVenda) {
 			int quantidade = itemVenda.getQuantidade();
 			
@@ -114,10 +115,17 @@ public class CarrinhoBean implements ICarrinho{
 			// Caso o produto não esteja no estoque significa que é um produto de terceiros
 			if(produto == null) continue;
 			
+			// Caso não tenha produto suficiente no estoque, cancela.
+			if(produto.getQuantidadeEstoque() < itemVenda.getQuantidade()) {
+				return false;
+			}
+			
 			// Atualiza estoque
 			produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() - quantidade);
 			iProduto.altera(produto);
+			
 		}
+		return true;
 	}
 	
 	/**
