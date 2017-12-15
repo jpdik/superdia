@@ -25,12 +25,12 @@ xmlns:h="http://java.sun.com/jsf/html"
 						#{v.id}
 					</p:column>
 					
-					<p:column>
+					<p:column filterBy="#{v.usuario.usuario}">
 						<f:facet name="header">Cliente</f:facet>
 						#{v.usuario.usuario}
 					</p:column>
 					
-					<p:column>
+					<p:column filterBy="#{v.usuario.perfil}">
 						<f:facet name="header">Perfil</f:facet>
 						#{v.usuario.perfil}
 					</p:column>
@@ -42,7 +42,7 @@ xmlns:h="http://java.sun.com/jsf/html"
 						</h:outputText>
 					</p:column>
 					
-					<p:column>
+					<p:column >
 						<f:facet name="header">Data e Hora</f:facet>
 						<h:outputText value="#{v.data.time}">
 							<f:convertDateTime timeZone="America/Sao_Paulo" pattern="dd/MM/yyyy - HH:mm:ss" />
