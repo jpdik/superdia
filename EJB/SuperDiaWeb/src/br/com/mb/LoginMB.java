@@ -67,8 +67,10 @@ public class LoginMB {
     }
 	
 	public String logout() {
-		carregaCartaoAtivo().card = new Cartao();
-		carregaCarrinhoAtivo().limpa();
+		if(carregaCartaoAtivo() != null)
+			carregaCartaoAtivo().card = new Cartao();
+		if(carregaCarrinhoAtivo() != null)
+			carregaCarrinhoAtivo().limpa();
 		usuario = new Usuario();
 		return "login.xhtml?faces-redirect=true";
 	}
