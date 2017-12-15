@@ -1,6 +1,10 @@
 package br.superdia.controle;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
 import br.com.interfacebean.ICarrinho;
+import br.com.interfacebean.ICartao;
 import br.superdia.app.SuperdiaApp;
 import br.superdia.app.utils.GerenciadorDeJanelas;
 import br.superdia.app.utils.OnChangeScreen;
@@ -46,7 +50,9 @@ public class PagamentoController {
     @FXML
     private AnchorPane rodapeAnchorPane;
 
+    private InitialContext ic;
     private ICarrinho iCarrinho = null;
+    private ICartao iCartao = null;
     private Stage primaryStage;
     private GerenciadorDeJanelas gerenciadorDeJanelas;
     private CaixaController caixaController;
@@ -117,6 +123,14 @@ public class PagamentoController {
 		this.iCarrinho = iCarrinho;
 	}
 
+	public InitialContext getIc() {
+		return ic;
+	}
+
+	public ICartao getiCartao() {
+		return iCartao;
+	}
+
 	@FXML
     private void initialize() {
 		gerenciadorDeJanelas.addOnChangeScreenListener(new OnChangeScreen() {
@@ -127,7 +141,16 @@ public class PagamentoController {
 					iCarrinho = (ICarrinho) userData;
 				}
 			}
-		});		   	
+		});	
+		
+		try {
+    		ic = gerenciadorDeJanelas.getLoginController().getIc();
+    		iCartao = (ICartao) ic.lookup("br.com.interfacebean.ICartao");
+    	} catch (NamingException e) {
+    		alertMessage("Ocorreu um Erro", "Erro no lookup in interface Context.", e.getMessage() + 
+    					".\nContate o adminstrador do sistema.", AlertType.ERROR);
+    		System.exit(0);
+    	}
 	}
 	
     @FXML
@@ -142,13 +165,13 @@ public class PagamentoController {
 
     @FXML
     private void trocoOnMouseCliked() {
-    	calculaTroco();    	
+    	calculaTroco();
     }
     
     @FXML
     private void valorRecebidoOnKeyPressed(KeyEvent event) {
     	if(event.getCode() == KeyCode.ENTER) {
-    		calculaTroco();    		
+    		calculaTroco();
     	}else if(event.getCode() == KeyCode.ESCAPE) {
     		cancelarButton.requestFocus();
     	}
@@ -181,6 +204,15 @@ public class PagamentoController {
     }
 
     private void concluirCompra() {
+    	System.out.println(numeroCartaoTextField.getText().length());
+    	if(!numeroCartaoTextField.getText().isEmpty()) {
+    		if(!iCartao.validaNumeroCartao(numeroCartaoTextField.getText())) {
+    			alertMessage("Atenção", "Cartão", "O número do cartão é inválido.", AlertType.WARNING);
+    			numeroCartaoTextField.requestFocus();
+    			return;
+    		}
+    	}
+    	
     	if(trocoTextField.getText().isEmpty()) {
     		alertMessage("Atenção", "Troco", "Sistema não calculou o troco.", AlertType.WARNING);
     	}else {
@@ -199,7 +231,8 @@ public class PagamentoController {
 			primaryStage = gerenciadorDeJanelas.getPrimaryStage();
 			primaryStage.setTitle("Caixa");
 			primaryStage.centerOnScreen();
-    	}    	
+    	}
+    	
     }
     
     private String trocaVirgulaPorPonto(String valor) {
@@ -208,9 +241,9 @@ public class PagamentoController {
 	
 	private void alertMessage(String titulo, String header, String conteudo, AlertType alertType) {
 		gerenciadorDeJanelas.getLoginController().alertMessage(titulo, header, conteudo, alertType);
-	}
-			
-	private void calculaTroco() {
+	}	
+				
+	private void calculaTroco() {			
 		Double valorRecebido, valorCompra;
 		try {
 			valorRecebido = Double.parseDouble(trocaVirgulaPorPonto(valorRecebidoTextField.getText()));
@@ -230,7 +263,6 @@ public class PagamentoController {
 			alertMessage("ERRO", "Valor Recebido.", e.getMessage(), AlertType.ERROR);
 			valorRecebidoTextField.requestFocus();
 		}
-    	
 	}		
 	
 	private void limpaCampos() {
