@@ -51,12 +51,23 @@ public class CarrinhoBean implements ICarrinho{
 		}
 		
 		// Verifica se há produto suficiente no estoque, caso não tenha retorna false
-		if (qtdeProduto < itemVenda.getQuantidade()) return false;
+		if (!verificaEstoque(itemVenda)) return false;
 		
 		if (produtoNoCarrinho) {
 			return itensVenda.remove(itemVenda) && itensVenda.add(itemVenda);
 		}else
 			return itensVenda.add(itemVenda);
+	}
+	
+	@Override
+	public boolean altera(ItemVenda itemVenda) {
+		
+		if (itensVenda.contains(itemVenda) && verificaEstoque(itemVenda)) {
+			System.err.println("\n\n\n\n\nqui####3\n\n\n\n\n");
+			return itensVenda.remove(itemVenda) && itensVenda.add(itemVenda);
+		}
+		
+		return false;
 	}
 
 	@Override
@@ -101,5 +112,24 @@ public class CarrinhoBean implements ICarrinho{
 			
 			iProduto.altera(produto);
 		}
+	}
+	
+	/**
+	 * Verifica se possue produto suficiente no estoque
+	 * @param itemVenda o item a ser verificado no estoque
+	 * @return <b>true</b> se a operação foi realizada com sucesso. Caso contrário <b>false</b>.
+	 */
+	private boolean verificaEstoque(ItemVenda itemVenda) {
+		
+		int qtdeProduto = itemVenda.getProduto().getQuantidadeEstoque();
+		
+		// Verifica quantidade adicionada e estoque do produto são maiores que zero
+		if (itemVenda == null || itemVenda.getQuantidade() <= 0 || qtdeProduto <= 0)
+			return false;
+		
+		// Verifica se há produto suficiente no estoque, caso não tenha retorna false
+		if (qtdeProduto < itemVenda.getQuantidade()) return false;
+		
+		return true;
 	}
 }

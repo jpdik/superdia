@@ -15,6 +15,14 @@ public interface ICarrinho {
 	boolean adiciona(ItemVenda itemVenda);
 	
 	/**
+	 * Altera a quantidade do produto presente no carrinho.
+	 * @param produto produto a ser alterado.
+	 * @param quantidade nova quantidade a ser introduzida.
+	 * @return <b>true</b> se a operação foi realizada com sucesso, caso contrário retorna <b>false</b>.
+	 */
+	boolean altera(ItemVenda itemVenda);
+	
+	/**
 	 * Remove um item do carrinho.
 	 * @param itemVenda o item a ser removido do carrinho.
 	 * @return <b>true</b> se a operação foi realizada com sucesso. Caso contrário <b>false</b>.
