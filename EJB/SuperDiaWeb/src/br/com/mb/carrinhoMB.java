@@ -37,6 +37,17 @@ public class carrinhoMB {
         context.addMessage(null, new FacesMessage("Carrinho",  produto.getNome()+" foi adicionado ao carrinho!"));
 	}
 	
+	public void altera(ItemVenda itemVenda) {
+		
+		itemVenda.setQuantidade(10);
+		
+		iCarrinho.altera(itemVenda);
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+        
+        context.addMessage(null, new FacesMessage("Carrinho",  itemVenda.getProduto().getNome()+" foi alterado no carrinho!"));
+	}
+	
 	public List<ItemVenda> produtosCarrinho(){
 		return iCarrinho.listaTodos();
 	}
@@ -72,7 +83,7 @@ public class carrinhoMB {
 				return "sucesso?faces-redirect=true";
 			}
 			else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Finalizar Compra", "O número do cartão é inválido"));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Finalizar Compra", "O nï¿½mero do cartï¿½o ï¿½ invï¿½lido"));
 		        return "#";
 			}
 		}else
@@ -88,14 +99,21 @@ public class carrinhoMB {
 	}
 	
 	public void aumentaQuantidade(ItemVenda itemVenda) {
-		System.out.println(itemVenda.getQuantidade());
 		itemVenda.setQuantidade(itemVenda.getQuantidade() + 1);
-		System.out.println(itemVenda.getQuantidade());
+		if (!iCarrinho.altera(itemVenda)) {
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+	        
+	        context.addMessage(null, new FacesMessage("Carrinho",  
+	        		itemVenda.getProduto().getNome()+" esgotado no estoque!"));
+		}
 	}
 	
 	public void diminuiQuantidade(ItemVenda itemVenda) {
-		if(itemVenda.getQuantidade() > 0)
+		if(itemVenda.getQuantidade() > 0) {
 			itemVenda.setQuantidade(itemVenda.getQuantidade() - 1);
+			iCarrinho.altera(itemVenda);
+		}
 	}
 	
 	public double valorTotal(ItemVenda itemVenda) {

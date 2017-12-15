@@ -7,8 +7,8 @@
 	xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/WEB-INF/_template.xhtml">
 	<ui:define name="corpo">
+		<p:growl id="msgs" showDetail="true" sticky="true" />
 		<h:form id="lista">
-			<p:growl id="msgs" showDetail="true" />
 			<fieldset id="carrinho">
 				<legend align="left">
 					<h:outputText style="font-size: 25px" value="Meu Carrinho">
@@ -37,15 +37,15 @@
 					
 					<p:column>
 						<f:facet name="header">Quantidade</f:facet>
-						<h:form id="qnt">
+						
 							<p:commandButton action="#{carrinhoMB.diminuiQuantidade(v)}" icon="ui-icon-carat-1-w" title="Diminuir">
 								<f:ajax render="@form :qnt"></f:ajax>
 							</p:commandButton>
 							#{v.quantidade}
-							<p:commandButton action="#{carrinhoMB.aumentaQuantidade(v)}" icon="ui-icon-carat-1-e" title="Diminuir">
+							<p:commandButton action="#{carrinhoMB.aumentaQuantidade(v)}" update="msgs" icon="ui-icon-carat-1-e" title="Diminuir">
 								<f:ajax render="@form :qnt"></f:ajax>
 							</p:commandButton>
-						</h:form>
+						
 					</p:column>
 					
 					<p:column>
