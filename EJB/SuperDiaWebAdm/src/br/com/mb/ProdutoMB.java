@@ -18,8 +18,10 @@ public class ProdutoMB {
 	private IProduto iProduto;
 
 	public void gravar() {
-		if (produto.getId() == null)
+		if (produto.getId() == null) {
+			produto.setVendidoPor("SuperDia");
 			iProduto.adiciona(produto);
+		}
 		else
 			iProduto.altera(produto);
 

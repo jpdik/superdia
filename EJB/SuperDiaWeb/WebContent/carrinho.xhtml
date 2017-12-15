@@ -38,13 +38,9 @@
 					<p:column>
 						<f:facet name="header">Quantidade</f:facet>
 						
-							<p:commandButton action="#{carrinhoMB.diminuiQuantidade(v)}" icon="ui-icon-carat-1-w" title="Diminuir">
-								<f:ajax render="@form :qnt"></f:ajax>
-							</p:commandButton>
+							<p:commandButton action="#{carrinhoMB.diminuiQuantidade(v)}" icon="ui-icon-carat-1-w"  update="@form" ajax="true" title="Diminuir" />
 							#{v.quantidade}
-							<p:commandButton action="#{carrinhoMB.aumentaQuantidade(v)}" update="msgs" icon="ui-icon-carat-1-e" title="Diminuir">
-								<f:ajax render="@form :qnt"></f:ajax>
-							</p:commandButton>
+							<p:commandButton action="#{carrinhoMB.aumentaQuantidade(v)}" update="@form msgs" icon="ui-icon-carat-1-e" ajax="true" title="Aumentar" />
 						
 					</p:column>
 					

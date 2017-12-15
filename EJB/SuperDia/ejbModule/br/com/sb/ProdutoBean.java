@@ -19,6 +19,8 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.client.ClientProperties;
+
 import br.com.interfacebean.IProduto;
 import br.com.modelo.Produto;
 
@@ -111,8 +113,16 @@ public class ProdutoBean implements IProduto {
 	}
 
 	private static String getHTML(String urlToRead) throws Exception {
+		System.setProperty("http.proxyHost", "10.0.0.254");
+		System.setProperty("http.proxyPort", "8080");
+		System.setProperty("https.proxyHost", "10.0.0.254");
+		System.setProperty("https.proxyPort", "8080");
+		
 		Client client = ClientBuilder.newClient();
-
+		
+		client.property(ClientProperties.CONNECT_TIMEOUT, 500);
+		client.property(ClientProperties.READ_TIMEOUT, 1000);
+		
 		WebTarget target = client.target(urlToRead);
 
 		Response response = target.request().get();

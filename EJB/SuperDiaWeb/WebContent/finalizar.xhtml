@@ -31,8 +31,7 @@
 				<div id="finalizar">
 					<p:panelGrid columns="2">
 						<p:commandButton value="Voltar ao Carrinho"
-							action="carrinho?faces-redirect=true" update="cadastro"
-							ajax="true" />
+							action="carrinho?faces-redirect=true" immediate="true"/>
 						<p:commandButton value="Finalizar Compra"
 							action="#{carrinhoMB.finalizaCompra}" update="cadastro"
 							ajax="true" />

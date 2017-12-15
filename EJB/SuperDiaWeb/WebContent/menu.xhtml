@@ -39,9 +39,9 @@
 						<h:panelGrid columns="2" id="opcoes" rendered="#{produtoMB.ProdutoDisponivel(p)}">
 							<p:commandButton value="Comprar"
 								actionListener="#{carrinhoMB.adicionar(p)}"
-								action="carrinho?faces-redirect=true" />
+								action="carrinho?faces-redirect=true" ajax="true" />
 							<p:commandButton value="Carrinho"
-								actionListener="#{carrinhoMB.adicionar(p)}" update="growl" />
+								actionListener="#{carrinhoMB.adicionar(p)}" ajax="true" update="growl" />
 						</h:panelGrid>
 						<p:commandButton value="Produto Indisponível" action="#" rendered="#{produtoMB.ProdutoDisponivel(p) == 'False'}"/>
 					</p:panelGrid>
