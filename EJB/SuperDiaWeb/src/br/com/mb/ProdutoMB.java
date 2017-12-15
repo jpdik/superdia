@@ -40,6 +40,10 @@ public class ProdutoMB {
 		return produtos;
 	}
 	
+	public boolean ProdutoDisponivel(Produto produto) {
+		return produto.getQuantidadeEstoque() > 0 ? true : false;
+	}
+	
 	public List<Produto> getProdutosExternos() {
 		return iProduto.listaTodosExternos(filtro);
 	}

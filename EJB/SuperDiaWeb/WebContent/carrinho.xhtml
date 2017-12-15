@@ -65,7 +65,7 @@
 				</p:dataTable>
 				
 				<div id="opcoes">
-				<p:panelGrid columns="2" id="opcoes">
+				<p:panelGrid columns="2" id="opcoes" rendered="#{carrinhoMB.carrinhoVazio() == 'False'}">
 					<h:outputText value="Valor Total:" />
 					<h:outputText value="#{vendaMB.valorTotal(carrinhoMB.itemVendas)}">
 						<f:convertNumber pattern="R$ #0.00"/>

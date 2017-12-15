@@ -3,25 +3,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/WEB-INF/_template.xhtml">
 	<ui:define name="corpo">
 		<div id="conteudo">
-			<div id="autentica">
-				<fieldset id="login">
-					<legend align="left">Autenticação</legend>
-					<h:form id="formlogin">
-						<h:panelGrid columns="2">
-						<h:outputLabel value="Login:" />
-						<h:inputText value="#{loginMB.usuario.usuario}" />
-						<h:outputLabel value="Senha:" />
-						<h:inputSecret value="#{loginMB.usuario.senha}"/>
-						<h:commandButton value="Efetuar Login" action="#{loginMB.autentica}" />
-						</h:panelGrid>
-					</h:form>	
-				</fieldset>
-			</div>
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+			<fieldset>
+				<legend align="left">Autenticação</legend>
+				<h:form id="formlogin">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Login:" />
+						<p:inputText value="#{loginMB.usuario.usuario}" />
+						<p:outputLabel value="Senha:" />
+						<p:password value="#{loginMB.usuario.senha}" />
+					</h:panelGrid>
+					<div id="acess">
+						<p:commandButton value="Logar" action="#{loginMB.autentica}" />
+					</div>
+				</h:form>
+			</fieldset>
 		</div>
 	</ui:define>
-</ui:composition>	
+</ui:composition>
 </html>

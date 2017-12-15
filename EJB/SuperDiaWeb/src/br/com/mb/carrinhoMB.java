@@ -90,6 +90,10 @@ public class carrinhoMB {
 			return "login?faces-redirect=true";
 	}
 	
+	public boolean carrinhoVazio() {
+		return iCarrinho.listaTodos().size() > 0 ? false : true;
+	}
+	
 	public void remove(ItemVenda itemVenda) {
 		iCarrinho.remove(itemVenda);
 	}

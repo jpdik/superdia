@@ -32,14 +32,18 @@
 							<f:convertNumber pattern="R$ #0.00"/>
 						</h:outputText>
 
+						<h:outputText value="Qnt. estoque:" />
+						<h:outputText value="#{p.quantidadeEstoque}" />
+
 						<h:outputText value="Opções:" />
-						<h:panelGrid columns="2" id="opcoes">
+						<h:panelGrid columns="2" id="opcoes" rendered="#{produtoMB.ProdutoDisponivel(p)}">
 							<p:commandButton value="Comprar"
 								actionListener="#{carrinhoMB.adicionar(p)}"
 								action="carrinho?faces-redirect=true" />
 							<p:commandButton value="Carrinho"
 								actionListener="#{carrinhoMB.adicionar(p)}" update="growl" />
 						</h:panelGrid>
+						<p:commandButton value="Produto Indisponível" action="#" rendered="#{produtoMB.ProdutoDisponivel(p) == 'False'}"/>
 					</p:panelGrid>
 				</ui:repeat>
 			</fieldset>
@@ -69,14 +73,18 @@
 							<f:convertNumber pattern="R$ #0.00"/>
 						</h:outputText>
 
+						<h:outputText value="Qnt. estoque:" />
+						<h:outputText value="#{p.quantidadeEstoque}" />
+
 						<h:outputText value="Opções:" />
-						<h:panelGrid columns="2" id="opcoes">
+						<h:panelGrid columns="2" id="opcoes" rendered="#{produtoMB.ProdutoDisponivel(p)}">
 							<p:commandButton value="Comprar"
 								actionListener="#{carrinhoMB.adicionar(p)}"
 								action="carrinho?faces-redirect=true" />
 							<p:commandButton value="Carrinho"
 								actionListener="#{carrinhoMB.adicionar(p)}" update="growl" />
 						</h:panelGrid>
+						<h:outputText value="Produto indisponível" rendered="!#{produtoMB.ProdutoDisponivel(p)}"/>
 					</p:panelGrid>
 				</ui:repeat>
 			</fieldset>

@@ -1,8 +1,10 @@
 package br.com.mb;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import br.com.interfacebean.ICliente;
 import br.com.modelo.Usuario;
@@ -20,7 +22,8 @@ public class ClienteMB {
 			return "login?faces-redirect=true";
 		}
 		usuario = new Usuario();
-		return "registrar?faces-redirect=true";
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Registro", "Usuário já existente."));
+		return "#";
 	}
 
 	public Usuario getUsuario() {

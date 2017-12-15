@@ -1,8 +1,10 @@
 package br.com.mb;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import br.com.interfacebean.IAutentica;
 import br.com.interfacebean.IUsuario;
@@ -36,7 +38,8 @@ public class LoginMB {
 		}
 		else {
 			this.usuario = new Usuario();
-			return "login?faces-redirect=true";
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Autenticação", "Usuário ou senha inválidos!"));
+			return "#";
 		}
 	}
 	

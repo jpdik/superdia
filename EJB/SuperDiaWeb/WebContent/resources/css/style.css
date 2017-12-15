@@ -87,7 +87,7 @@ td.Muito.Baixa, td.Muito.Baixo {
 	background-color: rgba(18, 107, 255, 0.92);
 	position: relative;
 	padding-top: 20px;
-	height: 200px;
+	height: 160px;
 }
 
 #fieldlogo{
@@ -176,7 +176,7 @@ td.Muito.Baixa, td.Muito.Baixo {
 }
 
 #escolherProduto table{
-	margin: 30px 18px;
+	margin: 30px 16px;
 	float: left;
 }
 
@@ -244,8 +244,13 @@ input:after {
 	clear: both;
 }
 
+#acess{
+	font-size: 15px;
+	margin-top: 60px;
+}
+
 #formlogin{
-	margin: 30px;
+	padding: 30px 80px;
 }
 
 input[type=submit] {

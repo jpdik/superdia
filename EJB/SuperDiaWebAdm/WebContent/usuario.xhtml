@@ -9,7 +9,7 @@
 	<ui:define name="corpo">
 		<div id="main">
 			<h:form id="cadastro">
-				<p:messages styleClass="erros"></p:messages>
+				<p:messages id="messages" autoUpdate="true" closable="true" />
 				<fieldset>
 					<legend>
 						<h:outputText style="font-size: 25px"
@@ -19,9 +19,9 @@
 
 					<div id="campos">
 						<p:outputLabel value="Login:" for="login" />
-						<p:inputText id="login" value="#{usuarioMB.usuario.usuario}" />
+						<p:inputText id="login" value="#{usuarioMB.usuario.usuario}" required="true" requiredMessage="Informe um nome de usuário!" />
 						<p:outputLabel value="Senha:" for="senha" />
-						<p:password id="senha" value="#{usuarioMB.usuario.senha}" />
+						<p:password id="senha" value="#{usuarioMB.usuario.senha}" required="true" requiredMessage="Informe uma senha!"/>
 
 						<h:outputLabel value="Perfil:" />
 						<h:selectOneMenu value="#{usuarioMB.usuario.perfil}">

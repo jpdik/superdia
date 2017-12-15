@@ -44,7 +44,7 @@
 				</h:form>
 				<h:form rendered="#{not empty loginMB.usuario.usuario}">
 					<p:commandButton value="Logado como: #{loginMB.usuario.usuario}" disabled="true" />
-					<p:commandButton type="submit" value="Deslogar" icon="ui-icon-power" action="#{loginMB.logout}" ajax="false"/> 
+					<p:commandButton type="submit" value="Logout" icon="ui-icon-power" action="#{loginMB.logout}" ajax="false"/> 
 				</h:form>
 			</f:facet>
 		</p:menubar>

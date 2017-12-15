@@ -3,25 +3,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/WEB-INF/_template.xhtml">
 	<ui:define name="corpo">
-		<h:messages />
 		<div id="conteudo">
-			<div id="autentica">
-				<fieldset id="login">
-					<legend align="left">Registro</legend>
-					<h:form id="formlogin">
-						<h:panelGrid columns="2">
-						<h:outputLabel value="Login:" />
-						<h:inputText value="#{clienteMB.usuario.usuario}" />
-						<h:outputLabel value="Senha:" />
-						<h:inputSecret value="#{clienteMB.usuario.senha}"/>
-						<h:commandButton value="Efetuar Registro" action="#{clienteMB.registra}" />
-						</h:panelGrid>
-					</h:form>	
-				</fieldset>
-			</div>
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+			<fieldset id="login">
+				<legend align="left">Registro</legend>
+				<h:form id="formlogin">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Login:" for="usuario" />
+						<p:inputText value="#{clienteMB.usuario.usuario}" id="usuario" required="true" requiredMessage="Informe um nome de usuário!"/>
+						<p:outputLabel value="Senha:" for="senha" />
+						<p:password value="#{clienteMB.usuario.senha}" id="senha" required="true" requiredMessage="Informe uma senha!"/>
+					</h:panelGrid>
+					<div id="acess">
+						<p:commandButton value="Registrar" action="#{clienteMB.registra}" />
+					</div>
+				</h:form>
+			</fieldset>
 		</div>
 	</ui:define>
 </ui:composition>	
